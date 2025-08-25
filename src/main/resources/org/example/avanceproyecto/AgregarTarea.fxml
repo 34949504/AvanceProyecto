@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.avanceproyecto.AgregarTarea"
+      prefHeight="400.0" prefWidth="600.0" alignment="CENTER">
+
+    <ChoiceBox value="Seleccionar" fx:id="departamentos_choicebox">
+        <items>
+            <!--            pila,cola,lista-->
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Recursos Humanos" />
+                <String fx:value="Finanzas" />
+                <String fx:value="IT" />
+                <String fx:value="Ventas" />
+                <String fx:value="Marketing" />
+            </FXCollections>
+        </items>
+    </ChoiceBox>
+
+
+    <ChoiceBox value="Seleccionar" fx:id="urgencia_choicebox">
+        <items>
+<!--            pila,cola,lista-->
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Urgente" />
+                <String fx:value="No urgenete" />
+                <String fx:value="listas" />
+            </FXCollections>
+        </items>
+    </ChoiceBox>
+
+    <ChoiceBox value="Tarea" disable="true" fx:id="tarea_choicebox">
+
+    </ChoiceBox>
+
+</HBox>

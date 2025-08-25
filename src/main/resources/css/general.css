@@ -1,0 +1,7 @@
+.border-pane-main-container {
+    -fx-background-color: black;
+
+}
+ToolBar {
+    -fx-background-color: black;
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<?import org.example.avanceproyecto.CLabel?>
+<?import org.example.avanceproyecto.MyClass?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import java.lang.String?>
+<BorderPane styleClass="border-pane-main-container" fx:id="MainPane" xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.avanceproyecto.MainController">
+    <center>
+
+        <VBox spacing="100" alignment="CENTER" xmlns="http://javafx.com/javafx"
+              prefHeight="400.0" prefWidth="600.0">
+
+            <Button text="Agregar Tarea" onAction="#displayAgregarTarea">
+                <styleClass>
+                    <String fx:value="urgent-button"/>
+                    <String fx:value="add-tarea-button"/>
+                </styleClass>
+            </Button>
+            <Button styleClass="normal-button" text="Ver tareas"></Button>
+
+        </VBox>
+    </center>
+
+</BorderPane>
+
+
+
+
+
