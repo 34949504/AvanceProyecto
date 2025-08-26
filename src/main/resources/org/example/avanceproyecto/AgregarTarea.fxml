@@ -9,7 +9,6 @@
 <?import javafx.collections.FXCollections?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.avanceproyecto.AgregarTarea"
       prefHeight="400.0" prefWidth="600.0" alignment="CENTER">
 
     <HBox alignment="CENTER">

@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class AgregarTarea implements Observer {
+public class AgregarTarea extends BaseController implements Observer {
 
     private JSONObject tareas_json;
     private ArrayList<Observer> observers = new ArrayList<>();
@@ -29,6 +29,10 @@ public class AgregarTarea implements Observer {
     private Button enviar;
     @FXML
     private Button regresar;
+
+    public AgregarTarea(String fxmlFile) {
+        super(fxmlFile);
+    }
 
     @FXML
     public void initialize() {

@@ -13,7 +13,7 @@
 <?import java.lang.String?>
 <BorderPane styleClass="border-pane-main-container" fx:id="MainPane" xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.avanceproyecto.MainController">
+            >
     <center>
 
         <VBox spacing="100" alignment="CENTER" xmlns="http://javafx.com/javafx"

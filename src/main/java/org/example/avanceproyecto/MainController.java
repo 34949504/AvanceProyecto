@@ -15,14 +15,17 @@ import lombok.Setter;
 import java.io.IOException;
 
 @Getter @Setter
-public class MainController implements Observer {
+public class MainController extends BaseController implements Observer {
 
     private Parent agregar_tarea_layout;
-    private Parent main_layout;
     private Stage stage;
 
     @FXML
     private BorderPane MainPane;
+
+    public MainController(String fxmlFile) {
+        super(fxmlFile);
+    }
 
 
     @FXML
