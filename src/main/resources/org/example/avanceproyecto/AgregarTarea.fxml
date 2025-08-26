@@ -25,6 +25,9 @@
         </items>
     </ChoiceBox>
 
+        <ChoiceBox value="Tarea" disable="true" fx:id="tarea_choicebox">
+
+        </ChoiceBox>
 
     <ChoiceBox value="Seleccionar" fx:id="urgencia_choicebox">
         <items>
@@ -37,9 +40,6 @@
         </items>
     </ChoiceBox>
 
-    <ChoiceBox value="Tarea" disable="true" fx:id="tarea_choicebox">
-
-    </ChoiceBox>
     </HBox>
 
     <HBox>

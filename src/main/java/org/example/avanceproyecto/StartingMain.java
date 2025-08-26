@@ -3,14 +3,12 @@ package org.example.avanceproyecto;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import org.json.JSONObject;
 
 import java.io.IOException;
-public class Main extends Application {
+public class StartingMain extends Application {
     JSONObject tareas_json = Utils.readJson("/Tareas.json");
     @Override
     public void start(Stage stage) throws IOException {
@@ -20,15 +18,9 @@ public class Main extends Application {
 
         agregarTarea.setTareas_json(tareas_json);
         agregarTarea.addObserver(mainController);
+
         mainController.setStage(stage);
-
-
-
-        mainController.setAgregar_tarea_layout(agregarTarea.getLayout()); // ✅ works now
-
-
-
-
+        mainController.addObserver(agregarTarea);
 
 
         Rectangle2D rectangle2D = Utils.getScreenDimsHalfed();
@@ -38,15 +30,9 @@ public class Main extends Application {
 
         stage.setX(rectangle2D.getMinX());
         stage.setY(rectangle2D.getMinY());
-        stage.setTitle("Hello!");
+        stage.setTitle("Yeah");
         stage.setScene(scene);
 
-
         stage.show();
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T> T getController(FXMLLoader fxmlLoader) {
-        return (T) fxmlLoader.getController();
     }
 }

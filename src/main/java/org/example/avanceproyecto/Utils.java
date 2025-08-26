@@ -32,4 +32,5 @@ public class Utils {
         double height = rectangle2D.getHeight() / 2;
         return new Rectangle2D(width / 2, height / 2, width, height);
     }
+
 }

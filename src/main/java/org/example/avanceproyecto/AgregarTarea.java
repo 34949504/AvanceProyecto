@@ -5,8 +5,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.BorderPane;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -16,6 +18,7 @@ public class AgregarTarea extends BaseController implements Observer {
 
     private JSONObject tareas_json;
     private ArrayList<Observer> observers = new ArrayList<>();
+    private TaskAdministrator taskAdministrator = new TaskAdministrator();
 
 
     @FXML
@@ -59,9 +62,32 @@ public class AgregarTarea extends BaseController implements Observer {
             @Override
             public void handle(ActionEvent actionEvent) {
                 for (Observer observer: observers){
-                    observer.go_mainLayout();
+                    observer.show_mainlayout();
                 }
 
+            }
+        });
+
+        enviar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String departamento = departamentos_choicebox.getValue();
+                String urgencia = urgencia_choicebox.getValue();
+                String tarea = tarea_choicebox.getValue();
+
+                boolean all_selected = true;
+
+                if (departamento.compareTo("Seleccionar") == 0) {
+                    all_selected = false;
+                }
+                if (urgencia.compareTo("Seleccionar") == 0) {
+                    all_selected = false;
+                }
+
+
+                if (all_selected){
+
+                }
             }
         });
 
@@ -88,5 +114,10 @@ public class AgregarTarea extends BaseController implements Observer {
 
     public void addObserver(Observer observer) {
         observers.add(observer);
+    }
+
+    @Override
+    public void show_agregarTarea(BorderPane main_pane_borderpane){
+        main_pane_borderpane.setCenter(getLayout());
     }
 }
