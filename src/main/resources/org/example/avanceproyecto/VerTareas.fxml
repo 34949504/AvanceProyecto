@@ -10,7 +10,7 @@
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="400.0" prefWidth="600.0">
     <top>
-        <HBox>
+        <HBox alignment="BASELINE_LEFT">
             <Button text="Ver tareas Urgentes">
 
             </Button>
@@ -18,10 +18,9 @@
 
             </Button>
             <Button text="Ver tareas Urgentes">
-
             </Button>
         </HBox>
-
+        <Label alignment="CENTER" fx:id="titulo_nombre_tarea_label" text="Ver tareas Urgentes"></Label>
     </top>
 
 
