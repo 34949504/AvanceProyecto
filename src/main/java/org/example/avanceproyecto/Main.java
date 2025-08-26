@@ -15,13 +15,22 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
+//        MainController mainController = BaseController.<MainController>loadController("Main.fxml", MainController.class);
+//        AgregarTarea agregarController = BaseController.<AgregarTarea>loadController("AgregarTarea.fxml", AgregarTarea.class);
 
         Pair<Parent, MainController> main_pair = loadFxml("Main.fxml");
         Pair<Parent, AgregarTarea> agregarTarea_pair = loadFxml("AgregarTarea.fxml");
 
         MainController mainController = main_pair.getValue();
         AgregarTarea agregarTarea = agregarTarea_pair.getValue();
+
         agregarTarea.setTareas_json(tareas_json);
+        agregarTarea.addObserver(mainController);
+
+        mainController.setStage(stage);
+        mainController.setMain_layout(main_pair.getKey());
+
+
 
         mainController.setAgregar_tarea_layout(agregarTarea_pair.getKey()); // ✅ works now
 

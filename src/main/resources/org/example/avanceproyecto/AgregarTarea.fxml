@@ -7,11 +7,12 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.collections.FXCollections?>
-<HBox xmlns="http://javafx.com/javafx"
+<VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.avanceproyecto.AgregarTarea"
       prefHeight="400.0" prefWidth="600.0" alignment="CENTER">
 
+    <HBox alignment="CENTER">
     <ChoiceBox value="Seleccionar" fx:id="departamentos_choicebox">
         <items>
             <!--            pila,cola,lista-->
@@ -40,5 +41,13 @@
     <ChoiceBox value="Tarea" disable="true" fx:id="tarea_choicebox">
 
     </ChoiceBox>
+    </HBox>
 
-</HBox>
+    <HBox>
+    <Button fx:id="regresar" text="Regresar">
+    </Button>
+    <Button fx:id="enviar" text="Enviar">
+    </Button>
+
+    </HBox>
+</VBox>
