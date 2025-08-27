@@ -23,7 +23,7 @@
                     <String fx:value="add-tarea-button"/>
                 </styleClass>
             </Button>
-            <Button styleClass="normal-button" text="Ver tareas"></Button>
+            <Button styleClass="normal-button" text="Ver tareas" onAction="#displayVerTarea"></Button>
 
         </VBox>
     </center>

@@ -1,11 +1,15 @@
-package org.example.avanceproyecto;
+package org.example.avanceproyecto.ControllerUtils;
 
 import javafx.geometry.Rectangle2D;
+import javafx.scene.layout.BorderPane;
+import org.example.avanceproyecto.Controllers.AgregarTarea;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+
 import javafx.stage.Screen;
 
 public class Utils {
@@ -32,5 +36,13 @@ public class Utils {
         double height = rectangle2D.getHeight() / 2;
         return new Rectangle2D(width / 2, height / 2, width, height);
     }
+
+    public static void callObserver(ArrayList<Observer> observers, BorderPane centerPane, Class<?>clazz){
+        for (Observer observer: observers) {
+            boolean sucess = observer.show_layout( clazz);
+            if (sucess)break;
+        }
+    }
+    
 
 }
