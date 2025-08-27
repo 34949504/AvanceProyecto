@@ -11,13 +11,13 @@
             prefHeight="400.0" prefWidth="600.0">
     <top>
         <HBox alignment="BASELINE_LEFT">
-            <Button text="Ver tareas Urgentes">
+            <Button fx:id="urgentes_button" text="Ver tareas Urgentes">
 
             </Button>
-            <Button text="Ver tareas Urgentes">
+            <Button fx:id="no_urgentes_button" text="Ver tareas no Urgentes">
 
             </Button>
-            <Button text="Ver tareas Urgentes">
+            <Button fx:id="lista_button" text="Ver tareas lista">
             </Button>
         </HBox>
         <Label alignment="CENTER" fx:id="titulo_nombre_tarea_label" text="Ver tareas Urgentes"></Label>

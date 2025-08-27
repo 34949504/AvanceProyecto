@@ -1,4 +1,4 @@
-package org.example.avanceproyecto;
+package org.example.avanceproyecto.Tarea;
 
 public enum TipoTarea {
     Urgente,

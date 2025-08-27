@@ -1,14 +1,16 @@
-package org.example.avanceproyecto;
+package org.example.avanceproyecto.Controllers;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.BorderPane;
+import org.example.avanceproyecto.ControllerUtils.BaseController;
+import org.example.avanceproyecto.ControllerUtils.Observer;
+import org.example.avanceproyecto.Tarea.TaskAdministrator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -17,7 +19,6 @@ import java.util.ArrayList;
 public class AgregarTarea extends BaseController implements Observer {
 
     private JSONObject tareas_json;
-    private ArrayList<Observer> observers = new ArrayList<>();
     private TaskAdministrator taskAdministrator = new TaskAdministrator();
 
 
@@ -61,10 +62,13 @@ public class AgregarTarea extends BaseController implements Observer {
         regresar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                for (Observer observer: observers){
-                    observer.show_mainlayout();
+//                for (Observer observer: getObservers()){
+//                    observer.show_mainlayout();
+//                }
+                for (Observer observer: getObservers()) {
+                    boolean sucess = observer.show_layout(MainController.class);
+                    if (sucess)break;
                 }
-
             }
         });
 
@@ -112,12 +116,5 @@ public class AgregarTarea extends BaseController implements Observer {
         this.tareas_json = tareas_json;
     }
 
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
 
-    @Override
-    public void show_agregarTarea(BorderPane main_pane_borderpane){
-        main_pane_borderpane.setCenter(getLayout());
-    }
 }

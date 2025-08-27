@@ -12,7 +12,14 @@ module org.example.avanceproyecto {
     requires com.almasb.fxgl.all;
     requires static lombok;
     requires javafx.base;
+    requires javafx.graphics;
 
     opens org.example.avanceproyecto to javafx.fxml;
     exports org.example.avanceproyecto;
+    exports org.example.avanceproyecto.Tarea;
+    opens org.example.avanceproyecto.Tarea to javafx.fxml;
+    exports org.example.avanceproyecto.ControllerUtils;
+    opens org.example.avanceproyecto.ControllerUtils to javafx.fxml;
+    exports org.example.avanceproyecto.Controllers;
+    opens org.example.avanceproyecto.Controllers to javafx.fxml;
 }

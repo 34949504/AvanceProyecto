@@ -1,19 +1,18 @@
-package org.example.avanceproyecto;
+package org.example.avanceproyecto.ControllerUtils;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.stage.Stage;
-import javafx.util.Pair;
+import javafx.scene.layout.BorderPane;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.IOException;
-import java.net.URL;
+import java.util.ArrayList;
 
 @Getter @Setter
-public abstract class BaseController {
+public abstract class BaseController implements Observer {
     protected Parent layout;
-
+    private BorderPane borderpane_main;
+    private ArrayList<Observer> observers = new ArrayList<>();
 
     public BaseController(String fxmlFile) {
         try {
@@ -23,6 +22,19 @@ public abstract class BaseController {
         } catch (Exception e) {
             throw new RuntimeException("Failed to load FXML: " + fxmlFile, e);
         }
+    }
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+
+    @Override
+    public boolean show_layout(Class<?> clazz) {
+        if (clazz.isAssignableFrom(this.getClass())) {
+            this.borderpane_main.setCenter(getLayout());
+            return true;
+        }
+        return false;
     }
 }
 
