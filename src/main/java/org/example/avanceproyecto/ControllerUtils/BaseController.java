@@ -1,19 +1,21 @@
 package org.example.avanceproyecto.ControllerUtils;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @Getter @Setter
 public abstract class BaseController implements Observer {
     protected Parent layout;
     private BorderPane borderpane_main;
     private ArrayList<Observer> observers = new ArrayList<>();
+    private Stage stage;
 
 
     public BaseController() {
@@ -31,8 +33,8 @@ public abstract class BaseController implements Observer {
             throw new RuntimeException("Failed to load FXML: " + fxmlFile, e);
         }
     }
-    public void addObserver(Observer observer) {
-        observers.add(observer);
+    public void addObservers(Observer ... observers_param) {
+        observers.addAll(Arrays.asList(observers_param));
     }
 
 

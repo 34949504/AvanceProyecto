@@ -27,6 +27,20 @@ ToolBar {
     -fx-text-fill: white;
 }
 
-.white-text {
+.white-text-big {
     -fx-text-fill: white;
+    -fx-font: normal bold 30px "Western";
 }
+
+.medium-size-choicebox {
+    -fx-font: normal bold 20px "Western";
+}
+.container-white-background {
+     -fx-background-color: white;
+}
+.medium-size-text-black-bold {
+    -fx-font: normal bold 20px "Western";
+    -fx-text-fill: black;
+}
+
+

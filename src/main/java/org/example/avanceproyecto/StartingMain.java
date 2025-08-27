@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.avanceproyecto.ControllerUtils.BaseController;
@@ -20,8 +21,12 @@ public class StartingMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
+        Window window = stage.getOwner();
+        if (window == null) {
+            System.out.println("FUck owner is null?");
+        }
 
-        ControllerInitializer controllerManager = new ControllerInitializer();
+        ControllerInitializer controllerManager = new ControllerInitializer(stage);
         Rectangle2D rectangle2D = Utils.getScreenDimsHalfed();
         Scene scene = new Scene(controllerManager.getMainController().getOrigin(), rectangle2D.getWidth(), rectangle2D.getHeight());
         scene.getStylesheets().add(getClass().getResource("/css/buttons.css").toExternalForm());
@@ -40,35 +45,39 @@ public class StartingMain extends Application {
         private AgregarTarea agregarTarea = new AgregarTarea("/FXML/AgregarTarea.fxml");
         private VerTareas verTareas = new VerTareas("/FXML/VerTareas.fxml");
 
-        public ControllerInitializer() {
+        Observer[] controllers = {mainController,agregarTarea,verTareas};
+
+        Stage stage;
+        public ControllerInitializer(Stage stage) {
+            this.stage = stage;
             initiliaze_observers();
             setStuff();
             setUpstuff();
+            loop_over_observers_and_pass_attributes(controllers);
         }
 
         private void initiliaze_observers() {
 
-//            addObserver(mainController,agregarTarea,verTareas);
-
-            agregarTarea.addObserver(mainController);
-            agregarTarea.addObserver(verTareas);
-            mainController.addObserver(agregarTarea);
-            mainController.addObserver(verTareas);
-            verTareas.addObserver(mainController);
-            verTareas.addObserver(agregarTarea);
+            mainController.addObservers(agregarTarea,verTareas);
+            agregarTarea.addObservers(mainController,verTareas);
+            verTareas.addObservers(mainController,agregarTarea);
         }
 
-        private void addObserver(BaseController notifier, Observer... observers) {
-            for (Observer observer : observers) {
-                notifier.addObserver(observer);
-            }
-        }
         private void setStuff() {
             agregarTarea.setTareas_json(tareas_json);
         }
         private void setUpstuff() {
             //To get acess of borderpane_main, you need to be observer of maincontroller
             mainController.share_with_controllers_borderpane();
+        }
+        private void loop_over_observers_and_pass_attributes(Observer[] observers){
+            int length = observers.length;
+            for (int i = 0; i <length; i++) {
+                Observer observer = observers[i];
+                if (observer instanceof BaseController baseController) {
+                    baseController.setStage(stage);
+                }
+            }
         }
 
     }

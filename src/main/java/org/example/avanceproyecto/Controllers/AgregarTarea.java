@@ -5,10 +5,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
 import org.example.avanceproyecto.ControllerUtils.BaseController;
 import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.ControllerUtils.Utils;
@@ -38,8 +41,16 @@ public class AgregarTarea extends BaseController implements Observer {
     private Button enviar;
     @FXML
     private Button regresar;
+
+    @FXML
+    private Label departamento_label;
+    @FXML
+    private Label tarea_label;
+    private boolean tarea_label_boolean_block_one_time_listener = false;
     @FXML
     private Label milisegundos_label;
+    @FXML
+    private Label tipoTarea_label;
 
     public AgregarTarea(String fxmlFile) {
         initilize_fxml(fxmlFile);
@@ -54,18 +65,32 @@ public class AgregarTarea extends BaseController implements Observer {
                 if (tarea_choicebox.isDisable()) {
                     tarea_choicebox.setDisable(false);
                 }
+                else if (tarea_choicebox.getValue().compareTo("Seleccionar") !=0) {
+                    tarea_label_boolean_block_one_time_listener = true;
+                    tarea_choicebox.setValue("Seleccionar");
+                    tarea_label.setText(String.format("Tarea: "));
+                    milisegundos_label.setText(String.format("Milisegundos:"));
+                }
                 currentNode.setDepartamento(t1);
                 populateTareaBox(t1);
+                departamento_label.setText(String.format("Departamento: %s",t1));
             }
         });
         tarea_choicebox.getSelectionModel().selectedItemProperty().addListener((new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String string, String t1) {
+                if (tarea_label_boolean_block_one_time_listener) {
+                    tarea_label_boolean_block_one_time_listener = false;
+                    return;
+                }
+
                 String departamento = departamentos_choicebox.getSelectionModel().getSelectedItem();
                 JSONObject departamento_json = tareas_json.getJSONObject(departamento.toLowerCase());
                 String tarea_firs  = tarea_choicebox.getSelectionModel().getSelectedItem();
+                System.out.printf(String.format("Tarea john cenea: %s",t1));
                 int milisecond =departamento_json.getInt(tarea_firs);
                 milisegundos_label.setText(String.format("Milisegundos:%s",String.valueOf(milisecond)));
+                tarea_label.setText(String.format("Tarea: %s",t1));
 
                 currentNode.setNombreTarea(tarea_firs);
                 currentNode.setMilisegundos(milisecond);
@@ -78,6 +103,7 @@ public class AgregarTarea extends BaseController implements Observer {
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 System.out.printf("s is %s and t1 is %s\n",s,t1);;
                 currentNode.setTipoTarea(TipoTarea.get_enum_by_string_comparison(t1));
+                tipoTarea_label.setText(String.format("Tipo de tarea: %s",t1));
             }
         });
 
@@ -89,15 +115,21 @@ public class AgregarTarea extends BaseController implements Observer {
                 String departamento = departamentos_choicebox.getValue();
                 String urgencia = urgencia_choicebox.getValue();
                 String tarea = tarea_choicebox.getValue();
-                String miliseconds = milisegundos_label.getText();
 
+                ArrayList<String> arrayList_campos_faltantes = new ArrayList<>();
                 boolean all_selected = true;
 
                 if (departamento.compareTo("Seleccionar") == 0) {
                     all_selected = false;
+                    arrayList_campos_faltantes.add("Departamento");
                 }
                 if (urgencia.compareTo("Seleccionar") == 0) {
                     all_selected = false;
+                    arrayList_campos_faltantes.add("Tipo de Tarea");
+                }
+                if (tarea.compareTo("Seleccionar") == 0) {
+                    all_selected = false;
+                    arrayList_campos_faltantes.add("Tarea");
                 }
 
                 if (all_selected){
@@ -114,6 +146,16 @@ public class AgregarTarea extends BaseController implements Observer {
                         }
                     }
 
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Info");
+                    alert.setHeaderText("Operation completed");
+                    alert.setContentText("Your task was saved!");
+                    alert.initOwner(getStage());
+                    alert.initModality(Modality.WINDOW_MODAL);
+
+                    alert.showAndWait();
+
                 }
             }
         });
@@ -129,16 +171,21 @@ public class AgregarTarea extends BaseController implements Observer {
             String tarea = departamento_tareas.getString(i);
             tarea_choicebox.getItems().add(tarea);
         }
-        if (!tarea_choicebox.getItems().isEmpty()) {
-            tarea_choicebox.getSelectionModel().selectFirst();
-            String tarea_firs  = tarea_choicebox.getSelectionModel().getSelectedItem();
-            int miliseconds =departamento_json.getInt(tarea_firs);
-            milisegundos_label.setText(String.format("Milisegundos:%s",String.valueOf(miliseconds)));
-
-            currentNode.setNombreTarea(tarea_firs);
-            currentNode.setMilisegundos(miliseconds);
-
-        }
+        System.out.println(tarea_choicebox.getItems().size());
+//        if (!tarea_choicebox.getItems().isEmpty()) {
+//            tarea_choicebox.getSelectionModel().selectFirst();
+//            String tarea_firs  = tarea_choicebox.getSelectionModel().getSelectedItem();
+//            System.out.println(String.format("Selected item bom %s ",tarea_firs));
+//            int miliseconds =departamento_json.getInt(tarea_firs);
+//            milisegundos_label.setText(String.format("Milisegundos:%s",String.valueOf(miliseconds)));
+//
+//            currentNode.setNombreTarea(tarea_firs);
+//            currentNode.setMilisegundos(miliseconds);
+//
+//        }
+//        else {
+//            System.out.println("DUmbass reson tarea choicebox is empty");
+//        }
 
     }
 
