@@ -1,5 +1,6 @@
 package org.example.avanceproyecto.ControllerUtils;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
@@ -14,7 +15,14 @@ public abstract class BaseController implements Observer {
     private BorderPane borderpane_main;
     private ArrayList<Observer> observers = new ArrayList<>();
 
-    public BaseController(String fxmlFile) {
+
+    public BaseController() {
+
+    }
+
+    //I initialize like this because  with the super(), it does not let me use the attributes of the subclass on the initialization, even tho they look initialized,
+    //they are not for the abstrac class which calls the javafx method initialize()
+    public void initilize_fxml(String fxmlFile) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             loader.setController(this); // ✅ Set this instance as controller

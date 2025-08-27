@@ -3,10 +3,11 @@ package org.example.avanceproyecto;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.avanceproyecto.ControllerUtils.BaseController;
+import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.ControllerUtils.Utils;
 import org.example.avanceproyecto.Controllers.MainController;
 import org.example.avanceproyecto.Controllers.AgregarTarea;
@@ -20,7 +21,7 @@ public class StartingMain extends Application {
     public void start(Stage stage) throws IOException {
 
 
-        ControllerManager controllerManager = new ControllerManager();
+        ControllerInitializer controllerManager = new ControllerInitializer();
         Rectangle2D rectangle2D = Utils.getScreenDimsHalfed();
         Scene scene = new Scene(controllerManager.getMainController().getOrigin(), rectangle2D.getWidth(), rectangle2D.getHeight());
         scene.getStylesheets().add(getClass().getResource("/css/buttons.css").toExternalForm());
@@ -34,22 +35,33 @@ public class StartingMain extends Application {
     }
 
     @Getter @Setter
-    private class  ControllerManager {
+    private class ControllerInitializer {
         private MainController mainController = new MainController("/FXML/Main.fxml");
         private AgregarTarea agregarTarea = new AgregarTarea("/FXML/AgregarTarea.fxml");
         private VerTareas verTareas = new VerTareas("/FXML/VerTareas.fxml");
 
-        public ControllerManager() {
+        public ControllerInitializer() {
             initiliaze_observers();
             setStuff();
             setUpstuff();
         }
 
         private void initiliaze_observers() {
+
+//            addObserver(mainController,agregarTarea,verTareas);
+
             agregarTarea.addObserver(mainController);
+            agregarTarea.addObserver(verTareas);
             mainController.addObserver(agregarTarea);
             mainController.addObserver(verTareas);
             verTareas.addObserver(mainController);
+            verTareas.addObserver(agregarTarea);
+        }
+
+        private void addObserver(BaseController notifier, Observer... observers) {
+            for (Observer observer : observers) {
+                notifier.addObserver(observer);
+            }
         }
         private void setStuff() {
             agregarTarea.setTareas_json(tareas_json);

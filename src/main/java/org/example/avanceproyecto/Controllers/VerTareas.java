@@ -16,9 +16,16 @@ import lombok.Setter;
 import org.example.avanceproyecto.ControllerUtils.BaseController;
 import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.ControllerUtils.Utils;
+import org.example.avanceproyecto.Tarea.TareaNodo;
+import org.example.avanceproyecto.Tarea.TipoTarea;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class VerTareas extends BaseController implements Observer {
 
+    private ObservableList<TareaNodo> data = FXCollections.observableArrayList();
+    private TipoTarea current_tipoTarea_state = TipoTarea.Urgente;
 
     @FXML
     private Button urgentes_button;
@@ -37,13 +44,14 @@ public class VerTareas extends BaseController implements Observer {
     private Button regresar;
 
     @FXML
-    private TableView<Persona> table;
+    private TableView<TareaNodo> table;
+
+
 
     public VerTareas(String fxmlFile) {
-        super(fxmlFile);
+        initilize_fxml(fxmlFile);
+
     }
-
-
 
     @FXML
     public void initialize() {
@@ -53,12 +61,14 @@ public class VerTareas extends BaseController implements Observer {
             @Override
             public void handle(ActionEvent actionEvent) {
                 titulo_nombre_tarea_label.setText(urgentes_button.getText());
+                changedaTable(TipoTarea.Urgente);
             }
         });
         no_urgentes_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 titulo_nombre_tarea_label.setText(no_urgentes_button.getText());
+                changedaTable(TipoTarea.No_Urgente);
             }
         });
 
@@ -66,53 +76,68 @@ public class VerTareas extends BaseController implements Observer {
             @Override
             public void handle(ActionEvent actionEvent) {
                 titulo_nombre_tarea_label.setText(lista_button.getText());
+                changedaTable(TipoTarea.Lista);
             }
         });
-
         createTable();
-
     }
 
     private void createTable() {
         // Create columns
-        TableColumn<Persona, String> nombreCol = new TableColumn<>("Nombre");
-        nombreCol.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        nombreCol.setPrefWidth(150);
+        TableColumn<TareaNodo, String> departamentoCol = new TableColumn<>("Departamento");
+        departamentoCol.setCellValueFactory(new PropertyValueFactory<>("departamento"));
+        departamentoCol.setPrefWidth(150);
 
-        TableColumn<Persona, Integer> edadCol = new TableColumn<>("Edad");
-        edadCol.setCellValueFactory(new PropertyValueFactory<>("edad"));
-        edadCol.setPrefWidth(150);
+        TableColumn<TareaNodo, String> tareaCol = new TableColumn<>("Tarea");
+        tareaCol.setCellValueFactory(new PropertyValueFactory<>("nombreTarea")); // Use camelCase
+        tareaCol.setPrefWidth(150);
 
-        table.getColumns().addAll(nombreCol, edadCol);
+        TableColumn<TareaNodo, Integer> milisecondsCol = new TableColumn<>("Milisegundos");
+        milisecondsCol.setCellValueFactory(new PropertyValueFactory<>("milisegundos"));
+        milisecondsCol.setPrefWidth(150);
+
+        table.getColumns().addAll(departamentoCol,tareaCol,milisecondsCol);
 
         // Set table width to match columns
-        table.setPrefWidth(300);
-        table.setMaxWidth(300);
-
-
-        // Create 5 Persona objects
-        ObservableList<Persona> data = FXCollections.observableArrayList(
-                new Persona(25, "Gerardo"),
-                new Persona(30, "Alice"),
-                new Persona(22, "Bob"),
-                new Persona(28, "Carol"),
-                new Persona(35, "David")
-        );
+        table.setPrefWidth(450);
+        table.setMaxWidth(450);
 
         table.setEditable(false);
-        // Add to the table
-        table.setItems(data);
+        table.setItems(this.data);
+
     }
 
+    private void changedaTable(TipoTarea tipoTarea) {
+        this.current_tipoTarea_state = tipoTarea;
+        ArrayList<TareaNodo> tareaNodoArrayList = new ArrayList<>();
 
-    @Getter @Setter @AllArgsConstructor
-    public class Persona {
-        int edad;
-        String nombre;
+        for (Observer observer : getObservers()) {
+            if (observer instanceof AgregarTarea agregarTarea){
+
+            ArrayList<TareaNodo> result = observer.get_node_tarea_array(tipoTarea);
+            if (result != null) {
+                tareaNodoArrayList = result;
+                System.out.println(tareaNodoArrayList.size());
+                break;
+            }
+            }
+        }
+        for (TareaNodo tareaNodo:tareaNodoArrayList) {
+            System.out.println(tareaNodo.getValues());
+        }
+        data.clear();
+        data.addAll(tareaNodoArrayList);
     }
 
+    @Override
+    public void updateTable(TipoTarea tipoTarea) {
 
+        System.out.println("Updating?");
+        if (this.current_tipoTarea_state == tipoTarea) {
+            changedaTable(tipoTarea);
+        }
 
+    }
 }
 
 

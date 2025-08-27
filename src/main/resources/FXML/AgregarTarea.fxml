@@ -28,13 +28,14 @@
         <ChoiceBox value="Tarea" disable="true" fx:id="tarea_choicebox">
 
         </ChoiceBox>
+        <Label fx:id="milisegundos_label" styleClass="white-text" text="Milisegundos:"></Label>
 
     <ChoiceBox value="Seleccionar" fx:id="urgencia_choicebox">
         <items>
 <!--            pila,cola,lista-->
             <FXCollections fx:factory="observableArrayList">
                 <String fx:value="Urgente" />
-                <String fx:value="No urgenete" />
+                <String fx:value="No urgente" />
                 <String fx:value="listas" />
             </FXCollections>
         </items>

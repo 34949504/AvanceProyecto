@@ -1,6 +1,9 @@
 package org.example.avanceproyecto.Tarea;
 
+import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.LinkedList.Pila;
+
+import java.util.ArrayList;
 
 public class TaskAdministrator {
 
@@ -8,9 +11,8 @@ public class TaskAdministrator {
 
 
 
-    public void add_task(String departamento,String tarea,String tipo_tarea,int milisegundos) {
-        TipoTarea tipoTarea = TipoTarea.get_enum_by_string_comparison(tipo_tarea);
-        TareaNodo tareaNodo = new TareaNodo(departamento,tarea,milisegundos);
+    public void add_task(String departamento,String tarea,TipoTarea tipoTarea,int milisegundos) {
+        TareaNodo tareaNodo = new TareaNodo(departamento,tarea,milisegundos,tipoTarea);
 
         if (tipoTarea == TipoTarea.Urgente) {
             pila.push(tareaNodo);
@@ -21,6 +23,23 @@ public class TaskAdministrator {
         else if (tipoTarea == TipoTarea.Lista) {
 
         }
+    }
+
+    public ArrayList<TareaNodo> get_arraylist_tarea_nodo(TipoTarea tipoTarea) {
+
+        System.out.println(tipoTarea);
+        if (tipoTarea == TipoTarea.Urgente) {
+            return pila.get_all_nodes();
+        }
+        else if (tipoTarea == TipoTarea.No_Urgente) {
+            return null;
+
+        }
+        else if (tipoTarea == TipoTarea.Lista) {
+            return null;
+        }
+
+        return null;
     }
 
 }

@@ -13,6 +13,7 @@ module org.example.avanceproyecto {
     requires static lombok;
     requires javafx.base;
     requires javafx.graphics;
+    requires com.fasterxml.jackson.databind;
 
     opens org.example.avanceproyecto to javafx.fxml;
     exports org.example.avanceproyecto;

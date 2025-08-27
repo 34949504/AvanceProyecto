@@ -7,11 +7,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import org.example.avanceproyecto.ControllerUtils.BaseController;
 import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.ControllerUtils.Utils;
+import org.example.avanceproyecto.Tarea.TareaNodo;
 import org.example.avanceproyecto.Tarea.TaskAdministrator;
+import org.example.avanceproyecto.Tarea.TipoTarea;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,6 +24,7 @@ public class AgregarTarea extends BaseController implements Observer {
 
     private JSONObject tareas_json;
     private TaskAdministrator taskAdministrator = new TaskAdministrator();
+    private TareaNodo currentNode = new TareaNodo();
 
 
     @FXML
@@ -34,9 +38,11 @@ public class AgregarTarea extends BaseController implements Observer {
     private Button enviar;
     @FXML
     private Button regresar;
+    @FXML
+    private Label milisegundos_label;
 
     public AgregarTarea(String fxmlFile) {
-        super(fxmlFile);
+        initilize_fxml(fxmlFile);
     }
 
     @FXML
@@ -48,15 +54,30 @@ public class AgregarTarea extends BaseController implements Observer {
                 if (tarea_choicebox.isDisable()) {
                     tarea_choicebox.setDisable(false);
                 }
+                currentNode.setDepartamento(t1);
                 populateTareaBox(t1);
             }
         });
+        tarea_choicebox.getSelectionModel().selectedItemProperty().addListener((new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String string, String t1) {
+                String departamento = departamentos_choicebox.getSelectionModel().getSelectedItem();
+                JSONObject departamento_json = tareas_json.getJSONObject(departamento.toLowerCase());
+                String tarea_firs  = tarea_choicebox.getSelectionModel().getSelectedItem();
+                int milisecond =departamento_json.getInt(tarea_firs);
+                milisegundos_label.setText(String.format("Milisegundos:%s",String.valueOf(milisecond)));
+
+                currentNode.setNombreTarea(tarea_firs);
+                currentNode.setMilisegundos(milisecond);
+            }
+        }));
 
 
         urgencia_choicebox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 System.out.printf("s is %s and t1 is %s\n",s,t1);;
+                currentNode.setTipoTarea(TipoTarea.get_enum_by_string_comparison(t1));
             }
         });
 
@@ -68,6 +89,7 @@ public class AgregarTarea extends BaseController implements Observer {
                 String departamento = departamentos_choicebox.getValue();
                 String urgencia = urgencia_choicebox.getValue();
                 String tarea = tarea_choicebox.getValue();
+                String miliseconds = milisegundos_label.getText();
 
                 boolean all_selected = true;
 
@@ -78,8 +100,19 @@ public class AgregarTarea extends BaseController implements Observer {
                     all_selected = false;
                 }
 
-
                 if (all_selected){
+                    taskAdministrator.add_task(
+                            currentNode.getDepartamento(),
+                            currentNode.getNombreTarea(),
+                            currentNode.getTipoTarea(),
+                            currentNode.getMilisegundos());
+
+                    for (Observer observer:getObservers()) {
+                        if (observer instanceof VerTareas verTareas) {
+                            verTareas.updateTable(currentNode.getTipoTarea());
+                            break;
+                        }
+                    }
 
                 }
             }
@@ -98,6 +131,13 @@ public class AgregarTarea extends BaseController implements Observer {
         }
         if (!tarea_choicebox.getItems().isEmpty()) {
             tarea_choicebox.getSelectionModel().selectFirst();
+            String tarea_firs  = tarea_choicebox.getSelectionModel().getSelectedItem();
+            int miliseconds =departamento_json.getInt(tarea_firs);
+            milisegundos_label.setText(String.format("Milisegundos:%s",String.valueOf(miliseconds)));
+
+            currentNode.setNombreTarea(tarea_firs);
+            currentNode.setMilisegundos(miliseconds);
+
         }
 
     }
@@ -107,4 +147,9 @@ public class AgregarTarea extends BaseController implements Observer {
     }
 
 
+    @Override
+    public ArrayList<TareaNodo> get_node_tarea_array(TipoTarea tipoTarea) {
+        System.out.println("bitch");
+        return taskAdministrator.get_arraylist_tarea_nodo(tipoTarea);
+    }
 }
