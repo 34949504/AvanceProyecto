@@ -21,6 +21,7 @@ public class StartingMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
+
         Window window = stage.getOwner();
         if (window == null) {
             System.out.println("FUck owner is null?");

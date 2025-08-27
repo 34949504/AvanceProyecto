@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
+import javafx.stage.Stage;
 import org.example.avanceproyecto.ControllerUtils.BaseController;
 import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.ControllerUtils.Utils;
@@ -116,20 +117,20 @@ public class AgregarTarea extends BaseController implements Observer {
                 String urgencia = urgencia_choicebox.getValue();
                 String tarea = tarea_choicebox.getValue();
 
-                ArrayList<String> arrayList_campos_faltantes = new ArrayList<>();
+                StringBuilder  datos_faltantes = new StringBuilder();
                 boolean all_selected = true;
 
                 if (departamento.compareTo("Seleccionar") == 0) {
                     all_selected = false;
-                    arrayList_campos_faltantes.add("Departamento");
+                    datos_faltantes.append("Departamento\n");
                 }
                 if (urgencia.compareTo("Seleccionar") == 0) {
                     all_selected = false;
-                    arrayList_campos_faltantes.add("Tipo de Tarea");
+                    datos_faltantes.append("Tipo de Tarea\n");
                 }
                 if (tarea.compareTo("Seleccionar") == 0) {
                     all_selected = false;
-                    arrayList_campos_faltantes.add("Tarea");
+                    datos_faltantes.append("Tarea");
                 }
 
                 if (all_selected){
@@ -147,13 +148,7 @@ public class AgregarTarea extends BaseController implements Observer {
                     }
 
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Info");
-                    alert.setHeaderText("Operation completed");
-                    alert.setContentText("Your task was saved!");
-                    alert.initOwner(getStage());
-                    alert.initModality(Modality.WINDOW_MODAL);
-
+                    Alert alert = Utils.get_alert_position_centered(getStage(),Alert.AlertType.WARNING,"Advertencia","Datos faltantes:",datos_faltantes.toString());
                     alert.showAndWait();
 
                 }
@@ -196,7 +191,6 @@ public class AgregarTarea extends BaseController implements Observer {
 
     @Override
     public ArrayList<TareaNodo> get_node_tarea_array(TipoTarea tipoTarea) {
-        System.out.println("bitch");
         return taskAdministrator.get_arraylist_tarea_nodo(tipoTarea);
     }
 }
