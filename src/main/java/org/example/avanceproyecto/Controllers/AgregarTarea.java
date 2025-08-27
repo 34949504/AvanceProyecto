@@ -10,6 +10,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.BorderPane;
 import org.example.avanceproyecto.ControllerUtils.BaseController;
 import org.example.avanceproyecto.ControllerUtils.Observer;
+import org.example.avanceproyecto.ControllerUtils.Utils;
 import org.example.avanceproyecto.Tarea.TaskAdministrator;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -59,18 +60,7 @@ public class AgregarTarea extends BaseController implements Observer {
             }
         });
 
-        regresar.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-//                for (Observer observer: getObservers()){
-//                    observer.show_mainlayout();
-//                }
-                for (Observer observer: getObservers()) {
-                    boolean sucess = observer.show_layout(MainController.class);
-                    if (sucess)break;
-                }
-            }
-        });
+        Utils.set_action_regresar_main_menu(regresar,getObservers());
 
         enviar.setOnAction(new EventHandler<ActionEvent>() {
             @Override

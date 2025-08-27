@@ -1,8 +1,12 @@
 package org.example.avanceproyecto.ControllerUtils;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import org.example.avanceproyecto.Controllers.AgregarTarea;
+import org.example.avanceproyecto.Controllers.MainController;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -42,6 +46,17 @@ public class Utils {
             boolean sucess = observer.show_layout( clazz);
             if (sucess)break;
         }
+    }
+    public static void set_action_regresar_main_menu(Button regresar,ArrayList<Observer> observers) {
+        regresar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                for (Observer observer: observers) {
+                    boolean sucess = observer.show_layout(MainController.class);
+                    if (sucess)break;
+                }
+            }
+        });
     }
     
 

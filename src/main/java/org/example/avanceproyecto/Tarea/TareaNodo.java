@@ -7,11 +7,15 @@ import lombok.Setter;
 public class TareaNodo {
     String departamento;
     String nombre_tarea;
+    int milisegundos;
 
     TareaNodo previous_node = null;
     TareaNodo next_node = null;
 
-    public TareaNodo(String departamento,String nombre_tarea) {
+    public TareaNodo(String departamento,String nombre_tarea,int milisegundos) {
+        this.departamento = departamento;
+        this.nombre_tarea = nombre_tarea;
+        this.milisegundos = milisegundos;
 
     }
 }

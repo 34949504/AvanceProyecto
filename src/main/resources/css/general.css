@@ -5,3 +5,24 @@
 ToolBar {
     -fx-background-color: black;
 }
+
+.title {
+-fx-font: normal bold 30px "Western";
+    -fx-text-fill: white;
+    -fx-alignment:center
+}
+
+
+
+.table-view {
+    -fx-background-color: black;
+    -fx-table-cell-border-color: gray;
+}
+
+.table-row-cell {
+    -fx-background-color: #222222;
+}
+
+.table-cell {
+    -fx-text-fill: white;
+}

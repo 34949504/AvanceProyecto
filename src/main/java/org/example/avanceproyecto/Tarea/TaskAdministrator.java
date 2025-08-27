@@ -8,9 +8,9 @@ public class TaskAdministrator {
 
 
 
-    public void add_task(String departamento,String tarea,String tipo_tarea) {
+    public void add_task(String departamento,String tarea,String tipo_tarea,int milisegundos) {
         TipoTarea tipoTarea = TipoTarea.get_enum_by_string_comparison(tipo_tarea);
-        TareaNodo tareaNodo = new TareaNodo(departamento,tarea);
+        TareaNodo tareaNodo = new TareaNodo(departamento,tarea,milisegundos);
 
         if (tipoTarea == TipoTarea.Urgente) {
             pila.push(tareaNodo);
