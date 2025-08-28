@@ -6,6 +6,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.avanceproyecto.Controllers.SharedStates;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ public abstract class BaseController implements Observer {
     private BorderPane borderpane_main;
     private ArrayList<Observer> observers = new ArrayList<>();
     private Stage stage;
+    SharedStates sharedStates = new SharedStates();
 
 
     public BaseController() {

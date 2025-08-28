@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.ControllerUtils.Utils;
+import org.example.avanceproyecto.Controllers.SharedStates;
 import org.example.avanceproyecto.Controllers.TaskDoer;
 import org.example.avanceproyecto.Tarea.TareaNodo;
 import org.example.avanceproyecto.Tarea.TipoTarea;
@@ -16,13 +17,10 @@ import java.util.ArrayList;
 @Getter @Setter
 public class Pila implements LinkedlistFuncs {
     TareaNodo tareaTop;
+    TaskDoer taskDoer;
 
     public Pila(ArrayList<Observer>observers) {
-        Utils.createTaskDoer(this,observers);
-//        TaskDoer taskDoer = new TaskDoer(this,observers);
-//        Thread thread = new Thread(taskDoer);  // wrap the task in a thread
-//        thread.setDaemon(true);                 // optional, allows app to exit if thread is running
-//        thread.start();
+        taskDoer = Utils.createTaskDoer(this,observers);
     }
 
 

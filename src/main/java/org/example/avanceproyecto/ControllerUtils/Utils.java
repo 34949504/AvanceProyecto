@@ -96,11 +96,12 @@ public class Utils {
         return alert;
     }
 
-    public static void createTaskDoer(LinkedlistFuncs linkedlistFuncs,ArrayList<Observer> observers) {
+    public static TaskDoer createTaskDoer(LinkedlistFuncs linkedlistFuncs,ArrayList<Observer> observers) {
         TaskDoer taskDoer = new TaskDoer(linkedlistFuncs,observers);
         Thread thread = new Thread(taskDoer);  // wrap the task in a thread
         thread.setDaemon(true);                 // optional, allows app to exit if thread is running
         thread.start();
+        return  taskDoer;
     }
 
 

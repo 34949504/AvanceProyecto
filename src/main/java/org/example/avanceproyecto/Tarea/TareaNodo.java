@@ -7,7 +7,7 @@ import lombok.Setter;
 public class TareaNodo {
     String departamento;
     String nombreTarea;
-    int milisegundos;
+    int segundos;
     TipoTarea tipoTarea;
 
     TareaNodo previous_node = null;
@@ -16,7 +16,7 @@ public class TareaNodo {
     public TareaNodo(String departamento,String nombreTarea,int milisegundos,TipoTarea tipoTarea) {
         this.departamento = departamento;
         this.nombreTarea = nombreTarea;
-        this.milisegundos = milisegundos;
+        this.segundos = milisegundos;
         this.tipoTarea = tipoTarea;
     }
     public  TareaNodo(){
@@ -28,9 +28,9 @@ public class TareaNodo {
         return String.format(
                 "Departamento %s\n" +
                         "Tarea %s\n" +
-                        "Milisegundos %d\n" +
+                        "Segundos %d\n" +
                         "Tipo tarea %s\n",
-                departamento, nombreTarea, milisegundos, tipoTarea
+                departamento, nombreTarea, segundos, tipoTarea
         );
     }
 }

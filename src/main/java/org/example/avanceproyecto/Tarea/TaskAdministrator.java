@@ -1,6 +1,7 @@
 package org.example.avanceproyecto.Tarea;
 
 import org.example.avanceproyecto.ControllerUtils.Observer;
+import org.example.avanceproyecto.Controllers.SharedStates;
 import org.example.avanceproyecto.LinkedList.Cola;
 import org.example.avanceproyecto.LinkedList.Lista;
 import org.example.avanceproyecto.LinkedList.Pila;
@@ -10,17 +11,22 @@ import java.util.ArrayList;
 public class TaskAdministrator {
 
     private ArrayList<Observer> observers;
+    private SharedStates sharedStates;
 
 
     private Pila pila ;
     private Cola cola ;
     private Lista lista;
 
-    public TaskAdministrator(ArrayList<Observer> observers) {
+    public TaskAdministrator(ArrayList<Observer> observers, SharedStates sharedStates) {
         this.observers = observers;
+        this.sharedStates = sharedStates;
         pila = new Pila(observers);
          cola = new Cola(observers);
          lista = new Lista(observers);
+
+         pila.getTaskDoer().setSharedStates(sharedStates);
+            cola.getTaskDoer().setSharedStates(sharedStates);
 
     }
 

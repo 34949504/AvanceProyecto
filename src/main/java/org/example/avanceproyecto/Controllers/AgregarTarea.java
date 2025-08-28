@@ -9,10 +9,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
 import org.example.avanceproyecto.ControllerUtils.*;
 import org.example.avanceproyecto.Tarea.TareaNodo;
 import org.example.avanceproyecto.Tarea.TaskAdministrator;
@@ -57,7 +53,7 @@ public class AgregarTarea extends BaseController implements Observer {
 
     @FXML
     public void initialize() {
-        taskAdministrator =  new TaskAdministrator(getObservers());
+        taskAdministrator =  new TaskAdministrator(getObservers(),getSharedStates());
 
         departamentos_choicebox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -70,7 +66,7 @@ public class AgregarTarea extends BaseController implements Observer {
                     tarea_label_boolean_block_one_time_listener = true;
                     tarea_choicebox.setValue("Seleccionar");
                     tarea_label.setText(String.format("Tarea: "));
-                    milisegundos_label.setText(String.format("Milisegundos:"));
+                    milisegundos_label.setText(String.format("Segundos:"));
                 }
                 currentNode.setDepartamento(t1);
                 populateTareaBox(t1);
@@ -90,11 +86,11 @@ public class AgregarTarea extends BaseController implements Observer {
                 String tarea_firs  = tarea_choicebox.getSelectionModel().getSelectedItem();
                 System.out.printf(String.format("Tarea john cenea: %s",t1));
                 int milisecond =departamento_json.getInt(tarea_firs);
-                milisegundos_label.setText(String.format("Milisegundos:%s",String.valueOf(milisecond)));
+                milisegundos_label.setText(String.format("Segundos:%s",String.valueOf(milisecond)));
                 tarea_label.setText(String.format("Tarea: %s",t1));
 
                 currentNode.setNombreTarea(tarea_firs);
-                currentNode.setMilisegundos(milisecond);
+                currentNode.setSegundos(milisecond);
             }
         }));
 
@@ -138,7 +134,7 @@ public class AgregarTarea extends BaseController implements Observer {
                             currentNode.getDepartamento(),
                             currentNode.getNombreTarea(),
                             currentNode.getTipoTarea(),
-                            currentNode.getMilisegundos());
+                            currentNode.getSegundos());
 
                     for (Observer observer:getObservers()) {
                         if (observer instanceof VerTareas verTareas) {
@@ -146,7 +142,7 @@ public class AgregarTarea extends BaseController implements Observer {
                             break;
                         }
                     }
-                    String message = String.format("Tarea:%s\nDuración:%dms\nTipo de Tarea:%s",currentNode.getNombreTarea(),currentNode.getMilisegundos(),currentNode.getTipoTarea());
+                    String message = String.format("Tarea:%s\nDuración:%dms\nTipo de Tarea:%s",currentNode.getNombreTarea(),currentNode.getSegundos(),currentNode.getTipoTarea());
                     Toast.show(getStage(),"Operacion Exitosa");
 //                    Alert alert = Utils.get_alert_position_centered(getStage(),Alert.AlertType.INFORMATION,"Operación Exitosa",currentNode.getDepartamento(),message);
 //                    alert.showAndWait();

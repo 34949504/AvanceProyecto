@@ -59,6 +59,8 @@
         <HBox alignment="CENTER">
             <Button fx:id="regresar" text="Regresar">
             </Button>
+            <Button fx:id="pausar_thread" text="Pausar tareas">
+            </Button>
         </HBox>
 
         </VBox>

@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.ControllerUtils.Utils;
+import org.example.avanceproyecto.Controllers.SharedStates;
+import org.example.avanceproyecto.Controllers.TaskDoer;
 import org.example.avanceproyecto.Tarea.TareaNodo;
 
 import java.util.ArrayList;
@@ -14,9 +16,10 @@ import java.util.ArrayList;
 public class Cola implements LinkedlistFuncs {
     TareaNodo first;
     TareaNodo last;
+    TaskDoer taskDoer;
 
     public Cola(ArrayList<Observer> observers) {
-        Utils.createTaskDoer(this,observers);
+        taskDoer =  Utils.createTaskDoer(this,observers);
     }
 
     //quiter
