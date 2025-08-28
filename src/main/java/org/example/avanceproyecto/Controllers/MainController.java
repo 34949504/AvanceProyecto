@@ -22,7 +22,7 @@ public class MainController extends BaseController implements Observer {
 
 
     public MainController(String fxmlFile) {
-        super(fxmlFile);
+        initilize_fxml(fxmlFile);
         setBorderpane_main((((BorderPane)getLayout())));
         Parent center = ((Parent) ((BorderPane)getLayout()).getCenter());
         origin = getLayout();

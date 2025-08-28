@@ -3,7 +3,7 @@
     -fx-text-fill: black;
     -fx-background-radius: 8px;
     -fx-font-size: 30px;
-    -fx-padding: 12px 24px;
+    -fx-padding: 12px 14px;
     -fx-cursor: hand;
 }
 
@@ -33,11 +33,8 @@
 }
 
 .tool-bar-button {
--fx-font: normal bold 18px "Western";
+-fx-font: normal bold 12px "Western";
 -fx-background-color: white;
-    -fx-background-radius: 30px;
-
-    -fx-padding: 12px 24px;
 }
 
 .tool-bar-button:pressed {
