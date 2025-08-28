@@ -1,13 +1,28 @@
 package org.example.avanceproyecto.Tarea;
 
 import org.example.avanceproyecto.ControllerUtils.Observer;
+import org.example.avanceproyecto.LinkedList.Cola;
+import org.example.avanceproyecto.LinkedList.Lista;
 import org.example.avanceproyecto.LinkedList.Pila;
 
 import java.util.ArrayList;
 
 public class TaskAdministrator {
 
-    private Pila pila = new Pila();
+    private ArrayList<Observer> observers;
+
+
+    private Pila pila ;
+    private Cola cola ;
+    private Lista lista;
+
+    public TaskAdministrator(ArrayList<Observer> observers) {
+        this.observers = observers;
+        pila = new Pila(observers);
+         cola = new Cola(observers);
+         lista = new Lista(observers);
+
+    }
 
 
 
@@ -18,10 +33,10 @@ public class TaskAdministrator {
             pila.push(tareaNodo);
         }
         else if (tipoTarea == TipoTarea.No_Urgente) {
-
+            cola.enqueue(tareaNodo);
         }
         else if (tipoTarea == TipoTarea.Lista) {
-
+            lista.insert(tareaNodo);
         }
     }
 
@@ -32,11 +47,10 @@ public class TaskAdministrator {
             return pila.get_all_nodes();
         }
         else if (tipoTarea == TipoTarea.No_Urgente) {
-            return null;
-
+            return cola.getallNodes();
         }
         else if (tipoTarea == TipoTarea.Lista) {
-            return null;
+            return lista.getAllNodes();
         }
 
         return null;

@@ -5,14 +5,18 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="400.0" prefWidth="600.0">
     <top>
-        <VBox alignment="CENTER" spacing="30">
+        <VBox alignment="CENTER" spacing="30" >
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
 
-        <HBox spacing="5">
+        <HBox spacing="30">
             <Button styleClass="tool-bar-button" fx:id="urgentes_button" text="Ver tareas Urgentes">
 
             </Button>
@@ -22,7 +26,6 @@
             <Button styleClass="tool-bar-button" fx:id="lista_button" text="Ver tareas lista">
             </Button>
         </HBox>
-            <Label styleClass="title" alignment="CENTER" fx:id="titulo_nombre_tarea_label" text="Ver tareas Urgentes"></Label>
         </VBox>
     </top>
 
@@ -30,11 +33,30 @@
 
         <VBox alignment="CENTER">
 
+            <StackPane prefWidth="600"> <!-- or the width of your parent container -->
 
+                <Label styleClass="title" fx:id="titulo_nombre_tarea_label" text="Ver tareas Urgentes" />
+                <VBox alignment="BASELINE_RIGHT" prefWidth="600" style="-fx-padding: 0 10 0 0;">
+                    <Label alignment="BASELINE_LEFT" styleClass="white-text-big" text="Filtro"></Label>
+                    <ChoiceBox fx:id="filtro" value="Ninguno">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Ninguno" />
+                                <String fx:value="Recursos Humanos" />
+                                <String fx:value="Finanzas" />
+                                <String fx:value="IT" />
+                                <String fx:value="Ventas" />
+                                <String fx:value="Marketing" />
+                            </FXCollections>
+                        </items>
+                    </ChoiceBox>
+                </VBox>
+
+            </StackPane>
         <TableView  fx:id="table">
         </TableView>
 
-        <HBox>
+        <HBox alignment="CENTER">
             <Button fx:id="regresar" text="Regresar">
             </Button>
         </HBox>

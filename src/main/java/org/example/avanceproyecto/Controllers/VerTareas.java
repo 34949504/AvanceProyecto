@@ -1,14 +1,12 @@
 package org.example.avanceproyecto.Controllers;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +24,9 @@ public class VerTareas extends BaseController implements Observer {
 
     private ObservableList<TareaNodo> data = FXCollections.observableArrayList();
     private TipoTarea current_tipoTarea_state = TipoTarea.Urgente;
+
+    @FXML
+    private ChoiceBox<String> filtro;
 
     @FXML
     private Button urgentes_button;
@@ -47,7 +48,6 @@ public class VerTareas extends BaseController implements Observer {
     private TableView<TareaNodo> table;
 
 
-
     public VerTareas(String fxmlFile) {
         initilize_fxml(fxmlFile);
 
@@ -55,13 +55,13 @@ public class VerTareas extends BaseController implements Observer {
 
     @FXML
     public void initialize() {
-        Utils.set_action_regresar_main_menu(regresar,getObservers());
-
+        Utils.set_action_regresar_main_menu(regresar, getObservers());
         urgentes_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 titulo_nombre_tarea_label.setText(urgentes_button.getText());
                 changedaTable(TipoTarea.Urgente);
+                change_color_state(urgentes_button,no_urgentes_button,lista_button);
             }
         });
         no_urgentes_button.setOnAction(new EventHandler<ActionEvent>() {
@@ -69,6 +69,7 @@ public class VerTareas extends BaseController implements Observer {
             public void handle(ActionEvent actionEvent) {
                 titulo_nombre_tarea_label.setText(no_urgentes_button.getText());
                 changedaTable(TipoTarea.No_Urgente);
+                change_color_state(no_urgentes_button,urgentes_button,lista_button);
             }
         });
 
@@ -77,6 +78,7 @@ public class VerTareas extends BaseController implements Observer {
             public void handle(ActionEvent actionEvent) {
                 titulo_nombre_tarea_label.setText(lista_button.getText());
                 changedaTable(TipoTarea.Lista);
+                change_color_state(lista_button,urgentes_button,no_urgentes_button);
             }
         });
         createTable();
@@ -96,13 +98,12 @@ public class VerTareas extends BaseController implements Observer {
         milisecondsCol.setCellValueFactory(new PropertyValueFactory<>("milisegundos"));
         milisecondsCol.setPrefWidth(150);
 
-        table.getColumns().addAll(departamentoCol,tareaCol,milisecondsCol);
+        table.getColumns().addAll(departamentoCol, tareaCol, milisecondsCol);
 
         // Set table width to match columns
         table.setPrefWidth(450);
         table.setMaxWidth(450);
 
-        table.setEditable(false);
         table.setItems(this.data);
 
     }
@@ -112,17 +113,17 @@ public class VerTareas extends BaseController implements Observer {
         ArrayList<TareaNodo> tareaNodoArrayList = new ArrayList<>();
 
         for (Observer observer : getObservers()) {
-            if (observer instanceof AgregarTarea agregarTarea){
+            if (observer instanceof AgregarTarea agregarTarea) {
 
-            ArrayList<TareaNodo> result = observer.get_node_tarea_array(tipoTarea);
-            if (result != null) {
-                tareaNodoArrayList = result;
-                System.out.println(tareaNodoArrayList.size());
-                break;
-            }
+                ArrayList<TareaNodo> result = observer.get_node_tarea_array(tipoTarea);
+                if (result != null) {
+                    tareaNodoArrayList = result;
+                    System.out.println(tareaNodoArrayList.size());
+                    break;
+                }
             }
         }
-        for (TareaNodo tareaNodo:tareaNodoArrayList) {
+        for (TareaNodo tareaNodo : tareaNodoArrayList) {
             System.out.println(tareaNodo.getValues());
         }
         data.clear();
@@ -131,13 +132,21 @@ public class VerTareas extends BaseController implements Observer {
 
     @Override
     public void updateTable(TipoTarea tipoTarea) {
-
         System.out.println("Updating?");
         if (this.current_tipoTarea_state == tipoTarea) {
             changedaTable(tipoTarea);
         }
 
     }
+
+    private void change_color_state(Button button_pressed,Button ... buttons_unpressed) {
+       button_pressed.setStyle("-fx-background-color:orange");
+       for (Button button:buttons_unpressed) {
+           button.setStyle("-fx-background-color:white");
+       }
+
+    }
+
 }
 
 

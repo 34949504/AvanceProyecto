@@ -6,10 +6,13 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.example.avanceproyecto.Controllers.AgregarTarea;
 import org.example.avanceproyecto.Controllers.MainController;
+import org.example.avanceproyecto.Controllers.TaskDoer;
+import org.example.avanceproyecto.LinkedList.LinkedlistFuncs;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -91,6 +94,13 @@ public class Utils {
             alertWindow.setY(centerY);
         });
         return alert;
+    }
+
+    public static void createTaskDoer(LinkedlistFuncs linkedlistFuncs,ArrayList<Observer> observers) {
+        TaskDoer taskDoer = new TaskDoer(linkedlistFuncs,observers);
+        Thread thread = new Thread(taskDoer);  // wrap the task in a thread
+        thread.setDaemon(true);                 // optional, allows app to exit if thread is running
+        thread.start();
     }
 
 

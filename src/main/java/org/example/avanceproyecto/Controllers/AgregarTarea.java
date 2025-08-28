@@ -13,9 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-import org.example.avanceproyecto.ControllerUtils.BaseController;
-import org.example.avanceproyecto.ControllerUtils.Observer;
-import org.example.avanceproyecto.ControllerUtils.Utils;
+import org.example.avanceproyecto.ControllerUtils.*;
 import org.example.avanceproyecto.Tarea.TareaNodo;
 import org.example.avanceproyecto.Tarea.TaskAdministrator;
 import org.example.avanceproyecto.Tarea.TipoTarea;
@@ -27,7 +25,7 @@ import java.util.ArrayList;
 public class AgregarTarea extends BaseController implements Observer {
 
     private JSONObject tareas_json;
-    private TaskAdministrator taskAdministrator = new TaskAdministrator();
+    private TaskAdministrator taskAdministrator;
     private TareaNodo currentNode = new TareaNodo();
 
 
@@ -59,6 +57,8 @@ public class AgregarTarea extends BaseController implements Observer {
 
     @FXML
     public void initialize() {
+        taskAdministrator =  new TaskAdministrator(getObservers());
+
         departamentos_choicebox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
@@ -146,6 +146,10 @@ public class AgregarTarea extends BaseController implements Observer {
                             break;
                         }
                     }
+                    String message = String.format("Tarea:%s\nDuración:%dms\nTipo de Tarea:%s",currentNode.getNombreTarea(),currentNode.getMilisegundos(),currentNode.getTipoTarea());
+                    Toast.show(getStage(),"Operacion Exitosa");
+//                    Alert alert = Utils.get_alert_position_centered(getStage(),Alert.AlertType.INFORMATION,"Operación Exitosa",currentNode.getDepartamento(),message);
+//                    alert.showAndWait();
 
                 } else {
                     Alert alert = Utils.get_alert_position_centered(getStage(),Alert.AlertType.WARNING,"Advertencia","Datos faltantes:",datos_faltantes.toString());

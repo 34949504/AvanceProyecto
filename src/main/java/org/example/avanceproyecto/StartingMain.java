@@ -12,6 +12,7 @@ import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.ControllerUtils.Utils;
 import org.example.avanceproyecto.Controllers.MainController;
 import org.example.avanceproyecto.Controllers.AgregarTarea;
+import org.example.avanceproyecto.Controllers.TaskDoer;
 import org.example.avanceproyecto.Controllers.VerTareas;
 import org.json.JSONObject;
 

@@ -3,16 +3,28 @@ package org.example.avanceproyecto.LinkedList;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.avanceproyecto.ControllerUtils.Observer;
+import org.example.avanceproyecto.ControllerUtils.Utils;
+import org.example.avanceproyecto.Controllers.TaskDoer;
 import org.example.avanceproyecto.Tarea.TareaNodo;
+import org.example.avanceproyecto.Tarea.TipoTarea;
 
 import java.util.ArrayList;
 
 //PILA, COMO SE APILAN LOS PLATOS UNO SOBRE OTRO, Y CUANDO SE AGREGA UN PLATO
 //SE AGREGA AL TOPE Y ES EL PRIMERO QUE SALE
 @Getter @Setter
-public class Pila {
-
+public class Pila implements LinkedlistFuncs {
     TareaNodo tareaTop;
+
+    public Pila(ArrayList<Observer>observers) {
+        Utils.createTaskDoer(this,observers);
+//        TaskDoer taskDoer = new TaskDoer(this,observers);
+//        Thread thread = new Thread(taskDoer);  // wrap the task in a thread
+//        thread.setDaemon(true);                 // optional, allows app to exit if thread is running
+//        thread.start();
+    }
+
 
     public void push(TareaNodo tareaNodo) {
         if (tareaTop == null) {
@@ -45,4 +57,13 @@ public class Pila {
         return tareaNodoArrayList;
     }
 
+    @Override
+    public TareaNodo getTaskToBeDone() {
+        return peek();
+    }
+
+    @Override
+    public void removeLastlyDoneTask() {
+        pop();
+    }
 }

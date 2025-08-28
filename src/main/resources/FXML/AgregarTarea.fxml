@@ -58,12 +58,15 @@
         </VBox>
     </HBox>
 
-    <VBox alignment="CENTER" styleClass="container-white-background" prefWidth="400"
+    <VBox alignment="CENTER" styleClass="container-white-background" prefHeight="150" prefWidth="400" maxWidth="400"
     >
-        <Label styleClass="medium-size-text-black-bold " fx:id="departamento_label" text="Departamento:"></Label>
+        <VBox alignment="BASELINE_LEFT" spacing="5">
+        <Label  styleClass="medium-size-text-black-bold " fx:id="departamento_label" text="Departamento:"></Label>
         <Label styleClass="medium-size-text-black-bold " fx:id="tarea_label" text="Tarea:"></Label>
         <Label styleClass="medium-size-text-black-bold" fx:id="milisegundos_label"  text="Milisegundos:"></Label>
         <Label styleClass="medium-size-text-black-bold" fx:id="tipoTarea_label"  text="Tipo tarea:"></Label>
+
+        </VBox>
     </VBox>
 
 
