@@ -13,20 +13,25 @@ public class TaskAdministrator {
     private ArrayList<Observer> observers;
     private SharedStates sharedStates;
 
-
     private Pila pila ;
     private Cola cola ;
     private Lista lista;
 
     public TaskAdministrator(ArrayList<Observer> observers, SharedStates sharedStates) {
+        System.out.println("hola?");
+        if (sharedStates != null) {
+            System.out.println("SHared states no  es null");
+        } else {
+            System.out.println("nullaso");
+        }
+
         this.observers = observers;
         this.sharedStates = sharedStates;
-        pila = new Pila(observers);
-         cola = new Cola(observers);
+        pila = new Pila(observers,sharedStates);
+         cola = new Cola(observers,sharedStates);
          lista = new Lista(observers);
 
-         pila.getTaskDoer().setSharedStates(sharedStates);
-            cola.getTaskDoer().setSharedStates(sharedStates);
+
 
     }
 

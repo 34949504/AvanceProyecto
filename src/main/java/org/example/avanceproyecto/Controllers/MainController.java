@@ -11,7 +11,6 @@ import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.ControllerUtils.Utils;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 @Getter @Setter
 public class MainController extends BaseController implements Observer {
@@ -29,13 +28,19 @@ public class MainController extends BaseController implements Observer {
         super.setLayout(center);
         //Change the layout to the center and not the whole borderpane
     }
+
+    @Override
+    public void init() {
+
+    }
+
     @FXML
     private void displayAgregarTarea() throws IOException {
-        Utils.callObserver(getObservers(),getBorderpane_main(),AgregarTarea.class);
+        Utils.callObserver_show_layout(getObservers(),getBorderpane_main(),AgregarTarea.class);
     }
     @FXML
     private void displayVerTarea() {
-        Utils.callObserver(getObservers(),getBorderpane_main(),VerTareas.class);
+        Utils.callObserver_show_layout(getObservers(),getBorderpane_main(),VerTareas.class);
     }
 
     public void share_with_controllers_borderpane(){

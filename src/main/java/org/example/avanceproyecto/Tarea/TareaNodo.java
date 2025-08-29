@@ -8,6 +8,7 @@ public class TareaNodo {
     String departamento;
     String nombreTarea;
     int segundos;
+    int remainingSeconds;
     TipoTarea tipoTarea;
 
     TareaNodo previous_node = null;
@@ -18,6 +19,7 @@ public class TareaNodo {
         this.nombreTarea = nombreTarea;
         this.segundos = milisegundos;
         this.tipoTarea = tipoTarea;
+        this.remainingSeconds = segundos;
     }
     public  TareaNodo(){
 
@@ -32,5 +34,11 @@ public class TareaNodo {
                         "Tipo tarea %s\n",
                 departamento, nombreTarea, segundos, tipoTarea
         );
+    }
+
+    public void decrementRemainingSeconds() {
+        if (remainingSeconds > 0) {
+            remainingSeconds--;
+        }
     }
 }

@@ -12,6 +12,7 @@ public class Lista   {
     public Lista(ArrayList<Observer> observers) {
     }
 
+
     public void insert(TareaNodo tareaNodo) {
         tareaNodoArrayList.add(tareaNodo);
     }

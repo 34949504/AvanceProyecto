@@ -17,7 +17,7 @@ public abstract class BaseController implements Observer {
     private BorderPane borderpane_main;
     private ArrayList<Observer> observers = new ArrayList<>();
     private Stage stage;
-    SharedStates sharedStates = new SharedStates();
+    SharedStates sharedStates;
 
 
     public BaseController() {

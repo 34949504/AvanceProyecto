@@ -6,11 +6,10 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import org.example.avanceproyecto.Controllers.AgregarTarea;
 import org.example.avanceproyecto.Controllers.MainController;
+import org.example.avanceproyecto.Controllers.SharedStates;
 import org.example.avanceproyecto.Controllers.TaskDoer;
 import org.example.avanceproyecto.LinkedList.LinkedlistFuncs;
 import org.json.JSONObject;
@@ -47,7 +46,7 @@ public class Utils {
         return new Rectangle2D(width / 2, height / 2, width, height);
     }
 
-    public static void callObserver(ArrayList<Observer> observers, BorderPane centerPane, Class<?> clazz) {
+    public static void callObserver_show_layout(ArrayList<Observer> observers, BorderPane centerPane, Class<?> clazz) {
         for (Observer observer : observers) {
             boolean sucess = observer.show_layout(clazz);
             if (sucess) break;
@@ -96,8 +95,8 @@ public class Utils {
         return alert;
     }
 
-    public static TaskDoer createTaskDoer(LinkedlistFuncs linkedlistFuncs,ArrayList<Observer> observers) {
-        TaskDoer taskDoer = new TaskDoer(linkedlistFuncs,observers);
+    public static TaskDoer createTaskDoer(LinkedlistFuncs linkedlistFuncs, ArrayList<Observer> observers, SharedStates sharedStates) {
+        TaskDoer taskDoer = new TaskDoer(linkedlistFuncs,observers,sharedStates);
         Thread thread = new Thread(taskDoer);  // wrap the task in a thread
         thread.setDaemon(true);                 // optional, allows app to exit if thread is running
         thread.start();

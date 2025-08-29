@@ -1,5 +1,6 @@
 package org.example.avanceproyecto.Controllers;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -54,9 +55,16 @@ public class VerTareas extends BaseController implements Observer {
 
     }
 
+    @Override
+    public void init() {
+
+    }
+
     @FXML
     public void initialize() {
         Utils.set_action_regresar_main_menu(regresar, getObservers());
+        change_color_state(urgentes_button,no_urgentes_button,lista_button);
+
         urgentes_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -97,12 +105,27 @@ public class VerTareas extends BaseController implements Observer {
             }
         });
 
+        pausar_thread.setStyle("-fx-background-color: green;");
+
         pausar_thread.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 SharedStates sharedStates = getSharedStates();
                 boolean new_value = !sharedStates.getThread_active().get();
-                sharedStates.getThread_active().set(new_value);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        sharedStates.getThread_active().set(new_value);
+                    }
+                });
+
+                System.out.printf("Value of thread active in vertareas %b\n",sharedStates.getThread_active().get());
+                if (new_value) {
+                    pausar_thread.setStyle("-fx-background-color: green;");
+                } else{
+                    pausar_thread.setStyle("-fx-background-color: red;");
+
+                }
             }
         });
 
@@ -184,6 +207,18 @@ public class VerTareas extends BaseController implements Observer {
 
     }
 
+    @Override
+    public void updateSecondsInTable(int seconds) {
+        System.out.println("Actualizando segundos "+seconds);
+        if (!data.isEmpty()) {
+            TareaNodo tareaNodo = data.getFirst();
+            if (tareaNodo != null) {
+                data.getFirst().setSegundos(seconds);
+                table.refresh();
+            }
+        }
+
+    }
 }
 
 
