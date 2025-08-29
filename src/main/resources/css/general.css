@@ -65,3 +65,9 @@ ToolBar {
 }
 
 
+.white-text-small {
+    -fx-text-fill: white;
+    -fx-font: normal bold 14px "Western";
+}
+
+
