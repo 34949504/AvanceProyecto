@@ -10,10 +10,7 @@ import lombok.Setter;
 import org.example.avanceproyecto.ControllerUtils.BaseController;
 import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.ControllerUtils.Utils;
-import org.example.avanceproyecto.Controllers.MainController;
-import org.example.avanceproyecto.Controllers.AgregarTarea;
-import org.example.avanceproyecto.Controllers.TaskDoer;
-import org.example.avanceproyecto.Controllers.VerTareas;
+import org.example.avanceproyecto.Controllers.*;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -46,6 +43,7 @@ public class StartingMain extends Application {
         private MainController mainController = new MainController("/FXML/Main.fxml");
         private AgregarTarea agregarTarea = new AgregarTarea("/FXML/AgregarTarea.fxml");
         private VerTareas verTareas = new VerTareas("/FXML/VerTareas.fxml");
+        private SharedStates sharedStates = new SharedStates();
 
         Observer[] controllers = {mainController,agregarTarea,verTareas};
 
@@ -78,6 +76,13 @@ public class StartingMain extends Application {
                 Observer observer = observers[i];
                 if (observer instanceof BaseController baseController) {
                     baseController.setStage(stage);
+                    baseController.setSharedStates(sharedStates);
+                }
+            }
+            for (int i = 0; i <length; i++) {
+                Observer observer = observers[i];
+                if (observer instanceof BaseController baseController) {
+                    observer.init();
                 }
             }
         }

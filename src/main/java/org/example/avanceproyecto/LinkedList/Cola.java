@@ -18,9 +18,10 @@ public class Cola implements LinkedlistFuncs {
     TareaNodo last;
     TaskDoer taskDoer;
 
-    public Cola(ArrayList<Observer> observers) {
-        taskDoer =  Utils.createTaskDoer(this,observers);
+    public Cola(ArrayList<Observer> observers,SharedStates sharedStates) {
+        taskDoer =  Utils.createTaskDoer(this,observers,sharedStates);
     }
+
 
     //quiter
     public void dequeue() {

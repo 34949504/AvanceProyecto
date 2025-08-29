@@ -5,6 +5,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -34,8 +35,8 @@ public class AgregarTarea extends BaseController implements Observer {
 
     @FXML
     private Button enviar;
-    @FXML
-    private Button regresar;
+//    @FXML
+//    private Button regresar;
 
     @FXML
     private Label departamento_label;
@@ -51,9 +52,15 @@ public class AgregarTarea extends BaseController implements Observer {
         initilize_fxml(fxmlFile);
     }
 
+    @Override
+    public void init() {
+
+
+        taskAdministrator =  new TaskAdministrator(getObservers(),getSharedStates());
+    }
+
     @FXML
     public void initialize() {
-        taskAdministrator =  new TaskAdministrator(getObservers(),getSharedStates());
 
         departamentos_choicebox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -104,7 +111,7 @@ public class AgregarTarea extends BaseController implements Observer {
             }
         });
 
-        Utils.set_action_regresar_main_menu(regresar,getObservers());
+//        Utils.set_action_regresar_main_menu(regresar,getObservers());
 
         enviar.setOnAction(new EventHandler<ActionEvent>() {
             @Override

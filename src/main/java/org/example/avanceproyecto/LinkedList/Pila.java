@@ -18,9 +18,11 @@ import java.util.ArrayList;
 public class Pila implements LinkedlistFuncs {
     TareaNodo tareaTop;
     TaskDoer taskDoer;
+    ArrayList<Observer> observers;
 
-    public Pila(ArrayList<Observer>observers) {
-        taskDoer = Utils.createTaskDoer(this,observers);
+    public Pila(ArrayList<Observer>observers,SharedStates sharedStates) {
+        this.observers = observers;
+        taskDoer = Utils.createTaskDoer(this,observers,sharedStates);
     }
 
 

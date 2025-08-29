@@ -11,5 +11,6 @@ public interface Observer {
     }
     default ArrayList<TareaNodo> get_node_tarea_array(TipoTarea tipoTarea){return null;}
     default void updateTable(TipoTarea tipoTarea){};
-
+    void init();
+    default void updateSecondsInTable(int seconds){};
 }

@@ -1,5 +1,6 @@
 package org.example.avanceproyecto.Controllers;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,12 +17,15 @@ import org.example.avanceproyecto.Tarea.TareaNodo;
 import org.example.avanceproyecto.Tarea.TipoTarea;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class VerTareas extends BaseController implements Observer {
 
     private ObservableList<TareaNodo> data = FXCollections.observableArrayList();
     private ObservableList<TareaNodo> filtered_data = FXCollections.observableArrayList();
     private TipoTarea current_tipoTarea_state = TipoTarea.Urgente;
+    @FXML
+    private Spinner<Integer> mySpinner;
 
     @FXML
     private Button pausar_thread;
@@ -42,8 +46,8 @@ public class VerTareas extends BaseController implements Observer {
     private Label titulo_nombre_tarea_label;
 
 
-    @FXML
-    private Button regresar;
+//    @FXML
+//    private Button regresar;
 
     @FXML
     private TableView<TareaNodo> table;
@@ -54,9 +58,37 @@ public class VerTareas extends BaseController implements Observer {
 
     }
 
+    @Override
+    public void init() {
+
+    }
+
     @FXML
     public void initialize() {
-        Utils.set_action_regresar_main_menu(regresar, getObservers());
+//        Utils.set_action_regresar_main_menu(regresar, getObservers());
+        change_color_state(urgentes_button,no_urgentes_button,lista_button);
+
+        mySpinner.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue<? extends Integer> observableValue, Integer integer, Integer t1) {
+                SharedStates sharedStates = getSharedStates();
+                AtomicInteger currentDelay = sharedStates.getSpeed();
+                int baseSpeed = 1000;
+                if (t1 == 0) {
+                    currentDelay.set(baseSpeed); // Normal speed: 1000ms
+                } else if (t1 > 0) {
+                    // Positive = faster (reduce delay)
+                    // Speed 1 = 900ms, Speed 10 = 100ms
+                    currentDelay.set(baseSpeed - (t1 * 90));
+                    if (currentDelay.get() < 100) currentDelay.set(100); // Minimum delay
+                } else {
+                    currentDelay.set(baseSpeed + (Math.abs(t1) * 100));
+                }
+
+            }
+        });
+
+
         urgentes_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -87,7 +119,7 @@ public class VerTareas extends BaseController implements Observer {
             public void changed(ObservableValue<? extends String> observableValue, String string, String t1) {
 
                 if (t1.compareTo("Ninguno") == 0) {
-                   table.setItems(data);
+                  table.setItems(data);
                 } else {
                     filter_data(t1);
                     table.setItems(filtered_data);
@@ -97,12 +129,27 @@ public class VerTareas extends BaseController implements Observer {
             }
         });
 
+        pausar_thread.setStyle("-fx-background-color: green;");
+
         pausar_thread.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 SharedStates sharedStates = getSharedStates();
                 boolean new_value = !sharedStates.getThread_active().get();
-                sharedStates.getThread_active().set(new_value);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        sharedStates.getThread_active().set(new_value);
+                    }
+                });
+
+                System.out.printf("Value of thread active in vertareas %b\n",sharedStates.getThread_active().get());
+                if (new_value) {
+                    pausar_thread.setStyle("-fx-background-color: green;");
+                } else{
+                    pausar_thread.setStyle("-fx-background-color: red;");
+
+                }
             }
         });
 
@@ -121,6 +168,16 @@ public class VerTareas extends BaseController implements Observer {
 
 
     private void createTable() {
+        table.setStyle("-fx-background-color: white; -fx-text-fill: black;");
+
+        // Optional: Style the table cells specifically
+        table.setRowFactory(tv -> {
+            TableRow<TareaNodo> row = new TableRow<>();
+            row.setStyle("-fx-background-color: white; -fx-text-fill: black;");
+            return row;
+        });
+
+
         // Create columns
         TableColumn<TareaNodo, String> departamentoCol = new TableColumn<>("Departamento");
         departamentoCol.setCellValueFactory(new PropertyValueFactory<>("departamento"));
@@ -128,17 +185,17 @@ public class VerTareas extends BaseController implements Observer {
 
         TableColumn<TareaNodo, String> tareaCol = new TableColumn<>("Tarea");
         tareaCol.setCellValueFactory(new PropertyValueFactory<>("nombreTarea")); // Use camelCase
-        tareaCol.setPrefWidth(150);
+        tareaCol.setPrefWidth(200);
 
         TableColumn<TareaNodo, Integer> milisecondsCol = new TableColumn<>("Segundos");
-        milisecondsCol.setCellValueFactory(new PropertyValueFactory<>("segundos"));
+        milisecondsCol.setCellValueFactory(new PropertyValueFactory<>("remainingSeconds"));
         milisecondsCol.setPrefWidth(150);
 
         table.getColumns().addAll(departamentoCol, tareaCol, milisecondsCol);
 
         // Set table width to match columns
-        table.setPrefWidth(450);
-        table.setMaxWidth(450);
+        table.setPrefWidth(500);
+        table.setMaxWidth(500);
 
         table.setItems(this.data);
 
@@ -184,6 +241,12 @@ public class VerTareas extends BaseController implements Observer {
 
     }
 
+    @Override
+    public void updateSecondsInTable(int seconds) {
+        System.out.println("Actualizando segundos "+seconds);
+        table.refresh();
+
+    }
 }
 
 
