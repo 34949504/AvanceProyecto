@@ -32,17 +32,14 @@ public class TaskDoer extends Task<Void> {
                 Thread.sleep(1000);
                 continue;
             }
-
-
             TareaNodo tareaNodo = linkedlistFuncs.getTaskToBeDone();
-            if (sharedStates == null) {
-                System.out.println("Fuck new york");
-            }
 
+//            if (!activeThread()) {
+//               continue;
+//            }
             if (!sharedStates.getThread_active().get()) {
                 Thread.sleep(1000);
                 continue;
-            } else {
             }
 
             if (tareaNodo == null) {
@@ -51,15 +48,9 @@ public class TaskDoer extends Task<Void> {
             } else {
             }
 
-            int miliseconds = tareaNodo.getSegundos() * 1000;
             doingTask.set(true);
-
-            String tarea = tareaNodo.getNombreTarea();
             int segundos = tareaNodo.getSegundos();
-
             if (tareaNodo.getTipoTarea() == TipoTarea.No_Urgente) {
-
-
                 for (int i = 0; i < segundos; i++) {
 
                     if (!sharedStates.getThread_active().get()) {
@@ -128,9 +119,7 @@ public class TaskDoer extends Task<Void> {
                         // IMMEDIATELY update UI with new task's remaining time
                         final int newTaskRemaining = tareaNodo.getRemainingSeconds();
                         final TareaNodo newTask = tareaNodo; // Capture for lambda
-                        Platform.runLater(() -> {
-                            for (Observer observer : observers) {
-                                if (observer instanceof VerTareas verTareas) {
+                        Platform.runLater(() -> { for (Observer observer : observers) { if (observer instanceof VerTareas verTareas) {
                                     System.out.println("🎯 Updating UI for new task: " + newTaskRemaining + " seconds");
                                     verTareas.updateSecondsInTable(newTaskRemaining);
                                     verTareas.updateTable(newTask.getTipoTarea());
@@ -142,7 +131,7 @@ public class TaskDoer extends Task<Void> {
                         continue; // Skip rest of iteration, start fresh with new task
                     }
 
-                    // Check if paused
+                  // Check if paused
                     if (!sharedStates.getThread_active().get()) {
                         while (!sharedStates.getThread_active().get()) {
                             System.out.println("💤 Sleeping in urgent tarea");
@@ -190,5 +179,14 @@ public class TaskDoer extends Task<Void> {
                 doingTask.set(false);
             }
         }
+    }
+
+    private boolean activeThread() throws InterruptedException {
+
+        if (!sharedStates.getThread_active().get()) {
+            Thread.sleep(1000);
+            return false;
+        }
+        return true;
     }
 }
