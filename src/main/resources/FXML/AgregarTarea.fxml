@@ -64,16 +64,16 @@
         <Label  styleClass="medium-size-text-black-bold " fx:id="departamento_label" text="Departamento:"></Label>
         <Label styleClass="medium-size-text-black-bold " fx:id="tarea_label" text="Tarea:"></Label>
         <Label styleClass="medium-size-text-black-bold" fx:id="milisegundos_label"  text="Segundos:"></Label>
-        <Label styleClass="medium-size-text-black-bold" fx:id="tipoTarea_label"  text="Tipo tarea:"></Label>
+        <Label styleClass="medium-size-text-black-bold" fx:id="tipoTarea_label"  text="Tipo de tarea:"></Label>
 
         </VBox>
     </VBox>
 
 
-    <HBox alignment="CENTER">
-    <Button fx:id="regresar" text="Regresar">
-    </Button>
-    <Button fx:id="enviar" text="Enviar">
+    <HBox alignment="CENTER" spacing="40">
+<!--    <Button styleClass="normal-button" fx:id="regresar" text="Regresar">-->
+<!--    </Button>-->
+    <Button styleClass="normal-button" fx:id="enviar" text="Enviar">
     </Button>
 
     </HBox>

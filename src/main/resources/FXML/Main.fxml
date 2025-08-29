@@ -12,20 +12,39 @@
 <BorderPane styleClass="border-pane-main-container" fx:id="MainPane" xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml"
             >
+
+   <top>
+
+       <HBox spacing="30" alignment="BASELINE_LEFT" xmlns="http://javafx.com/javafx"
+             prefHeight="100.0" style="-fx-padding: 30 0 0 30;">
+
+           <Button fx:id="agregar_tarea" text="Agregar Tarea" onAction="#displayAgregarTarea">
+               <styleClass>
+<!--                   <String fx:value="urgent-button"/>-->
+<!--                   <String fx:value="add-tarea-button"/>-->
+                   <String fx:value="small-button"/>
+               </styleClass>
+           </Button>
+           <Button fx:id="ver_tarea" styleClass="small-button" text="Ver tareas" onAction="#displayVerTarea"></Button>
+
+       </HBox>
+   </top>
+
+
     <center>
 
-        <VBox spacing="100" alignment="CENTER" xmlns="http://javafx.com/javafx"
-              prefHeight="400.0" prefWidth="600.0">
+<!--        <VBox spacing="100" alignment="CENTER" xmlns="http://javafx.com/javafx"-->
+<!--              prefHeight="400.0" prefWidth="600.0">-->
 
-            <Button text="Agregar Tarea" onAction="#displayAgregarTarea">
-                <styleClass>
-                    <String fx:value="urgent-button"/>
-                    <String fx:value="add-tarea-button"/>
-                </styleClass>
-            </Button>
-            <Button styleClass="normal-button" text="Ver tareas" onAction="#displayVerTarea"></Button>
+<!--            <Button text="Agregar Tarea" onAction="#displayAgregarTarea">-->
+<!--                <styleClass>-->
+<!--                    <String fx:value="urgent-button"/>-->
+<!--                    <String fx:value="add-tarea-button"/>-->
+<!--                </styleClass>-->
+<!--            </Button>-->
+<!--            <Button styleClass="normal-button" text="Ver tareas" onAction="#displayVerTarea"></Button>-->
 
-        </VBox>
+<!--        </VBox>-->
     </center>
 
 </BorderPane>

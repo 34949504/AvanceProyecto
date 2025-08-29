@@ -19,6 +19,8 @@ public class TaskDoer extends Task<Void> {
     SharedStates sharedStates;
     AtomicBoolean doingTask = new AtomicBoolean(false);
 
+    AtomicBoolean  isLastIteration = new AtomicBoolean(false);
+
     public TaskDoer(LinkedlistFuncs linkedlistFuncs, ArrayList<Observer> observers, SharedStates sharedStates) {
         this.linkedlistFuncs = linkedlistFuncs;
         this.observers = observers;
@@ -34,9 +36,6 @@ public class TaskDoer extends Task<Void> {
             }
             TareaNodo tareaNodo = linkedlistFuncs.getTaskToBeDone();
 
-//            if (!activeThread()) {
-//               continue;
-//            }
             if (!sharedStates.getThread_active().get()) {
                 Thread.sleep(1000);
                 continue;
@@ -45,57 +44,12 @@ public class TaskDoer extends Task<Void> {
             if (tareaNodo == null) {
                 Thread.sleep(1000);
                 continue;
-            } else {
             }
 
             doingTask.set(true);
             int segundos = tareaNodo.getSegundos();
             if (tareaNodo.getTipoTarea() == TipoTarea.No_Urgente) {
-                for (int i = 0; i < segundos; i++) {
-
-                    if (!sharedStates.getThread_active().get()) {
-                        while (!sharedStates.getThread_active().get()) {
-                            System.out.println("Sleeping in tarea");
-                            Thread.sleep(1000);
-                        }
-                    }
-
-                    Thread.sleep(1000);
-
-                    final int currentIteration = i + 1;
-                    final int remainingSeconds = segundos - currentIteration;
-                    final boolean isLastIteration = (remainingSeconds == 0);
-
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            for (Observer observer : observers) {
-                                System.out.println("observer");
-                                if (observer instanceof VerTareas verTareas) {
-                                    System.out.println("found vertareas");
-                                    verTareas.updateSecondsInTable(remainingSeconds);
-
-                                    // Remove task when countdown reaches 0
-                                    if (remainingSeconds == 0) {
-
-                                        TareaNodo tareaNodo = linkedlistFuncs.getTaskToBeDone();
-                                        System.out.println("Done with tarea " + tareaNodo.getNombreTarea());
-                                        linkedlistFuncs.removeLastlyDoneTask();
-                                        // Update table after removal
-                                        verTareas.updateTable(tareaNodo.getTipoTarea());
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                    });
-
-                    if (isLastIteration) {
-                        // Give Platform.runLater time to execute before allowing next task
-                        Thread.sleep(500); // Increased delay to ensure UI cleanup completes
-                        doingTask.set(false);
-                    }
-                }
+                tarea_no_urgente();
             }
             //pila
 //pila
@@ -142,7 +96,7 @@ public class TaskDoer extends Task<Void> {
 
                     System.out.println("⚡ Doing urgent tarea: " + tareaNodo.getNombreTarea() +
                             " (" + tareaNodo.getRemainingSeconds() + "s left)");
-                    Thread.sleep(1000);
+                    Thread.sleep(sharedStates.getSpeed().get());
 
                     // Decrement remaining time
                     tareaNodo.decrementRemainingSeconds();
@@ -188,5 +142,65 @@ public class TaskDoer extends Task<Void> {
             return false;
         }
         return true;
+    }
+
+
+    private void tarea_no_urgente() throws InterruptedException {
+
+        TareaNodo tareaNodo = linkedlistFuncs.getTaskToBeDone();
+        int segundos = tareaNodo.getSegundos();
+
+        for (int i = 0; i < segundos; i++) {
+
+            Thread.sleep(sharedStates.getSpeed().get());
+            if (!sharedStates.getThread_active().get()) {
+                while (!sharedStates.getThread_active().get()) {
+                    System.out.println("Sleeping in tarea");
+                    Thread.sleep(1000);
+                }
+            }
+
+
+//            final int currentIteration = i + 1;
+//            final int remainingSeconds = segundos - currentIteration;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    for (Observer observer : observers) {
+                        System.out.println("observer");
+                        if (observer instanceof VerTareas verTareas) {
+
+                            int remainingSeconds =  tareaNodo.decrementRemainingSeconds();
+                            verTareas.updateSecondsInTable(remainingSeconds);
+
+                            // Remove task when countdown reaches 0
+                            if (remainingSeconds == 0) {
+                                linkedlistFuncs.removeLastlyDoneTask();
+                                verTareas.updateTable(tareaNodo.getTipoTarea());
+                                isLastIteration.set(true);
+                            }
+                            break;
+                        }
+                    }
+                }
+            });
+
+            if (isLastIteration.get()) {
+                // Give Platform.runLater time to execute before allowing next task
+                Thread.sleep(500); // Increased delay to ensure UI cleanup completes
+                doingTask.set(false);
+            }
+        }
+
+        while (true) {
+            System.out.println("Here in while looop waiting for guit to update");
+            if (isLastIteration.get()) {
+                // Give Platform.runLater time to execute before allowing next task
+                Thread.sleep(500); // Increased delay to ensure UI cleanup completes
+                doingTask.set(false);
+                isLastIteration.set(false);
+                break;
+            }
+        }
     }
 }

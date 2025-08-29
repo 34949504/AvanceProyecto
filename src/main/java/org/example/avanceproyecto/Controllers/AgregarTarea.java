@@ -35,8 +35,8 @@ public class AgregarTarea extends BaseController implements Observer {
 
     @FXML
     private Button enviar;
-    @FXML
-    private Button regresar;
+//    @FXML
+//    private Button regresar;
 
     @FXML
     private Label departamento_label;
@@ -111,7 +111,7 @@ public class AgregarTarea extends BaseController implements Observer {
             }
         });
 
-        Utils.set_action_regresar_main_menu(regresar,getObservers());
+//        Utils.set_action_regresar_main_menu(regresar,getObservers());
 
         enviar.setOnAction(new EventHandler<ActionEvent>() {
             @Override

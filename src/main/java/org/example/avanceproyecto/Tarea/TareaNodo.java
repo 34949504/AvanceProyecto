@@ -36,9 +36,10 @@ public class TareaNodo {
         );
     }
 
-    public void decrementRemainingSeconds() {
+    public int decrementRemainingSeconds() {
         if (remainingSeconds > 0) {
             remainingSeconds--;
         }
+        return  remainingSeconds;
     }
 }

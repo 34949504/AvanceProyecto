@@ -9,6 +9,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Getter @Setter
 public class SharedStates {
     private AtomicBoolean thread_active = new AtomicBoolean(true);
-    private AtomicInteger atomicInteger = new AtomicInteger(1);
+    private AtomicInteger speed = new AtomicInteger(1000);
 
 }

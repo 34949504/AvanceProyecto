@@ -16,7 +16,7 @@
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
 
-        <HBox spacing="30">
+        <HBox spacing="30" alignment="CENTER">
             <Button styleClass="tool-bar-button" fx:id="urgentes_button" text="Ver tareas Urgentes">
 
             </Button>
@@ -57,10 +57,16 @@
         </TableView>
 
         <HBox alignment="CENTER">
-            <Button fx:id="regresar" text="Regresar">
-            </Button>
+<!--            <Button fx:id="regresar" text="Regresar">-->
+<!--            </Button>-->
             <Button fx:id="pausar_thread" text="Pausar tareas">
             </Button>
+            <Spinner fx:id="mySpinner" initialValue="1" maxWidth="70">
+                <valueFactory>
+                    <SpinnerValueFactory.IntegerSpinnerValueFactory min="-10" max="10" initialValue="0" />
+                </valueFactory>
+            </Spinner>
+
         </HBox>
 
         </VBox>
