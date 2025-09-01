@@ -1,3 +1,7 @@
+/*
+Se encarga de controlar el gui cuando ves las tareas
+ */
+
 package org.example.avanceproyecto.Controllers;
 
 import javafx.application.Platform;

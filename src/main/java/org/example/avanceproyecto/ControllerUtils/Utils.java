@@ -1,3 +1,6 @@
+/*
+Funciones de utilidad
+ */
 package org.example.avanceproyecto.ControllerUtils;
 
 import javafx.event.ActionEvent;

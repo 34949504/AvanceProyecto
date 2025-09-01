@@ -1,3 +1,11 @@
+/*
+Es un Thread que se inicializa en las clases COlas y pilas, que checa cada segundo si una nueva tarea
+ha sido agregada.
+Simula la realizacion de tareas con Thread.Sleep(),
+Esta ajustado para la lista de pilas ya si se esta realizando una tarea, y agregar otra tarea, se detiene la tarea vieja y resume la
+nueva tarea
+ */
+
 package org.example.avanceproyecto.Controllers;
 
 import javafx.application.Platform;

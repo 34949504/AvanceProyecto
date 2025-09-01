@@ -1,3 +1,9 @@
+/*
+Aqui inicia el programa
+Inicializo los controladores y sus observadores
+ */
+
+
 package org.example.avanceproyecto;
 
 import javafx.application.Application;

@@ -1,3 +1,7 @@
+/*
+Metodos que permiten a las clases comunicarse
+ */
+
 package org.example.avanceproyecto.ControllerUtils;
 import javafx.scene.layout.BorderPane;
 import org.example.avanceproyecto.Tarea.TareaNodo;

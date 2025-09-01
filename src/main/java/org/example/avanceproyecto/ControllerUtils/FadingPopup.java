@@ -1,3 +1,6 @@
+/*
+No se utiliza
+ */
 package org.example.avanceproyecto.ControllerUtils;
 
 import javafx.animation.FadeTransition;

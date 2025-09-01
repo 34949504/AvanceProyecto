@@ -1,3 +1,7 @@
+/*
+.Todos los controllers extienden a esta clase abstracta para reducir codigo redundante
+Inicializa fxml
+ */
 package org.example.avanceproyecto.ControllerUtils;
 
 import javafx.fxml.FXMLLoader;

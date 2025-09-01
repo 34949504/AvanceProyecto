@@ -1,4 +1,7 @@
 package org.example.avanceproyecto.Controllers;
+/*
+Datos atomicos que permite una facil comunicacion entre dos clases como VerTareas y TaskDoer
+ */
 
 import lombok.Getter;
 import lombok.Setter;

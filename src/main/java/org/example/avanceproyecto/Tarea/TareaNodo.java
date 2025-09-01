@@ -1,3 +1,11 @@
+/*
+Es la estructura de datos que se utiliza para agregar tareas
+RemainingSeconds se utiliza para calcular los segundos restantes de la tarea
+previous and next node se utilizan en pilas o colas
+
+ */
+
+
 package org.example.avanceproyecto.Tarea;
 
 import lombok.Getter;
