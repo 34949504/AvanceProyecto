@@ -65,8 +65,6 @@ public class TaskDoer extends Task<Void> {
 
                     // If a different task is now on top, switch to it
                     if (!currentTopTask.equals(tareaNodo)) {
-                        System.out.println("🔄 Switching from " + tareaNodo.getNombreTarea() +
-                                " to new urgent task: " + currentTopTask.getNombreTarea());
                         tareaNodo = currentTopTask;
                         segundos = tareaNodo.getSegundos();
 
@@ -74,7 +72,6 @@ public class TaskDoer extends Task<Void> {
                         final int newTaskRemaining = tareaNodo.getRemainingSeconds();
                         final TareaNodo newTask = tareaNodo; // Capture for lambda
                         Platform.runLater(() -> { for (Observer observer : observers) { if (observer instanceof VerTareas verTareas) {
-                                    System.out.println("🎯 Updating UI for new task: " + newTaskRemaining + " seconds");
                                     verTareas.updateSecondsInTable(newTaskRemaining);
                                     verTareas.updateTable(newTask.getTipoTarea());
                                     break;
@@ -88,14 +85,11 @@ public class TaskDoer extends Task<Void> {
                   // Check if paused
                     if (!sharedStates.getThread_active().get()) {
                         while (!sharedStates.getThread_active().get()) {
-                            System.out.println("💤 Sleeping in urgent tarea");
                             Thread.sleep(1000);
                         }
                         continue; // Recheck for new tasks after unpausing
                     }
 
-                    System.out.println("⚡ Doing urgent tarea: " + tareaNodo.getNombreTarea() +
-                            " (" + tareaNodo.getRemainingSeconds() + "s left)");
                     Thread.sleep(sharedStates.getSpeed().get());
 
                     // Decrement remaining time
@@ -107,11 +101,9 @@ public class TaskDoer extends Task<Void> {
                     Platform.runLater(() -> {
                         for (Observer observer : observers) {
                             if (observer instanceof VerTareas verTareas) {
-                                System.out.println("🔢 Updating countdown: " + remainingSeconds);
                                 verTareas.updateSecondsInTable(remainingSeconds);
 
                                 if (isCompleted) {
-                                    System.out.println("✅ Done with urgent tarea: " + currentTask.getNombreTarea());
                                     linkedlistFuncs.removeLastlyDoneTask();
                                     verTareas.updateTable(currentTask.getTipoTarea());
                                 }
@@ -121,12 +113,10 @@ public class TaskDoer extends Task<Void> {
                     });
 
                     if (isCompleted) {
-                        System.out.println("🏁 Task completed, checking for next...");
                         Thread.sleep(500); // Let UI update
                         tareaNodo = linkedlistFuncs.getTaskToBeDone(); // Get next task
                         if (tareaNodo != null) {
                             segundos = tareaNodo.getSegundos();
-                            System.out.println("🆕 Next urgent task: " + tareaNodo.getNombreTarea());
                         }
                     }
                 }
@@ -167,7 +157,6 @@ public class TaskDoer extends Task<Void> {
                 @Override
                 public void run() {
                     for (Observer observer : observers) {
-                        System.out.println("observer");
                         if (observer instanceof VerTareas verTareas) {
 
                             int remainingSeconds =  tareaNodo.decrementRemainingSeconds();
@@ -193,7 +182,6 @@ public class TaskDoer extends Task<Void> {
         }
 
         while (true) {
-            System.out.println("Here in while looop waiting for guit to update");
             if (isLastIteration.get()) {
                 // Give Platform.runLater time to execute before allowing next task
                 Thread.sleep(500); // Increased delay to ensure UI cleanup completes

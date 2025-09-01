@@ -151,8 +151,6 @@ public class AgregarTarea extends BaseController implements Observer {
                     }
                     String message = String.format("Tarea:%s\nDuración:%dms\nTipo de Tarea:%s",currentNode.getNombreTarea(),currentNode.getSegundos(),currentNode.getTipoTarea());
                     Toast.show(getStage(),"Operacion Exitosa");
-//                    Alert alert = Utils.get_alert_position_centered(getStage(),Alert.AlertType.INFORMATION,"Operación Exitosa",currentNode.getDepartamento(),message);
-//                    alert.showAndWait();
 
                 } else {
                     Alert alert = Utils.get_alert_position_centered(getStage(),Alert.AlertType.WARNING,"Advertencia","Datos faltantes:",datos_faltantes.toString());

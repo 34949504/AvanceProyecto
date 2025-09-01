@@ -22,7 +22,6 @@ public class StartingMain extends Application {
 
         Window window = stage.getOwner();
         if (window == null) {
-            System.out.println("FUck owner is null?");
         }
 
         ControllerInitializer controllerManager = new ControllerInitializer(stage);
