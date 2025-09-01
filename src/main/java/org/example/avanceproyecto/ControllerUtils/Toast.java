@@ -1,3 +1,6 @@
+/*
+Objecto para mostrar por breves segundos que la operacion fue exitosa creando la tarea
+ */
 package org.example.avanceproyecto.ControllerUtils;
 
 import javafx.animation.FadeTransition;

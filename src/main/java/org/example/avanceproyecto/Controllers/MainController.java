@@ -1,3 +1,7 @@
+/*
+Es el controlador que tiene el layout dondde van los demas layouts fxml
+ */
+
 package org.example.avanceproyecto.Controllers;
 
 import javafx.fxml.FXML;

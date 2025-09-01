@@ -1,3 +1,6 @@
+/*
+Interfaz que permite a la clase TareaDoer llamar los metodos de PIlas,COlas,
+ */
 package org.example.avanceproyecto.LinkedList;
 
 import org.example.avanceproyecto.Tarea.TareaNodo;

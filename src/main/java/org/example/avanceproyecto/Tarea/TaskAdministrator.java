@@ -1,3 +1,8 @@
+/*
+Clase que resguarda las clases Pila,Cola,Lista
+Se encarga de realizar los metodos de la clase Pila,Cola, y LIsta
+ */
+
 package org.example.avanceproyecto.Tarea;
 
 import org.example.avanceproyecto.ControllerUtils.Observer;
