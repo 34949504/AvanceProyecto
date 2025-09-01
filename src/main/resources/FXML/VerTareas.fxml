@@ -57,6 +57,7 @@
         </TableView>
 
         <HBox alignment="CENTER" spacing="10">
+
 <!--            <Button fx:id="regresar" text="Regresar">-->
 <!--            </Button>-->
             <Button fx:id="pausar_thread" text="Pausar tareas">
@@ -70,6 +71,7 @@
                     </valueFactory>
                 </Spinner>
             </VBox>
+
 
         </HBox>
 
