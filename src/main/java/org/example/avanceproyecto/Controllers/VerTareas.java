@@ -181,7 +181,6 @@ public class VerTareas extends BaseController implements Observer {
             return row;
         });
 
-
         // Create columns
         TableColumn<TareaNodo, String> departamentoCol = new TableColumn<>("Departamento");
         departamentoCol.setCellValueFactory(new PropertyValueFactory<>("departamento"));
@@ -191,15 +190,20 @@ public class VerTareas extends BaseController implements Observer {
         tareaCol.setCellValueFactory(new PropertyValueFactory<>("nombreTarea")); // Use camelCase
         tareaCol.setPrefWidth(200);
 
+
+        TableColumn<TareaNodo, String> empleado = new TableColumn<>("Responsable");
+        empleado.setCellValueFactory(new PropertyValueFactory<>("empleadoAsignado")); // Use camelCase
+        empleado.setPrefWidth(300);
+
         TableColumn<TareaNodo, Integer> milisecondsCol = new TableColumn<>("Segundos");
         milisecondsCol.setCellValueFactory(new PropertyValueFactory<>("remainingSeconds"));
         milisecondsCol.setPrefWidth(150);
 
-        table.getColumns().addAll(departamentoCol, tareaCol, milisecondsCol);
+        table.getColumns().addAll(departamentoCol, tareaCol,empleado ,milisecondsCol);
 
         // Set table width to match columns
-        table.setPrefWidth(500);
-        table.setMaxWidth(500);
+        table.setPrefWidth(800);
+        table.setMaxWidth(800);
 
         table.setItems(this.data);
 

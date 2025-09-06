@@ -78,10 +78,10 @@ public class AgregarTarea extends BaseController implements Observer {
                     tarea_choicebox.setDisable(false);
                     empleado_choicebox.setDisable(false);
                 }
-                else if (tarea_choicebox.getValue().compareTo("Seleccionar") !=0) {
+                else if (tarea_choicebox.getValue().compareTo("Seleccionar") !=0 || empleado_choicebox.getValue().compareTo("Seleccionar") !=0) {
                     choice_block_one_time_ignore = true;
                     set_choice_label_values("Seleccionar","Tarea: ",tarea_choicebox,tarea_label);
-                    set_choice_label_values("Seleccionar","Tarea: ",empleado_choicebox,empleado_label);
+                    set_choice_label_values("Seleccionar","Empleado: ",empleado_choicebox,empleado_label);
                     milisegundos_label.setText(String.format("Segundos:"));
                 }
 
@@ -121,7 +121,7 @@ public class AgregarTarea extends BaseController implements Observer {
 
                 empleado_label.setText(String.format("Empleado: %s",t1));
                 String empleado_selected  = empleado_choicebox.getSelectionModel().getSelectedItem();
-                currentNode.setEmpleado_asignado(empleado_selected);
+                currentNode.setEmpleadoAsignado(empleado_selected);
 
 
             }
@@ -157,7 +157,6 @@ public class AgregarTarea extends BaseController implements Observer {
                     taskAdministrator.add_task(currentNode);
 
                     for (Observer observer:getObservers()) {
-
                         if (observer instanceof VerTareas verTareas) {
                             verTareas.updateTable(currentNode.getTipoTarea());
                         }

@@ -46,6 +46,7 @@ public class TaskAdministrator {
         TareaNodo tareaNodo = TareaNodo.getNodeFromOtherNodeValues(nodo);
         TipoTarea tipoTarea = tareaNodo.getTipoTarea();
 
+
         int remaining = tareaNodo.getRemainingSeconds();
         System.out.println("REmaining "+remaining);
 

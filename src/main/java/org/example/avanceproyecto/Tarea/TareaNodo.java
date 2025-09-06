@@ -18,7 +18,7 @@ public class TareaNodo {
     int segundos;
     int remainingSeconds;
     TipoTarea tipoTarea;
-    String empleado_asignado;
+    String empleadoAsignado;
 
     TareaNodo previous_node = null;
     TareaNodo next_node = null;
@@ -29,7 +29,7 @@ public class TareaNodo {
         this.segundos = milisegundos;
         this.tipoTarea = tipoTarea;
         this.remainingSeconds = segundos;
-        this.empleado_asignado = empleado_asignado;
+        this.empleadoAsignado = empleado_asignado;
     }
     public  TareaNodo(){
 
@@ -59,7 +59,7 @@ public class TareaNodo {
         int segundos = nodo_values.getSegundos();
         int remainingSeconds = nodo_values.getRemainingSeconds();
         TipoTarea tipoTarea = nodo_values.getTipoTarea();
-        String empleado_asignado = nodo_values.getEmpleado_asignado();
+        String empleado_asignado = nodo_values.getEmpleadoAsignado();
         TareaNodo new_node = new TareaNodo(departamento,nombreTarea,segundos,tipoTarea,empleado_asignado);
         return new_node;
     }
