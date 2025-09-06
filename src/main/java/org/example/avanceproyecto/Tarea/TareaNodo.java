@@ -18,16 +18,18 @@ public class TareaNodo {
     int segundos;
     int remainingSeconds;
     TipoTarea tipoTarea;
+    String empleado_asignado;
 
     TareaNodo previous_node = null;
     TareaNodo next_node = null;
 
-    public TareaNodo(String departamento,String nombreTarea,int milisegundos,TipoTarea tipoTarea) {
+    public TareaNodo(String departamento,String nombreTarea,int milisegundos,TipoTarea tipoTarea,String empleado_asignado) {
         this.departamento = departamento;
         this.nombreTarea = nombreTarea;
         this.segundos = milisegundos;
         this.tipoTarea = tipoTarea;
         this.remainingSeconds = segundos;
+        this.empleado_asignado = empleado_asignado;
     }
     public  TareaNodo(){
 
@@ -49,5 +51,16 @@ public class TareaNodo {
             remainingSeconds--;
         }
         return  remainingSeconds;
+    }
+
+    public static TareaNodo getNodeFromOtherNodeValues(TareaNodo nodo_values) {
+        String departamento = nodo_values.getDepartamento();
+        String nombreTarea = nodo_values.getNombreTarea();
+        int segundos = nodo_values.getSegundos();
+        int remainingSeconds = nodo_values.getRemainingSeconds();
+        TipoTarea tipoTarea = nodo_values.getTipoTarea();
+        String empleado_asignado = nodo_values.getEmpleado_asignado();
+        TareaNodo new_node = new TareaNodo(departamento,nombreTarea,segundos,tipoTarea,empleado_asignado);
+        return new_node;
     }
 }

@@ -29,6 +29,8 @@ public class MainController extends BaseController implements Observer {
     private Button agregar_tarea;
     @FXML
     private Button ver_tarea;
+    @FXML
+    private Button empleados;
 
 
     public MainController(String fxmlFile) {
@@ -53,13 +55,19 @@ public class MainController extends BaseController implements Observer {
     @FXML
     private void displayAgregarTarea() throws IOException {
         Utils.callObserver_show_layout(getObservers(),getBorderpane_main(),AgregarTarea.class);
-        color_active_button(agregar_tarea,ver_tarea);
+        color_active_button(agregar_tarea,ver_tarea,empleados);
     }
     @FXML
     private void displayVerTarea() {
         Utils.callObserver_show_layout(getObservers(),getBorderpane_main(),VerTareas.class);
-        color_active_button(ver_tarea,agregar_tarea);
+        color_active_button(ver_tarea,agregar_tarea,empleados);
     }
+    @FXML
+    private void verEmpleados() {
+        Utils.callObserver_show_layout(getObservers(),getBorderpane_main(),Empleados.class);
+        color_active_button(empleados,agregar_tarea,ver_tarea);
+    }
+
 
     public void share_with_controllers_borderpane(){
         for(Observer observer:getObservers()) {

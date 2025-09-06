@@ -41,6 +41,14 @@
         </VBox>
 
         <VBox alignment="CENTER">
+
+            <Label text="Empleado" styleClass="white-text-big">
+            </Label>
+            <ChoiceBox styleClass="medium-size-choicebox" value="Seleccionar" disable="true" fx:id="empleado_choicebox">
+            </ChoiceBox>
+        </VBox>
+
+        <VBox alignment="CENTER">
             <Label text="Urgencia" styleClass="white-text-big">
 
             </Label>
@@ -65,6 +73,7 @@
         <Label styleClass="medium-size-text-black-bold " fx:id="tarea_label" text="Tarea:"></Label>
         <Label styleClass="medium-size-text-black-bold" fx:id="milisegundos_label"  text="Segundos:"></Label>
         <Label styleClass="medium-size-text-black-bold" fx:id="tipoTarea_label"  text="Tipo de tarea:"></Label>
+            <Label styleClass="medium-size-text-black-bold" fx:id="empleado_label"  text="Empleado:"></Label>
 
         </VBox>
     </VBox>

@@ -22,6 +22,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 public class StartingMain extends Application {
     JSONObject tareas_json = Utils.readJson("/Tareas.json");
+    JSONObject estadisticas_json = Utils.readJson("/estadisticas.json");
+    JSONObject empleados_json = Utils.readJson("/empleados.json");
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -48,9 +50,11 @@ public class StartingMain extends Application {
         private MainController mainController = new MainController("/FXML/Main.fxml");
         private AgregarTarea agregarTarea = new AgregarTarea("/FXML/AgregarTarea.fxml");
         private VerTareas verTareas = new VerTareas("/FXML/VerTareas.fxml");
+        private Empleados empleados = new Empleados("/FXML/Empleados.fxml");
         private SharedStates sharedStates = new SharedStates();
+        private EstadisticaTracker estadisticaTracker = new EstadisticaTracker();
 
-        Observer[] controllers = {mainController,agregarTarea,verTareas};
+        Observer[] controllers = {mainController,agregarTarea,verTareas,empleados};
 
         Stage stage;
         public ControllerInitializer(Stage stage) {
@@ -63,16 +67,18 @@ public class StartingMain extends Application {
 
         private void initiliaze_observers() {
 
-            mainController.addObservers(agregarTarea,verTareas);
-            agregarTarea.addObservers(mainController,verTareas);
+            mainController.addObservers(agregarTarea,verTareas,empleados);
+            agregarTarea.addObservers(mainController,verTareas,estadisticaTracker);
             verTareas.addObservers(mainController,agregarTarea);
         }
 
         private void setStuff() {
             agregarTarea.setTareas_json(tareas_json);
+            agregarTarea.setEmpleados_json(empleados_json);
         }
+
+        //IMPORTANT ALL CONTROLLERS FXML NEED THE BORDERPANE
         private void setUpstuff() {
-            //To get acess of borderpane_main, you need to be observer of maincontroller
             mainController.share_with_controllers_borderpane();
         }
         private void loop_over_observers_and_pass_attributes(Observer[] observers){
@@ -80,6 +86,7 @@ public class StartingMain extends Application {
             for (int i = 0; i <length; i++) {
                 Observer observer = observers[i];
                 if (observer instanceof BaseController baseController) {
+                    System.out.println(observer.getClass());
                     baseController.setStage(stage);
                     baseController.setSharedStates(sharedStates);
                 }

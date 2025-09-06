@@ -42,8 +42,12 @@ public class TaskAdministrator {
 
 
 
-    public void add_task(String departamento,String tarea,TipoTarea tipoTarea,int milisegundos) {
-        TareaNodo tareaNodo = new TareaNodo(departamento,tarea,milisegundos,tipoTarea);
+    public void add_task(TareaNodo nodo) {
+        TareaNodo tareaNodo = TareaNodo.getNodeFromOtherNodeValues(nodo);
+        TipoTarea tipoTarea = tareaNodo.getTipoTarea();
+
+        int remaining = tareaNodo.getRemainingSeconds();
+        System.out.println("REmaining "+remaining);
 
         if (tipoTarea == TipoTarea.Urgente) {
             pila.push(tareaNodo);

@@ -26,6 +26,7 @@
                </styleClass>
            </Button>
            <Button fx:id="ver_tarea" styleClass="small-button" text="Ver tareas" onAction="#displayVerTarea"></Button>
+           <Button fx:id="empleados" styleClass="small-button" text="Ver Empleados" onAction="#verEmpleados"></Button>
 
        </HBox>
    </top>

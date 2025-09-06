@@ -46,9 +46,20 @@ public abstract class BaseController implements Observer {
 
     @Override
     public boolean show_layout(Class<?> clazz) {
+
+        System.out.println(this.getClass());
+        System.out.println("THis was called");
         if (clazz.isAssignableFrom(this.getClass())) {
+            System.out.println("loading layout");
+            System.out.println(clazz);
+            System.out.println( "And basecontroller loaded  is " +this.getClass());
             this.borderpane_main.setCenter(getLayout());
             return true;
+        }
+        else {
+            System.out.println(clazz);
+            System.out.println( "And basecontroller is " +this.getClass());
+            System.out.println("not assignable");
         }
         return false;
     }

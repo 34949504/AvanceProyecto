@@ -17,4 +17,5 @@ public interface Observer {
     default void updateTable(TipoTarea tipoTarea){};
     void init();
     default void updateSecondsInTable(int seconds){};
+    default void tarea_creada(TareaNodo tareaNodo){};
 }

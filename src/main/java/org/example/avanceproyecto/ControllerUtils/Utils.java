@@ -15,16 +15,19 @@ import org.example.avanceproyecto.Controllers.MainController;
 import org.example.avanceproyecto.Controllers.SharedStates;
 import org.example.avanceproyecto.Controllers.TaskDoer;
 import org.example.avanceproyecto.LinkedList.LinkedlistFuncs;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.stage.Screen;
 
 public class Utils {
+    private static final Random random = new Random();
 
     public static JSONObject readJson(String filename) {
         InputStream inputStream = Utils.class.getResourceAsStream(filename);
@@ -35,6 +38,7 @@ public class Utils {
         try {
             bytes = inputStream.readAllBytes();
         } catch (IOException e) {
+            System.out.println();
             throw new RuntimeException(e);
         }
         String jeson = new String(bytes, StandardCharsets.UTF_8);
@@ -104,6 +108,14 @@ public class Utils {
         thread.setDaemon(true);                 // optional, allows app to exit if thread is running
         thread.start();
         return  taskDoer;
+    }
+
+    public static int getRandomIntFromList(JSONArray jsonArray) {
+        if (jsonArray == null || jsonArray.length() == 0) {
+            throw new IllegalArgumentException("JSONArray is null or empty");
+        }
+        int index = random.nextInt(jsonArray.length()); // pick a random index
+        return jsonArray.getInt(index); // return the value at that index
     }
 
 
