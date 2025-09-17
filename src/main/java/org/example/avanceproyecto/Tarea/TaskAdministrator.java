@@ -6,6 +6,7 @@ Se encarga de realizar los metodos de la clase Pila,Cola, y LIsta
 package org.example.avanceproyecto.Tarea;
 
 import org.example.avanceproyecto.ControllerUtils.Observer;
+import org.example.avanceproyecto.ControllerUtils.Prioridad;
 import org.example.avanceproyecto.Controllers.SharedStates;
 import org.example.avanceproyecto.LinkedList.Cola;
 import org.example.avanceproyecto.LinkedList.Lista;
@@ -23,12 +24,6 @@ public class TaskAdministrator {
     private Lista lista;
 
     public TaskAdministrator(ArrayList<Observer> observers, SharedStates sharedStates) {
-        System.out.println("hola?");
-        if (sharedStates != null) {
-            System.out.println("SHared states no  es null");
-        } else {
-            System.out.println("nullaso");
-        }
 
         this.observers = observers;
         this.sharedStates = sharedStates;
@@ -40,24 +35,23 @@ public class TaskAdministrator {
 
     }
 
-
-
     public void add_task(TareaNodo nodo) {
-        TareaNodo tareaNodo = TareaNodo.getNodeFromOtherNodeValues(nodo);
-        TipoTarea tipoTarea = tareaNodo.getTipoTarea();
+        TipoTarea tipoTarea = nodo.getTipoTarea();
+        Prioridad prioridad = nodo.getPrioridad();
 
-
-        int remaining = tareaNodo.getRemainingSeconds();
-        System.out.println("REmaining "+remaining);
+        if (prioridad != Prioridad.none){
+            System.out.println("priorities");
+            return;
+        }
 
         if (tipoTarea == TipoTarea.Urgente) {
-            pila.push(tareaNodo);
+            pila.push(nodo);
         }
         else if (tipoTarea == TipoTarea.No_Urgente) {
-            cola.enqueue(tareaNodo);
+            cola.enqueue(nodo);
         }
         else if (tipoTarea == TipoTarea.Lista) {
-            lista.insert(tareaNodo);
+            lista.insert(nodo);
         }
     }
 

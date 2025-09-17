@@ -10,6 +10,8 @@ package org.example.avanceproyecto.Tarea;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.avanceproyecto.ControllerUtils.Empleado;
+import org.example.avanceproyecto.ControllerUtils.Prioridad;
 
 @Getter @Setter
 public class TareaNodo {
@@ -18,18 +20,20 @@ public class TareaNodo {
     int segundos;
     int remainingSeconds;
     TipoTarea tipoTarea;
-    String empleadoAsignado;
+    Empleado empleadoAsignado;
+    Prioridad prioridad = Prioridad.none;
 
     TareaNodo previous_node = null;
     TareaNodo next_node = null;
 
-    public TareaNodo(String departamento,String nombreTarea,int milisegundos,TipoTarea tipoTarea,String empleado_asignado) {
+    public TareaNodo(String departamento,String nombreTarea,int milisegundos,TipoTarea tipoTarea,Empleado empleado_asignado,Prioridad prioridad) {
         this.departamento = departamento;
         this.nombreTarea = nombreTarea;
         this.segundos = milisegundos;
         this.tipoTarea = tipoTarea;
         this.remainingSeconds = segundos;
         this.empleadoAsignado = empleado_asignado;
+        this.prioridad = prioridad;
     }
     public  TareaNodo(){
 
@@ -59,8 +63,9 @@ public class TareaNodo {
         int segundos = nodo_values.getSegundos();
         int remainingSeconds = nodo_values.getRemainingSeconds();
         TipoTarea tipoTarea = nodo_values.getTipoTarea();
-        String empleado_asignado = nodo_values.getEmpleadoAsignado();
-        TareaNodo new_node = new TareaNodo(departamento,nombreTarea,segundos,tipoTarea,empleado_asignado);
+        Empleado empleado_asignado = nodo_values.getEmpleadoAsignado();
+        Prioridad prioridad = nodo_values.getPrioridad();
+        TareaNodo new_node = new TareaNodo(departamento,nombreTarea,segundos,tipoTarea,empleado_asignado,prioridad);
         return new_node;
     }
 }

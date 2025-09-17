@@ -5,6 +5,7 @@ Se encarga de controlar el gui cuando ves las tareas
 package org.example.avanceproyecto.Controllers;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,8 +16,8 @@ import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.avanceproyecto.ControllerUtils.BaseController;
+import org.example.avanceproyecto.ControllerUtils.Empleado;
 import org.example.avanceproyecto.ControllerUtils.Observer;
-import org.example.avanceproyecto.ControllerUtils.Utils;
 import org.example.avanceproyecto.Tarea.TareaNodo;
 import org.example.avanceproyecto.Tarea.TipoTarea;
 
@@ -29,7 +30,7 @@ public class VerTareas extends BaseController implements Observer {
     private ObservableList<TareaNodo> filtered_data = FXCollections.observableArrayList();
     private TipoTarea current_tipoTarea_state = TipoTarea.Urgente;
     @FXML
-    private Spinner<Integer> mySpinner;
+    private Spinner<Integer> spinner_velocidad;
 
     @FXML
     private Button pausar_thread;
@@ -45,6 +46,9 @@ public class VerTareas extends BaseController implements Observer {
 
     @FXML
     private Button lista_button;
+
+    @FXML
+    private Button prioridad_button;
 
     @FXML
     private Label titulo_nombre_tarea_label;
@@ -71,91 +75,13 @@ public class VerTareas extends BaseController implements Observer {
     public void initialize() {
 //        Utils.set_action_regresar_main_menu(regresar, getObservers());
         change_color_state(urgentes_button,no_urgentes_button,lista_button);
+        Action_listaButton();
+        Action_pausarThread();
+        Action_UrgentesButton();
+        Action_noUrgentesBUtton();
+        Listener_filtro();
+        Listener_spinnerVelocidad();
 
-        mySpinner.valueProperty().addListener(new ChangeListener<Integer>() {
-            @Override
-            public void changed(ObservableValue<? extends Integer> observableValue, Integer integer, Integer t1) {
-                SharedStates sharedStates = getSharedStates();
-                AtomicInteger currentDelay = sharedStates.getSpeed();
-                int baseSpeed = 1000;
-                if (t1 == 0) {
-                    currentDelay.set(baseSpeed); // Normal speed: 1000ms
-                } else if (t1 > 0) {
-                    // Positive = faster (reduce delay)
-                    // Speed 1 = 900ms, Speed 10 = 100ms
-                    currentDelay.set(baseSpeed - (t1 * 90));
-                    if (currentDelay.get() < 100) currentDelay.set(100); // Minimum delay
-                } else {
-                    currentDelay.set(baseSpeed + (Math.abs(t1) * 100));
-                }
-
-            }
-        });
-
-
-        urgentes_button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                titulo_nombre_tarea_label.setText(urgentes_button.getText());
-                changedaTable(TipoTarea.Urgente);
-                change_color_state(urgentes_button,no_urgentes_button,lista_button);
-            }
-        });
-        no_urgentes_button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                titulo_nombre_tarea_label.setText(no_urgentes_button.getText());
-                changedaTable(TipoTarea.No_Urgente);
-                change_color_state(no_urgentes_button,urgentes_button,lista_button);
-            }
-        });
-
-        lista_button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                titulo_nombre_tarea_label.setText(lista_button.getText());
-                changedaTable(TipoTarea.Lista);
-                change_color_state(lista_button,urgentes_button,no_urgentes_button);
-            }
-        });
-        filtro.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String string, String t1) {
-
-                if (t1.compareTo("Ninguno") == 0) {
-                  table.setItems(data);
-                } else {
-                    filter_data(t1);
-                    table.setItems(filtered_data);
-                }
-
-
-            }
-        });
-
-        pausar_thread.setStyle("-fx-background-color: green;");
-
-        pausar_thread.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                SharedStates sharedStates = getSharedStates();
-                boolean new_value = !sharedStates.getThread_active().get();
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        sharedStates.getThread_active().set(new_value);
-                    }
-                });
-
-                System.out.printf("Value of thread active in vertareas %b\n",sharedStates.getThread_active().get());
-                if (new_value) {
-                    pausar_thread.setStyle("-fx-background-color: green;");
-                } else{
-                    pausar_thread.setStyle("-fx-background-color: red;");
-
-                }
-            }
-        });
 
         createTable();
     }
@@ -192,7 +118,13 @@ public class VerTareas extends BaseController implements Observer {
 
 
         TableColumn<TareaNodo, String> empleado = new TableColumn<>("Responsable");
-        empleado.setCellValueFactory(new PropertyValueFactory<>("empleadoAsignado")); // Use camelCase
+        empleado.setCellValueFactory(cellData -> {
+            Empleado e = cellData.getValue().getEmpleadoAsignado();
+            if (e == null) {
+                return new SimpleStringProperty("—"); // or "Seleccionar"
+            }
+            return new SimpleStringProperty(e.getFullName()); // or whatever field you want
+        });
         empleado.setPrefWidth(300);
 
         TableColumn<TareaNodo, Integer> milisecondsCol = new TableColumn<>("Segundos");
@@ -233,7 +165,7 @@ public class VerTareas extends BaseController implements Observer {
     }
 
     @Override
-    public void updateTable(TipoTarea tipoTarea) {
+    public void tareaTerminada(TipoTarea tipoTarea) {
         System.out.println("Updating?");
         if (this.current_tipoTarea_state == tipoTarea) {
             changedaTable(tipoTarea);
@@ -254,6 +186,105 @@ public class VerTareas extends BaseController implements Observer {
         System.out.println("Actualizando segundos "+seconds);
         table.refresh();
 
+    }
+
+    private void Listener_spinnerVelocidad() {
+
+        spinner_velocidad.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue<? extends Integer> observableValue, Integer integer, Integer t1) {
+                SharedStates sharedStates = getSharedStates();
+                AtomicInteger currentDelay = sharedStates.getSpeed();
+                int baseSpeed = 1000;
+                if (t1 == 0) {
+                    currentDelay.set(baseSpeed); // Normal speed: 1000ms
+                } else if (t1 > 0) {
+                    // Positive = faster (reduce delay)
+                    // Speed 1 = 900ms, Speed 10 = 100ms
+                    currentDelay.set(baseSpeed - (t1 * 90));
+                    if (currentDelay.get() < 100) currentDelay.set(100); // Minimum delay
+                } else {
+                    currentDelay.set(baseSpeed + (Math.abs(t1) * 100));
+                }
+
+            }
+        });
+    }
+    private void Action_UrgentesButton() {
+
+        urgentes_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                titulo_nombre_tarea_label.setText(urgentes_button.getText());
+                changedaTable(TipoTarea.Urgente);
+                change_color_state(urgentes_button,no_urgentes_button,lista_button);
+            }
+        });
+    }
+    private void Action_noUrgentesBUtton() {
+
+        no_urgentes_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                titulo_nombre_tarea_label.setText(no_urgentes_button.getText());
+                changedaTable(TipoTarea.No_Urgente);
+                change_color_state(no_urgentes_button,urgentes_button,lista_button);
+            }
+        });
+    }
+    private void Action_listaButton() {
+
+        lista_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                titulo_nombre_tarea_label.setText(lista_button.getText());
+                changedaTable(TipoTarea.Lista);
+                change_color_state(lista_button,urgentes_button,no_urgentes_button);
+            }
+        });
+    }
+    private void Listener_filtro() {
+
+        filtro.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String string, String t1) {
+
+                if (t1.compareTo("Ninguno") == 0) {
+                    table.setItems(data);
+                } else {
+                    filter_data(t1);
+                    table.setItems(filtered_data);
+                }
+
+
+            }
+        });
+    }
+    private void Action_pausarThread() {
+
+        pausar_thread.setStyle("-fx-background-color: green;");
+
+        pausar_thread.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                SharedStates sharedStates = getSharedStates();
+                boolean new_value = !sharedStates.getThread_active().get();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        sharedStates.getThread_active().set(new_value);
+                    }
+                });
+
+                System.out.printf("Value of thread active in vertareas %b\n",sharedStates.getThread_active().get());
+                if (new_value) {
+                    pausar_thread.setStyle("-fx-background-color: green;");
+                } else{
+                    pausar_thread.setStyle("-fx-background-color: red;");
+
+                }
+            }
+        });
     }
 }
 

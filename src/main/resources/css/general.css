@@ -3,8 +3,12 @@
 
 }
 ToolBar {
-    -fx-background-color: black;
+    -fx-background-color: white;
 }
+.wassa {
+    -fx-background-color: #29384f;
+}
+
 
 .title {
 -fx-font: normal bold 30px "Western";
@@ -34,6 +38,7 @@ ToolBar {
 
 .medium-size-choicebox {
     -fx-font: normal bold 20px "Western";
+    -fx-pref-width: 450px; /* sets the preferred width */
 }
 .container-white-background {
      -fx-background-color: white;
@@ -41,6 +46,7 @@ ToolBar {
 .medium-size-text-black-bold {
     -fx-font: normal bold 20px "Western";
     -fx-text-fill: black;
+
 }
 
 

@@ -18,13 +18,16 @@ import org.example.avanceproyecto.LinkedList.LinkedlistFuncs;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import javafx.stage.Screen;
+import java.time.LocalDate; // import the LocalDate class
 
 public class Utils {
     private static final Random random = new Random();
@@ -44,6 +47,21 @@ public class Utils {
         String jeson = new String(bytes, StandardCharsets.UTF_8);
         JSONObject jsonObject = new JSONObject(jeson);
         return jsonObject;
+    }
+    public static JSONObject readJsonAbs(String filename) {
+         String filePath = filename; // Replace with your file path
+        StringBuilder stringBuilder = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            return new JSONObject(stringBuilder.toString());
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+            return null;
+        }
     }
 
     public static Rectangle2D getScreenDimsHalfed() {
@@ -116,6 +134,39 @@ public class Utils {
         }
         int index = random.nextInt(jsonArray.length()); // pick a random index
         return jsonArray.getInt(index); // return the value at that index
+    }
+
+    public static String getTodaysDate() {
+        LocalDate myObj = LocalDate.now(); // Create a date object
+        System.out.println(myObj); // Display the current date
+        return myObj.toString();
+    }
+
+    public static void writeJson(String jsonObject, String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+                    writer.write(jsonObject);
+                    System.out.println("Successfully wrote to the file.");
+                } catch (IOException e) {
+                    System.err.println("Error writing to file: " + e.getMessage());
+                }
+    }
+
+
+    public static String getDepartamentoById(JSONObject departamentos_id,Integer id) {
+
+        Iterator<String> keys = departamentos_id.keys();
+
+        while (keys.hasNext()) {
+            String next = keys.next();
+            Integer cur_id = departamentos_id.getInt(next);
+
+            if (cur_id == id) {
+                return next;
+            }
+
+        }
+        return null;
+
     }
 
 

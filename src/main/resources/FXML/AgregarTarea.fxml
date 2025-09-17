@@ -7,20 +7,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       prefHeight="400.0" prefWidth="600.0" alignment="TOP_CENTER" spacing="50">
-
-    <VBox alignment="CENTER" spacing="20">
-
-        <HBox alignment="CENTER" spacing="20">
+ <HBox spacing="30"> <VBox fx:id="choicebox_container"  spacing="20">
 
 
         <VBox alignment="CENTER">
         <Label text="Departamento" styleClass="white-text-big">
 
         </Label>
-            <ChoiceBox styleClass="medium-size-choicebox" value="Seleccionar" fx:id="departamentos_choicebox">
+            <ChoiceBox  styleClass="medium-size-choicebox" value="Seleccionar" fx:id="departamentos_choicebox">
                 <items>
                     <!--            pila,cola,lista-->
                     <FXCollections fx:factory="observableArrayList">
@@ -34,12 +32,12 @@
             </ChoiceBox>
         </VBox>
 
-            <VBox alignment="CENTER">
+            <VBox alignment="CENTER" fx:id="urgencia_choicebox_container">
                 <Label text="Urgencia" styleClass="white-text-big">
 
                 </Label>
 
-                <ChoiceBox styleClass="medium-size-choicebox" value="Seleccionar" fx:id="urgencia_choicebox">
+                <ChoiceBox  styleClass="medium-size-choicebox" value="Seleccionar" fx:id="urgencia_choicebox">
                     <items>
                         <!--            pila,cola,lista-->
                         <FXCollections fx:factory="observableArrayList">
@@ -51,14 +49,12 @@
                 </ChoiceBox>
             </VBox>
 
-        </HBox>
 
-        <HBox alignment="CENTER" spacing="20">
         <VBox alignment="CENTER">
 
             <Label text="Empleado" styleClass="white-text-big">
             </Label>
-            <ChoiceBox styleClass="medium-size-choicebox" value="Seleccionar" disable="true" fx:id="empleado_choicebox">
+            <ChoiceBox  styleClass="medium-size-choicebox"  disable="true" fx:id="empleado_choicebox">
             </ChoiceBox>
         </VBox>
 
@@ -67,16 +63,21 @@
                 <Label text="Tarea" styleClass="white-text-big">
 
                 </Label>
-                <ChoiceBox styleClass="medium-size-choicebox" value="Seleccionar" disable="true" fx:id="tarea_choicebox">
+                <ChoiceBox  styleClass="medium-size-choicebox" value="Seleccionar" disable="true" fx:id="tarea_choicebox">
                 </ChoiceBox>
             </VBox>
 
-        </HBox>
     </VBox>
 
-    <VBox alignment="CENTER" styleClass="container-white-background" prefHeight="150" prefWidth="400" maxWidth="400"
-    >
-        <VBox alignment="BASELINE_LEFT" spacing="5">
+        <VBox spacing="20" >
+
+            <padding>
+                <Insets top="10"/>
+            </padding>
+
+            <VBox alignment="CENTER" spacing="20" prefHeight="350"
+                  style="-fx-border-color: white; -fx-border-width: 2; -fx-border-radius: 5;">
+        <VBox fx:id="labels_output_container" alignment="BASELINE_LEFT" prefHeight="200" maxHeight="200" prefWidth="400" maxWidth="400" styleClass="container-white-background"  spacing="5">
         <Label  styleClass="medium-size-text-black-bold " fx:id="departamento_label" text="Departamento:"></Label>
         <Label styleClass="medium-size-text-black-bold " fx:id="tarea_label" text="Tarea:"></Label>
         <Label styleClass="medium-size-text-black-bold" fx:id="milisegundos_label"  text="Segundos:"></Label>
@@ -84,14 +85,22 @@
             <Label styleClass="medium-size-text-black-bold" fx:id="empleado_label"  text="Empleado:"></Label>
 
         </VBox>
+
+        <VBox alignment="CENTER" spacing="40">
+            <!--    <Button styleClass="normal-button" fx:id="regresar" text="Regresar">-->
+            <!--    </Button>-->
+            <Button  styleClass="normal-button" fx:id="enviar" text="Enviar">
+            </Button>
+
+
+        </VBox>
     </VBox>
 
+                        <Button alignment="BOTTOM_LEFT"  styleClass="normal-button" fx:id="tareas_prioritarias_button" text="Tareas con prioridades">
+                        </Button>
 
-    <HBox alignment="CENTER" spacing="40">
-<!--    <Button styleClass="normal-button" fx:id="regresar" text="Regresar">-->
-<!--    </Button>-->
-    <Button styleClass="normal-button" fx:id="enviar" text="Enviar">
-    </Button>
+        </VBox>
 
     </HBox>
+
 </VBox>

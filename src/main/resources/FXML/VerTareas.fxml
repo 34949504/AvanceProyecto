@@ -25,6 +25,8 @@
             </Button>
             <Button styleClass="tool-bar-button" fx:id="lista_button" text="Ver tareas lista">
             </Button>
+            <Button styleClass="tool-bar-button" fx:id="prioridad_button" text="Ver tareas prioridad">
+            </Button>
         </HBox>
         </VBox>
     </top>
@@ -36,7 +38,7 @@
             <StackPane prefWidth="600"> <!-- or the width of your parent container -->
 
                 <Label styleClass="title" fx:id="titulo_nombre_tarea_label" text="Ver tareas Urgentes" />
-                <VBox alignment="BASELINE_RIGHT" prefWidth="600" style="-fx-padding: 0 10 0 0;">
+                <VBox alignment="BASELINE_RIGHT" prefWidth="600" style="-fx-padding: 0 10 30 0;">
                     <Label alignment="BASELINE_LEFT" styleClass="white-text-big" text="Filtro"></Label>
                     <ChoiceBox fx:id="filtro" value="Ninguno">
                         <items>
@@ -65,7 +67,7 @@
             <VBox alignment="CENTER" style="-fx-padding: 0 0 15 0;" >
                 <Label styleClass="white-text-small" text="Velociad:">
                 </Label>
-                <Spinner fx:id="mySpinner" initialValue="1" maxWidth="70">
+                <Spinner fx:id="spinner_velocidad" initialValue="1" maxWidth="70">
                     <valueFactory>
                         <SpinnerValueFactory.IntegerSpinnerValueFactory min="-10" max="10" initialValue="0" />
                     </valueFactory>

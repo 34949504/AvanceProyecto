@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.avanceproyecto.ControllerUtils.Empleado;
 import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.LinkedList.LinkedlistFuncs;
 import org.example.avanceproyecto.Tarea.TareaNodo;
@@ -81,7 +82,7 @@ public class TaskDoer extends Task<Void> {
                         final TareaNodo newTask = tareaNodo; // Capture for lambda
                         Platform.runLater(() -> { for (Observer observer : observers) { if (observer instanceof VerTareas verTareas) {
                                     verTareas.updateSecondsInTable(newTaskRemaining);
-                                    verTareas.updateTable(newTask.getTipoTarea());
+                                    verTareas.tareaTerminada(newTask.getTipoTarea());
                                     break;
                                 }
                             }
@@ -105,6 +106,7 @@ public class TaskDoer extends Task<Void> {
                     final int remainingSeconds = tareaNodo.getRemainingSeconds();
                     final boolean isCompleted = (remainingSeconds == 0);
                     final TareaNodo currentTask = tareaNodo; // Capture for lambda
+                    final Empleado empleado = tareaNodo.getEmpleadoAsignado();
 
                     Platform.runLater(() -> {
                         for (Observer observer : observers) {
@@ -113,7 +115,8 @@ public class TaskDoer extends Task<Void> {
 
                                 if (isCompleted) {
                                     linkedlistFuncs.removeLastlyDoneTask();
-                                    verTareas.updateTable(currentTask.getTipoTarea());
+                                    verTareas.tareaTerminada(currentTask.getTipoTarea());
+                                       empleado.setActividadStatus(Empleado.ActividadStatus.No_activo);
                                 }
                                 break;
                             }
@@ -159,8 +162,6 @@ public class TaskDoer extends Task<Void> {
             }
 
 
-//            final int currentIteration = i + 1;
-//            final int remainingSeconds = segundos - currentIteration;
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -173,7 +174,7 @@ public class TaskDoer extends Task<Void> {
                             // Remove task when countdown reaches 0
                             if (remainingSeconds == 0) {
                                 linkedlistFuncs.removeLastlyDoneTask();
-                                verTareas.updateTable(tareaNodo.getTipoTarea());
+                                verTareas.tareaTerminada(tareaNodo.getTipoTarea());
                                 isLastIteration.set(true);
                             }
                             break;
@@ -191,7 +192,6 @@ public class TaskDoer extends Task<Void> {
 
         while (true) {
             if (isLastIteration.get()) {
-                // Give Platform.runLater time to execute before allowing next task
                 Thread.sleep(500); // Increased delay to ensure UI cleanup completes
                 doingTask.set(false);
                 isLastIteration.set(false);
