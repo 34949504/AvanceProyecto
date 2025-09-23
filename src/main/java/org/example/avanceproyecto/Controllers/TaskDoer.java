@@ -29,6 +29,7 @@ public class TaskDoer extends Task<Void> {
     AtomicBoolean doingTask = new AtomicBoolean(false);
 
     AtomicBoolean  isLastIteration = new AtomicBoolean(false);
+    boolean DEBUGG = true;
 
     public TaskDoer(LinkedlistFuncs linkedlistFuncs, ArrayList<Observer> observers, SharedStates sharedStates) {
         this.linkedlistFuncs = linkedlistFuncs;
@@ -39,99 +40,32 @@ public class TaskDoer extends Task<Void> {
     @Override
     protected Void call() throws Exception {
         while (true) {
-            if (doingTask.get()) {
-                Thread.sleep(1000);
-                continue;
-            }
             TareaNodo tareaNodo = linkedlistFuncs.getTaskToBeDone();
 
             if (!sharedStates.getThread_active().get()) {
                 Thread.sleep(1000);
                 continue;
             }
-
             if (tareaNodo == null) {
                 Thread.sleep(1000);
                 continue;
             }
 
+            if (doingTask.get()) {
+                Thread.sleep(1000);
+                continue;
+            }
+
+
+
             doingTask.set(true);
-            int segundos = tareaNodo.getSegundos();
             if (tareaNodo.getTipoTarea() == TipoTarea.No_Urgente) {
                 tarea_no_urgente();
             }
             //pila
 //pila
             else if (tareaNodo.getTipoTarea() == TipoTarea.Urgente) {
-                while (tareaNodo != null) {
-                    // Check every second if there's a new urgent task on top of stack
-                    TareaNodo currentTopTask = linkedlistFuncs.getTaskToBeDone();
-
-                    if (currentTopTask == null) {
-                        // No more tasks
-                        break;
-                    }
-
-                    // If a different task is now on top, switch to it
-                    if (!currentTopTask.equals(tareaNodo)) {
-                        tareaNodo = currentTopTask;
-                        segundos = tareaNodo.getSegundos();
-
-                        // IMMEDIATELY update UI with new task's remaining time
-                        final int newTaskRemaining = tareaNodo.getRemainingSeconds();
-                        final TareaNodo newTask = tareaNodo; // Capture for lambda
-                        Platform.runLater(() -> { for (Observer observer : observers) { if (observer instanceof VerTareas verTareas) {
-                                    verTareas.updateSecondsInTable(newTaskRemaining);
-                                    verTareas.tareaTerminada(newTask.getTipoTarea());
-                                    break;
-                                }
-                            }
-                        });
-
-                        continue; // Skip rest of iteration, start fresh with new task
-                    }
-
-                  // Check if paused
-                    if (!sharedStates.getThread_active().get()) {
-                        while (!sharedStates.getThread_active().get()) {
-                            Thread.sleep(1000);
-                        }
-                        continue; // Recheck for new tasks after unpausing
-                    }
-
-                    Thread.sleep(sharedStates.getSpeed().get());
-
-                    // Decrement remaining time
-                    tareaNodo.decrementRemainingSeconds();
-                    final int remainingSeconds = tareaNodo.getRemainingSeconds();
-                    final boolean isCompleted = (remainingSeconds == 0);
-                    final TareaNodo currentTask = tareaNodo; // Capture for lambda
-                    final Empleado empleado = tareaNodo.getEmpleadoAsignado();
-
-                    Platform.runLater(() -> {
-                        for (Observer observer : observers) {
-                            if (observer instanceof VerTareas verTareas) {
-                                verTareas.updateSecondsInTable(remainingSeconds);
-
-                                if (isCompleted) {
-                                    linkedlistFuncs.removeLastlyDoneTask();
-                                    verTareas.tareaTerminada(currentTask.getTipoTarea());
-                                       empleado.setActividadStatus(Empleado.ActividadStatus.No_activo);
-                                }
-                                break;
-                            }
-                        }
-                    });
-
-                    if (isCompleted) {
-                        Thread.sleep(500); // Let UI update
-                        tareaNodo = linkedlistFuncs.getTaskToBeDone(); // Get next task
-                        if (tareaNodo != null) {
-                            segundos = tareaNodo.getSegundos();
-                        }
-                    }
-                }
-                doingTask.set(false);
+                tarea_urgente();
             }
         }
     }
@@ -174,7 +108,7 @@ public class TaskDoer extends Task<Void> {
                             // Remove task when countdown reaches 0
                             if (remainingSeconds == 0) {
                                 linkedlistFuncs.removeLastlyDoneTask();
-                                verTareas.tareaTerminada(tareaNodo.getTipoTarea());
+                                verTareas.tareaTerminada(tareaNodo);
                                 isLastIteration.set(true);
                             }
                             break;
@@ -197,6 +131,112 @@ public class TaskDoer extends Task<Void> {
                 isLastIteration.set(false);
                 break;
             }
+        }
+    }
+    private void tarea_urgente() {
+        // Check every second if there's a new urgent task on top of stack
+        TareaNodo tareaNodo = linkedlistFuncs.getTaskToBeDone();
+        int segundos = tareaNodo.getSegundos();
+
+        while (tareaNodo != null) {
+
+        TareaNodo currentTopTask = linkedlistFuncs.getTaskToBeDone();
+
+        if (currentTopTask == null) {
+            // No more tasks
+            break;
+        }
+
+        // If a different task is now on top, switch to it
+        if (!currentTopTask.equals(tareaNodo)) {
+            tareaNodo = currentTopTask;
+            segundos = tareaNodo.getSegundos();
+
+            // IMMEDIATELY update UI with new task's remaining time
+            final int newTaskRemaining = tareaNodo.getRemainingSeconds();
+            final TareaNodo newTask = tareaNodo; // Capture for lambda
+            Platform.runLater(() -> { for (Observer observer : observers)
+            {
+                observer.updateSecondsInTable(newTaskRemaining);
+                observer.tareaTerminada(newTask);
+//                            if (observer instanceof VerTareas verTareas) {
+//                                    verTareas.updateSecondsInTable(newTaskRemaining);
+//                                    verTareas.tareaTerminada(newTask);
+//                                    break;
+//                                }
+            }
+            });
+
+            continue; // Skip rest of iteration, start fresh with new task
+        }
+
+        // Check if paused
+        if (!sharedStates.getThread_active().get()) {
+            while (!sharedStates.getThread_active().get()) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            continue; // Recheck for new tasks after unpausing
+        }
+
+            try {
+                Thread.sleep(sharedStates.getSpeed().get());
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            // Decrement remaining time
+        tareaNodo.decrementRemainingSeconds();
+        final int remainingSeconds = tareaNodo.getRemainingSeconds();
+        final boolean isCompleted = (remainingSeconds == 0);
+        final TareaNodo currentTask = tareaNodo; // Capture for lambda
+        final Empleado empleado = tareaNodo.getEmpleadoAsignado();
+
+        Platform.runLater(() -> {
+            for (Observer observer : observers) {
+
+                observer.updateSecondsInTable(remainingSeconds);
+//                if (isCompleted) {
+//                    linkedlistFuncs.removeLastlyDoneTask();
+//                    observer.tareaTerminada(currentTask);
+//                    empleado.setActividadStatus(Empleado.ActividadStatus.No_activo);
+//                }
+
+                            if (observer instanceof VerTareas verTareas) {
+                                verTareas.updateSecondsInTable(remainingSeconds);
+
+                                if (isCompleted) {
+                                    linkedlistFuncs.removeLastlyDoneTask();
+                                    verTareas.tareaTerminada(currentTask);
+                                       empleado.setActividadStatus(Empleado.ActividadStatus.No_activo);
+                                }
+                                break;
+                            }
+            }
+        });
+
+        if (isCompleted) {
+            try {
+                Thread.sleep(500); // Let UI update
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            tareaNodo = linkedlistFuncs.getTaskToBeDone(); // Get next task
+            if (tareaNodo != null) {
+                segundos = tareaNodo.getSegundos();
+            }
+        }
+
+        }
+        doingTask.set(false);
+    }
+
+    private void debugging(String message) {
+        if (DEBUGG) {
+            System.out.println(message);
         }
     }
 }

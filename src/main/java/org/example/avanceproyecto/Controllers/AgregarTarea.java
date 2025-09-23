@@ -22,10 +22,15 @@ import org.example.avanceproyecto.Tarea.TareaNodo; import org.example.avanceproy
 
 import java.util.ArrayList;
 
+/**
+ * Se encarga de seleccionar la tarea a realizar por departamento, urgencia, empleado, tarea
+ */
 @Setter @Getter
 public class AgregarTarea extends BaseController implements Observer {
 
     private JSONObject tareas_json;
+    private JSONObject departamentos_id;
+
     private JSONObject empleados_json;
     private TaskAdministrator taskAdministrator;
     private TareaNodo currentNode = new TareaNodo();
@@ -53,7 +58,7 @@ public class AgregarTarea extends BaseController implements Observer {
     private Label departamento_label;
     @FXML
     private Label tarea_label;
-    private boolean choice_block_one_time_ignore = false;
+    private boolean ignore_one_time_flag = false; // Se utiliza para bloquear a los listeners tareas choicebox y empleados cuando el departamentos choicebox cambia
     @FXML
     private Label milisegundos_label;
     @FXML
@@ -85,9 +90,13 @@ public class AgregarTarea extends BaseController implements Observer {
 
 
         taskAdministrator =  new TaskAdministrator(getObservers(),getSharedStates());
+//        getObservers().add(this);
 
     }
 
+    /**
+    Se llaman funciones que inicializan sus listeners y logicas.
+     */
     @FXML
     public void initialize() {
 
@@ -103,6 +112,7 @@ public class AgregarTarea extends BaseController implements Observer {
 
 
         empleado_choicebox.setValue(null);
+
         setupEmpleadoChoiceBox();
         enviarOnAction();
         urgenciaChoiceboxListener();
@@ -120,9 +130,6 @@ public class AgregarTarea extends BaseController implements Observer {
         }
     }
 
-    private void populateChoiceBox(JSONArray jsonArray,ChoiceBox<?> choiceBox) {
-
-    }
 
 
     private void populateTareaBox(String departamento) {
@@ -142,7 +149,6 @@ public class AgregarTarea extends BaseController implements Observer {
 
         empleado_choicebox.getItems().clear();
         for (Empleado empleado:empleadoArrayList) {
-                String empleado_fullName = empleado.getFullName();
                 empleado_choicebox.getItems().add(empleado);
             }
     }
@@ -181,8 +187,6 @@ public class AgregarTarea extends BaseController implements Observer {
 
             @Override
             public Empleado fromString(String string) {
-                // Optional: used if user types into editable ComboBox
-                // For ChoiceBox, you can just return null or implement lookup
                 return null;
             }
         });
@@ -200,19 +204,20 @@ public class AgregarTarea extends BaseController implements Observer {
             public void changed(ObservableValue<? extends String> observableValue, String string, String t1) {
                 System.out.println("This was called bruv");
 
-                if (choice_block_one_time_ignore) {
-                    choice_block_one_time_ignore = false;
+                if (ignore_one_time_flag) {
+                    ignore_one_time_flag = false;
                     return;
                 }
-                System.out.println("fuck why");
                 tipoTarea_label.setText(String.format("Prioridad: %s",t1));
                 setLabelColor(tipoTarea_label,dato_activo_color);
                 currentNode.setPrioridad(Prioridad.getPrioridad(t1));
-
-
             }
         });
     }
+
+    /**
+     * Es un toggle para quitar urgencias checkpoint y poner prioridades checkpoint  y al reves
+     */
     private void tareasPrioritariasOnAction() {
 
         tareas_prioritarias_button.setOnAction(new EventHandler<ActionEvent>() {
@@ -222,7 +227,7 @@ public class AgregarTarea extends BaseController implements Observer {
                 String light_yellow = SharedStates.Colores.AMARILLO;
                 String white = SharedStates.Colores.BLANCO;
 
-                choice_block_one_time_ignore = true;
+                ignore_one_time_flag = true;
                 if (tareas_prioritarias_active) {
                     setLabelColor(tipoTarea_label,dato_faltante_color);
                     tareas_prioritarias_button.setStyle(String.format("-fx-background-color: %s;",white));
@@ -259,6 +264,10 @@ public class AgregarTarea extends BaseController implements Observer {
             }
         });
     }
+    /**
+     * AL seleccioanr un departamento, se actualiza el nombre de departamento en  la hoja de la derecha
+     * Se pone el tarea choicebox "Seleccionar " y empleado choicebox a null
+     */
     private void departamentosChoiceboxListener() {
 
         departamentos_choicebox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -273,21 +282,21 @@ public class AgregarTarea extends BaseController implements Observer {
                     empleado_choicebox.setDisable(false);
                 }
 
-                else if (tarea_choicebox.getValue().compareTo("Seleccionar") !=0 || empleado_choicebox.getValue() != null ) {
-                    choice_block_one_time_ignore = true;
 
-                    tarea_choicebox.setValue("Seleccionar");
-                    tarea_label.setText("Tarea:");
+                else if ( tarea_choicebox.getValue().compareTo("Seleccionar") !=0 || empleado_choicebox.getValue() != null )
+                { ignore_one_time_flag = true; }
 
-                    empleado_choicebox.setValue(null);
-                    empleado_label.setText("Empleado:");
-                    milisegundos_label.setText(String.format("Segundos:"));
+                tarea_choicebox.setValue("Seleccionar");
+                tarea_label.setText("Tarea:");
 
-                    setLabelColor(empleado_label,dato_faltante_color);
-                    setLabelColor(tarea_label,dato_faltante_color);
-                    setLabelColor(milisegundos_label,dato_faltante_color);
+                empleado_choicebox.setValue(null);
+                empleado_label.setText("Empleado:");
+                milisegundos_label.setText(String.format("Segundos:"));
 
-                }
+                setLabelColor(empleado_label,dato_faltante_color);
+                setLabelColor(tarea_label,dato_faltante_color);
+                setLabelColor(milisegundos_label,dato_faltante_color);
+
 
                 departamento_label.setText(String.format("Departamento: %s",t1));
                 currentNode.setDepartamento(t1);
@@ -296,13 +305,14 @@ public class AgregarTarea extends BaseController implements Observer {
             }
         });
     }
+
     private void tareaChoiceboxListener() {
 
         tarea_choicebox.getSelectionModel().selectedItemProperty().addListener((new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String string, String t1) {
-                if (choice_block_one_time_ignore) {
-                    choice_block_one_time_ignore = false;
+                if (ignore_one_time_flag) {
+                    ignore_one_time_flag = false;
                     return;
                 }
                 String departamento = departamentos_choicebox.getSelectionModel().getSelectedItem();
@@ -328,8 +338,8 @@ public class AgregarTarea extends BaseController implements Observer {
             @Override
             public void changed(ObservableValue<? extends Empleado> observableValue, Empleado empleado, Empleado t1) {
 
-                if (choice_block_one_time_ignore) {
-                    choice_block_one_time_ignore = false;
+                if (ignore_one_time_flag) {
+                    ignore_one_time_flag = false;
                     return;
                 }
                 if (t1 == null) {
@@ -352,8 +362,8 @@ public class AgregarTarea extends BaseController implements Observer {
         urgencia_choicebox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                if (choice_block_one_time_ignore) {
-                    choice_block_one_time_ignore = false;
+                if (ignore_one_time_flag) {
+                    ignore_one_time_flag = false;
                     return;
                 }
 
@@ -365,6 +375,18 @@ public class AgregarTarea extends BaseController implements Observer {
             }
         });
     }
+
+    /**
+     * Se verifica que no haya datos faltantes en los checkpoints
+     * Se checa si si la tarea es prioritario o no  con if (No puede existir una tarea urgente y con prioridad al mismo tiempo)
+     * Si no hay datos faltantes, se hace una copia del nodo en donde se ha guardado informacion
+     * Se cambia el estatus del empleado a activo
+     * Se enviar la tarea al taskAdministrator
+     * Se limpia el checkbox
+     * Se notifica a los observadores que una tarea ha sido creada
+     * Else: se muestra con una alert los datos faltantes
+     *
+     */
     private void enviarOnAction() {
 
         enviar.setOnAction(new EventHandler<ActionEvent>() {
@@ -396,9 +418,9 @@ public class AgregarTarea extends BaseController implements Observer {
                     tareaNodo.getEmpleadoAsignado().setActividadStatus(Empleado.ActividadStatus.Activo);
                     quitar_empleado_realizando_tarea_de_checkbox(departamento);
                     for (Observer observer:getObservers()) {
-                        if (observer instanceof VerTareas verTareas) {
-                            verTareas.tareaTerminada(currentNode.getTipoTarea());
-                        }
+//                        if (observer instanceof VerTareas verTareas) {
+//                            verTareas.tareaTerminada(currentNode.getTipoTarea());
+//                        }
                         observer.tarea_creada(tareaNodo);
                     }
                     String message = String.format("Tarea:%s\nDuración:%dms\nTipo de Tarea:%s",currentNode.getNombreTarea(),currentNode.getSegundos(),currentNode.getTipoTarea());
@@ -413,6 +435,12 @@ public class AgregarTarea extends BaseController implements Observer {
         });
     }
 
+    /**
+     * Checa el estatus de cada empleado, si su estatus es No_activo, significa que no esta haciendo una tarea
+     *y esta disponible para hacer otra tarea,de lo contrario, no se agregaria a lista porque un empleado no
+     * puede realizar dos tareas al mismo tiempo
+     * @param departamento
+     */
     private void quitar_empleado_realizando_tarea_de_checkbox(String departamento) {
 
         SharedStates sharedStates = getSharedStates();
@@ -431,11 +459,11 @@ public class AgregarTarea extends BaseController implements Observer {
     }
 
 
-
-
-
-
-
-
-
+    @Override
+    public void tareaTerminada(TareaNodo tareaNodo) {
+        System.out.println("actualizando checkpoint");
+        Empleado empleado =tareaNodo.getEmpleadoAsignado();
+        String departamento = Utils.getDepartamentoById(departamentos_id,empleado.getDepartamentoId());
+        quitar_empleado_realizando_tarea_de_checkbox(departamento);
+    }
 }

@@ -52,7 +52,7 @@ public class EstadisticaTracker extends BaseController implements Observer {
         System.out.println("tarea creada");
 
 //        System.out.println(estadistica_json.toString(4));
-        Utils.writeJson(estadistica_json.toString(4), "/home/gerardo/programming/school/Estructura_de_datos/AvanceProyecto/data/estadisticas.json");
+        Utils.writeJson(estadistica_json.toString(4), "data","estadisticas.json");
     }
 
     private JSONObject getJSON(JSONObject jsonObject,String key) {

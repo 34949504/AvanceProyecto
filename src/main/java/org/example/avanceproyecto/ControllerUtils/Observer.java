@@ -13,7 +13,11 @@ public interface Observer {
         return false;
     }
     default ArrayList<TareaNodo> get_node_tarea_array(TipoTarea tipoTarea){return null;}
-    default void tareaTerminada(TipoTarea tipoTarea){};
+    default void tareaTerminada(TareaNodo tareaNodo){};
+
+    /**
+     * La funcion init sirve para que la clase inicialize sin que haya conflictos de null etc
+     */
     void init();
     default void updateSecondsInTable(int seconds){};
     default void tarea_creada(TareaNodo tareaNodo){};

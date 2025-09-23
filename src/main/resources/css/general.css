@@ -5,6 +5,10 @@
 ToolBar {
     -fx-background-color: white;
 }
+
+.fill-white {
+    -fx-background-color: white;
+}
 .wassa {
     -fx-background-color: #29384f;
 }

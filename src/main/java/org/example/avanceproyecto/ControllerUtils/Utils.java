@@ -8,6 +8,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -19,9 +21,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -32,7 +35,10 @@ import java.time.LocalDate; // import the LocalDate class
 public class Utils {
     private static final Random random = new Random();
 
-    public static JSONObject readJson(String filename) {
+    /*
+    Reads data from a read-only files from the resources folders
+     */
+    public static JSONObject readJson_READONLY(String filename) {
         InputStream inputStream = Utils.class.getResourceAsStream(filename);
         if (inputStream == null) {
             throw new RuntimeException(String.format("filename %s does not exist", filename));
@@ -142,13 +148,26 @@ public class Utils {
         return myObj.toString();
     }
 
-    public static void writeJson(String jsonObject, String filename) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-                    writer.write(jsonObject);
-                    System.out.println("Successfully wrote to the file.");
-                } catch (IOException e) {
-                    System.err.println("Error writing to file: " + e.getMessage());
-                }
+    public static void writeJson(String jsonObject, String ... filepath) {
+        String currentDirectory = System.getProperty("user.dir");
+        Path path = Paths.get(currentDirectory,filepath);
+        String fileName =  path.toString();
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(fileName));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            writer.write(jsonObject);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -167,6 +186,25 @@ public class Utils {
         }
         return null;
 
+    }
+    public static String readFile(String ... path ) {
+        String currentDirectory = System.getProperty("user.dir");
+        Path filePath = Paths.get(currentDirectory,path);
+        String content = null;
+        try {
+            content = Files.readString(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return content;
+
+    }
+
+    public static <T,G>  TableColumn<T,G> createColumn(String tablaNombre,String referencia_value_class,int width) {
+        TableColumn<T,G> columna = new TableColumn<>(tablaNombre);
+        columna.setCellValueFactory(new PropertyValueFactory<>(referencia_value_class));
+        columna.setPrefWidth(width);
+        return columna;
     }
 
 

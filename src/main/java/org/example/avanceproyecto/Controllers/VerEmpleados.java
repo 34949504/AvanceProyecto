@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -52,13 +53,9 @@ public class VerEmpleados extends BaseController implements Observer {
         });
 
         // Create columns
-        TableColumn<Empleado, String> nombre_columna = new TableColumn<>("Empleado");
-        nombre_columna.setCellValueFactory(new PropertyValueFactory<>("empleadoName"));
-        nombre_columna.setPrefWidth(150);
 
-        TableColumn<Empleado, String> apellido_column = new TableColumn<>("Apellido");
-        apellido_column.setCellValueFactory(new PropertyValueFactory<>("empleadoLastName")); // Use camelCase
-        apellido_column.setPrefWidth(200);
+        TableColumn<Empleado, String> nombre_columna = Utils.createColumn("Empleado","empleadoName",150);
+        TableColumn<Empleado, String> apellido_column = Utils.createColumn("Apellido","empleadoLastName",200);;
 
 
         TableColumn<Empleado, String> departamento_column = new TableColumn<>("Departamento");
@@ -75,9 +72,33 @@ public class VerEmpleados extends BaseController implements Observer {
             return new SimpleStringProperty(status); // or whatever field you want
 
         }); // Use camelCase
-        apellido_column.setPrefWidth(200);
+        status_actividad.setCellFactory(column -> {
+            return new TableCell<Empleado, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
 
+                    if (empty || item == null) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        setText(item);
+
+                        // Change color based on value
+                        if ("Activo".equals(item)) {
+                            setStyle("-fx-background-color: #90EE90; -fx-text-fill: black;"); // Light green
+                        } else {
+                            setStyle("-fx-background-color: #f5e642; -fx-text-fill: black;"); // Light pink
+                        }
+                    }
+                }
+            };
+        });
+
+
+        apellido_column.setPrefWidth(200);
         departamento_column.setPrefWidth(300);
+
         table.setPrefWidth(800);
         table.setMaxWidth(800);
         table.setMaxHeight(300);
@@ -88,6 +109,9 @@ public class VerEmpleados extends BaseController implements Observer {
         populate_data();
     }
 
+    /**
+    Agrega los datos de los empleados al observablelist data
+     */
     private void populate_data() {
 
         SharedStates sharedStates = getSharedStates();
@@ -97,5 +121,13 @@ public class VerEmpleados extends BaseController implements Observer {
             }
 
         }
+    }
+
+    /**
+     * Es llamada  por taskDoer, solamente se tiene que refreshear, porque alla se actualiza el status del empleado
+     */
+    @Override
+    public void tareaTerminada(TareaNodo tareaNodo) {
+        table.refresh();
     }
 }

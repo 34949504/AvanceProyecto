@@ -12,9 +12,27 @@
 
     <center>
 
+        <VBox alignment="CENTER">
+            <HBox>
+                <Label text="Buscar:"></Label>
+                <TextField>
+                </TextField>
 
-        <TableView  fx:id="table">
-        </TableView>
+                <VBox>
+                    <Label text="Filtro">
+                    </Label>
+                    <ChoiceBox></ChoiceBox>
+
+                </VBox>
+
+
+            </HBox>
+
+            <TableView  fx:id="table">
+            </TableView>
+
+        </VBox>
+
 
 <!--        <Button styleClass="small-button" text="hola"></Button>-->
 

@@ -19,15 +19,32 @@ import org.example.avanceproyecto.Controllers.*;
 import org.json.JSONObject;
 
 import java.io.IOException;
+/*
+Es el inicio del programa
+Resumen:
+Se lee los archivos jsons
+Se inicializa ControllerInitializer
+Se agrega a la escenal los archivos css
+
+ */
 public class StartingMain extends Application {
-    JSONObject tareas_json = Utils.readJson("/Tareas.json");
-    JSONObject estadisticas_json = Utils.readJsonAbs("/home/gerardo/programming/school/Estructura_de_datos/AvanceProyecto/data/estadisticas.json");
-    JSONObject empleados_json = Utils.readJson("/empleados.json");
-    JSONObject departamentos_id = Utils.readJson("/departamentos_id.json");
+    JSONObject tareas_json ;
+    JSONObject estadisticas_json ;
+    JSONObject empleados_json ;
+    JSONObject departamentos_id ;
+
+    private void readJsons() {
+         tareas_json = Utils.readJson_READONLY("/Tareas.json");
+         estadisticas_json = new JSONObject(Utils.readFile("data","estadisticas.json"));
+         empleados_json = Utils.readJson_READONLY("/empleados.json");
+         departamentos_id = Utils.readJson_READONLY("/departamentos_id.json");
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
 
-        Utils.getTodaysDate();
+        readJsons();
+
 
         ControllerInitializer controllerManager = new ControllerInitializer(stage);
         Rectangle2D rectangle2D = Utils.getScreenDimsHalfed();
@@ -44,6 +61,12 @@ public class StartingMain extends Application {
         stage.show();
     }
 
+    /**
+     * Inicializa las clases del programa
+     * Se inicializan sus observadores
+     * Se les pasa los datos de los jsons
+     *
+     */
     @Getter @Setter
     private class ControllerInitializer {
         private MainController mainController = new MainController("/FXML/Main.fxml");
@@ -55,14 +78,14 @@ public class StartingMain extends Application {
 
         private Stage stage;
         //IMPOOORTANT SE TIENE QUE AGREGAR LOS CONTROLLERS QUE TIENEN GUI FXML
-        Observer[] controllers = {mainController,agregarTarea,verTareas,empleados,estadisticaTracker};
+        Observer[] controllers_FXML = {mainController,agregarTarea,verTareas,empleados,estadisticaTracker};
         //IMPORTANT
         public ControllerInitializer(Stage stage) {
             this.stage = stage;
             initiliaze_observers();
             setJsons();
             setUpstuff();
-            loop_over_observers_and_pass_attributes(controllers);
+            loop_over_observers_and_pass_attributes(controllers_FXML);
         }
 
         /*
@@ -71,7 +94,7 @@ public class StartingMain extends Application {
         private void initiliaze_observers() {
 
             mainController.addObservers(agregarTarea,verTareas,empleados,estadisticaTracker);
-            agregarTarea.addObservers(mainController,verTareas,estadisticaTracker);
+            agregarTarea.addObservers(mainController,verTareas,estadisticaTracker,agregarTarea,empleados);
             verTareas.addObservers(mainController,agregarTarea);
         }
 
@@ -83,6 +106,7 @@ public class StartingMain extends Application {
             agregarTarea.setEmpleados_json(empleados_json);
             estadisticaTracker.setEstadistica_json(estadisticas_json);
             empleados.setDepartamentos_id(departamentos_id);
+            agregarTarea.setDepartamentos_id(departamentos_id);
         }
 
         //IMPORTANT ALL CONTROLLERS FXML NEED THE BORDERPANE

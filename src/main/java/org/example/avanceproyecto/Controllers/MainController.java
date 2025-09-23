@@ -20,6 +20,11 @@ import org.example.avanceproyecto.ControllerUtils.Utils;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Es la pantalla principal, siempre se ve, y tiene un borderpane en donde el centro es
+ * replazado cuando se presiona un boton para mostrar el layout correspondiete,
+ * Se inica con el layout AgregarTarea como default
+ */
 @Getter @Setter
 public class MainController extends BaseController implements Observer {
 
@@ -109,7 +114,10 @@ public class MainController extends BaseController implements Observer {
         color_active_button(estadisticas);
     }
 
-
+    /*
+    No estoy muy seguro de porque tengo que pasar el borderpane, si esta misma clase ya tiene el borderpane y lo puede accesar xd
+    SE tiene que checar
+     */
     public void share_with_controllers_borderpane(){
         for(Observer observer:getObservers()) {
             if (observer instanceof BaseController baseController) {

@@ -69,7 +69,7 @@
 
     </VBox>
 
-        <VBox spacing="20" >
+        <VBox  spacing="20" >
 
             <padding>
                 <Insets top="10"/>
@@ -86,7 +86,7 @@
 
         </VBox>
 
-        <VBox alignment="CENTER" spacing="40">
+        <VBox  alignment="CENTER" spacing="40">
             <!--    <Button styleClass="normal-button" fx:id="regresar" text="Regresar">-->
             <!--    </Button>-->
             <Button  styleClass="normal-button" fx:id="enviar" text="Enviar">
@@ -96,7 +96,7 @@
         </VBox>
     </VBox>
 
-                        <Button alignment="BOTTOM_LEFT"  styleClass="normal-button" fx:id="tareas_prioritarias_button" text="Tareas con prioridades">
+                        <Button  alignment="BOTTOM_LEFT"  styleClass="normal-button" fx:id="tareas_prioritarias_button" text="Tareas con prioridades">
                         </Button>
 
         </VBox>

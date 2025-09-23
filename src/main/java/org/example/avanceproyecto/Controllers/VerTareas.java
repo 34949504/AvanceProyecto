@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.avanceproyecto.ControllerUtils.BaseController;
 import org.example.avanceproyecto.ControllerUtils.Empleado;
 import org.example.avanceproyecto.ControllerUtils.Observer;
+import org.example.avanceproyecto.ControllerUtils.Utils;
 import org.example.avanceproyecto.Tarea.TareaNodo;
 import org.example.avanceproyecto.Tarea.TipoTarea;
 
@@ -26,9 +27,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class VerTareas extends BaseController implements Observer {
 
-    private ObservableList<TareaNodo> data = FXCollections.observableArrayList();
-    private ObservableList<TareaNodo> filtered_data = FXCollections.observableArrayList();
-    private TipoTarea current_tipoTarea_state = TipoTarea.Urgente;
+    private ObservableList<TareaNodo> data = FXCollections.observableArrayList(); //Fata de todos los tareas nodos
+    private ObservableList<TareaNodo> filtered_data = FXCollections.observableArrayList(); //Data filtrada por departamento para poner en la tabla
+    private TipoTarea current_tipoTarea_state = TipoTarea.Urgente; //Urgenete, No urgenete, Lista
     @FXML
     private Spinner<Integer> spinner_velocidad;
 
@@ -86,6 +87,10 @@ public class VerTareas extends BaseController implements Observer {
         createTable();
     }
 
+    /**
+     * Filtra la lista de data y pasa los valores filtrados a filtered data
+     * @param departamento
+     */
     private void filter_data(String departamento) {
         filtered_data.clear();
         for (int i = 0; i < data.size(); i++) {
@@ -97,6 +102,9 @@ public class VerTareas extends BaseController implements Observer {
     }
 
 
+    /**
+     * Codigo para crear la tabla
+     */
     private void createTable() {
         table.setStyle("-fx-background-color: white; -fx-text-fill: black;");
 
@@ -108,14 +116,10 @@ public class VerTareas extends BaseController implements Observer {
         });
 
         // Create columns
-        TableColumn<TareaNodo, String> departamentoCol = new TableColumn<>("Departamento");
-        departamentoCol.setCellValueFactory(new PropertyValueFactory<>("departamento"));
-        departamentoCol.setPrefWidth(150);
 
-        TableColumn<TareaNodo, String> tareaCol = new TableColumn<>("Tarea");
-        tareaCol.setCellValueFactory(new PropertyValueFactory<>("nombreTarea")); // Use camelCase
-        tareaCol.setPrefWidth(200);
-
+        TableColumn<TareaNodo, String> departamentoCol = Utils.createColumn("Departamento","departamento",150);;
+        TableColumn<TareaNodo, String> tareaCol = Utils.createColumn("Tarea","nombreTarea",150);;
+        TableColumn<TareaNodo, String> milisecondsCol = Utils.createColumn("Segundos","remainingSeconds",150);;
 
         TableColumn<TareaNodo, String> empleado = new TableColumn<>("Responsable");
         empleado.setCellValueFactory(cellData -> {
@@ -127,9 +131,6 @@ public class VerTareas extends BaseController implements Observer {
         });
         empleado.setPrefWidth(300);
 
-        TableColumn<TareaNodo, Integer> milisecondsCol = new TableColumn<>("Segundos");
-        milisecondsCol.setCellValueFactory(new PropertyValueFactory<>("remainingSeconds"));
-        milisecondsCol.setPrefWidth(150);
 
         table.getColumns().addAll(departamentoCol, tareaCol,empleado ,milisecondsCol);
 
@@ -141,6 +142,11 @@ public class VerTareas extends BaseController implements Observer {
 
     }
 
+    /**
+     * Actualiza los datos de la tabla
+     * cuando una tarea es creada, eliminada, o cunado se cambia la vista de la tablas de urgentes, no urgenes y listas
+     * @param tipoTarea
+     */
     private void changedaTable(TipoTarea tipoTarea) {
         this.current_tipoTarea_state = tipoTarea;
         ArrayList<TareaNodo> tareaNodoArrayList = new ArrayList<>();
@@ -156,16 +162,21 @@ public class VerTareas extends BaseController implements Observer {
                 }
             }
         }
-        for (TareaNodo tareaNodo : tareaNodoArrayList) {
-            System.out.println(tareaNodo.getValues());
-        }
+//        for (TareaNodo tareaNodo : tareaNodoArrayList) {
+//            System.out.println(tareaNodo.getValues());
+//        }
         data.clear();
         data.addAll(tareaNodoArrayList);
         filter_data(filtro.getValue());
     }
 
+    /**
+     * Es llamada por taskdoer cuando una tarea es terminada
+     * @param tareaNodo
+     */
     @Override
-    public void tareaTerminada(TipoTarea tipoTarea) {
+    public void tareaTerminada(TareaNodo tareaNodo) {
+        TipoTarea tipoTarea = tareaNodo.getTipoTarea();
         System.out.println("Updating?");
         if (this.current_tipoTarea_state == tipoTarea) {
             changedaTable(tipoTarea);
@@ -173,7 +184,25 @@ public class VerTareas extends BaseController implements Observer {
 
     }
 
-    private void change_color_state(Button button_pressed,Button ... buttons_unpressed) {
+    /**
+     * Es llamado por agregarTareas despues de haber presionado el boton enviar
+     * @param tareaNodo
+     */
+    @Override
+    public void tarea_creada(TareaNodo tareaNodo) {
+        TipoTarea tipoTarea = tareaNodo.getTipoTarea();
+        System.out.println("Updating?");
+        if (this.current_tipoTarea_state == tipoTarea) {
+            changedaTable(tipoTarea);
+        }
+    }
+
+    /**
+     * Se encarga de cambiar el color de los botones urgenest, no urgentes y listas
+     * @param button_pressed
+     * @param buttons_unpressed
+     */
+    private void change_color_state(Button button_pressed, Button ... buttons_unpressed) {
        button_pressed.setStyle("-fx-background-color:orange");
        for (Button button:buttons_unpressed) {
            button.setStyle("-fx-background-color:white");
@@ -181,13 +210,19 @@ public class VerTareas extends BaseController implements Observer {
 
     }
 
+    /**
+     * Es llamada por taskdoer, en taskdoer se actualizan los segundos en los objectos y aqui solo llamamos refresh
+     * @param seconds
+     */
     @Override
     public void updateSecondsInTable(int seconds) {
         System.out.println("Actualizando segundos "+seconds);
         table.refresh();
-
     }
 
+    /**
+     * Se encarga de actualizar la duracion de sleep  de sharedStates que utiliza taskDOer
+     */
     private void Listener_spinnerVelocidad() {
 
         spinner_velocidad.valueProperty().addListener(new ChangeListener<Integer>() {
@@ -199,17 +234,18 @@ public class VerTareas extends BaseController implements Observer {
                 if (t1 == 0) {
                     currentDelay.set(baseSpeed); // Normal speed: 1000ms
                 } else if (t1 > 0) {
-                    // Positive = faster (reduce delay)
-                    // Speed 1 = 900ms, Speed 10 = 100ms
                     currentDelay.set(baseSpeed - (t1 * 90));
                     if (currentDelay.get() < 100) currentDelay.set(100); // Minimum delay
                 } else {
                     currentDelay.set(baseSpeed + (Math.abs(t1) * 100));
                 }
-
             }
         });
     }
+
+    /**
+     * La vista de tareas urgentes activando
+     */
     private void Action_UrgentesButton() {
 
         urgentes_button.setOnAction(new EventHandler<ActionEvent>() {
@@ -221,6 +257,10 @@ public class VerTareas extends BaseController implements Observer {
             }
         });
     }
+
+    /**
+     *La vista de tareas no urgentes activando
+     */
     private void Action_noUrgentesBUtton() {
 
         no_urgentes_button.setOnAction(new EventHandler<ActionEvent>() {
@@ -232,6 +272,10 @@ public class VerTareas extends BaseController implements Observer {
             }
         });
     }
+
+    /**
+     * La vista de tareas listas activando
+     */
     private void Action_listaButton() {
 
         lista_button.setOnAction(new EventHandler<ActionEvent>() {
@@ -243,6 +287,10 @@ public class VerTareas extends BaseController implements Observer {
             }
         });
     }
+
+    /**
+     * Escucha cambios en el filtro checkbox, filtra o regresa data normal
+     */
     private void Listener_filtro() {
 
         filtro.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -260,6 +308,10 @@ public class VerTareas extends BaseController implements Observer {
             }
         });
     }
+    /**
+     * Funcion de pausar la realizacion de tareas, cambia el estado atomico de sharedShared THreadActive
+     * que es utilizado por taskdoer
+     */
     private void Action_pausarThread() {
 
         pausar_thread.setStyle("-fx-background-color: green;");
