@@ -66,6 +66,7 @@ public class TaskDoer extends Task<Void> {
 //pila
             else if (tareaNodo.getTipoTarea() == TipoTarea.Urgente) {
                 tarea_urgente();
+
             }
         }
     }

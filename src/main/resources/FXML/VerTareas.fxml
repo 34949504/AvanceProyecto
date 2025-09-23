@@ -68,6 +68,7 @@
                 <Label styleClass="white-text-small" text="Velociad:">
                 </Label>
                 <Spinner fx:id="spinner_velocidad" initialValue="1" maxWidth="70">
+
                     <valueFactory>
                         <SpinnerValueFactory.IntegerSpinnerValueFactory min="-10" max="10" initialValue="0" />
                     </valueFactory>

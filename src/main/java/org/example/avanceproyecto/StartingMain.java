@@ -46,6 +46,7 @@ public class StartingMain extends Application {
         readJsons();
 
 
+
         ControllerInitializer controllerManager = new ControllerInitializer(stage);
         Rectangle2D rectangle2D = Utils.getScreenDimsHalfed();
         Scene scene = new Scene(controllerManager.getMainController().getOrigin(), rectangle2D.getWidth(), rectangle2D.getHeight());
