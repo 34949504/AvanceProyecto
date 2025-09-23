@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <center>
+
+        <VBox alignment="CENTER">
+            <HBox>
+                <Label text="Buscar:"></Label>
+                <TextField>
+                </TextField>
+
+                <VBox>
+                    <Label text="Filtro">
+                    </Label>
+                    <ChoiceBox></ChoiceBox>
+
+                </VBox>
+
+
+            </HBox>
+
+            <TableView  fx:id="table">
+            </TableView>
+
+        </VBox>
+
+
+<!--        <Button styleClass="small-button" text="hola"></Button>-->
+
+    </center>
+
+
+</BorderPane>

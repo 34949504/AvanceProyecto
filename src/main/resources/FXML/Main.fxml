@@ -13,10 +13,10 @@
             xmlns:fx="http://javafx.com/fxml"
             >
 
-   <top>
+   <top >
 
-       <HBox spacing="30" alignment="BASELINE_LEFT" xmlns="http://javafx.com/javafx"
-             prefHeight="100.0" style="-fx-padding: 30 0 0 30;">
+       <HBox styleClass="wassa" spacing="30" alignment="TOP_LEFT" xmlns="http://javafx.com/javafx"
+             prefHeight="60.0" style="-fx-padding: 10 0 0 30;">
 
            <Button fx:id="agregar_tarea" text="Agregar Tarea" onAction="#displayAgregarTarea">
                <styleClass>
@@ -26,6 +26,8 @@
                </styleClass>
            </Button>
            <Button fx:id="ver_tarea" styleClass="small-button" text="Ver tareas" onAction="#displayVerTarea"></Button>
+           <Button fx:id="empleados" styleClass="small-button" text="Ver Empleados" onAction="#verEmpleados"></Button>
+           <Button fx:id="estadisticas" styleClass="small-button" text="Ver Estadisticas" onAction="#verEstadisticas"></Button>
 
        </HBox>
    </top>

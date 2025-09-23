@@ -3,7 +3,8 @@ package org.example.avanceproyecto.Tarea;
 public enum TipoTarea {
     Urgente,
     No_Urgente,
-    Lista;
+    Lista,
+    none;
 
     public static TipoTarea get_enum_by_string_comparison(String type) {
 

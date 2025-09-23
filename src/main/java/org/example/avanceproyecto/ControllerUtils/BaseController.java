@@ -46,9 +46,15 @@ public abstract class BaseController implements Observer {
 
     @Override
     public boolean show_layout(Class<?> clazz) {
+
+        System.out.println(this.getClass());
         if (clazz.isAssignableFrom(this.getClass())) {
+            System.out.println(clazz);
             this.borderpane_main.setCenter(getLayout());
             return true;
+        }
+        else {
+            System.out.println("Was not able to show layout what");
         }
         return false;
     }

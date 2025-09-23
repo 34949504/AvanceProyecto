@@ -1,0 +1,68 @@
+{
+    "recursos humanos": {
+      "1": {"nombre": "Ana", "apellidos": "García López", "fecha_nacimiento": "1985-03-12"},
+      "2": {"nombre": "Luis", "apellidos": "Martínez Pérez", "fecha_nacimiento": "1990-07-25"},
+      "3": {"nombre": "Carla", "apellidos": "Ramírez Torres", "fecha_nacimiento": "1988-11-04"},
+      "4": {"nombre": "Pedro", "apellidos": "Hernández Cruz", "fecha_nacimiento": "1987-01-16"},
+      "5": {"nombre": "Lucía", "apellidos": "Vega Sánchez", "fecha_nacimiento": "1992-05-30"},
+      "6": {"nombre": "Jorge", "apellidos": "Ruiz Gómez", "fecha_nacimiento": "1989-09-12"},
+      "7": {"nombre": "Sofía", "apellidos": "Morales Díaz", "fecha_nacimiento": "1991-12-22"},
+      "8": {"nombre": "Diego", "apellidos": "López Ramírez", "fecha_nacimiento": "1986-06-15"},
+      "9": {"nombre": "Valeria", "apellidos": "Fernández Jiménez", "fecha_nacimiento": "1993-08-03"},
+      "10": {"nombre": "Carlos", "apellidos": "Santos Ortega", "fecha_nacimiento": "1984-10-28"},
+      "empleados_ordenados": [1,2,3,4,5,6,7,8,9,10]
+    },
+    "finanzas": {
+      "1": {"nombre": "María", "apellidos": "Gómez Medina", "fecha_nacimiento": "1986-01-05"},
+      "2": {"nombre": "Eduardo", "apellidos": "Torres Castillo", "fecha_nacimiento": "1988-02-18"},
+      "3": {"nombre": "Jorge", "apellidos": "Hernández Cruz", "fecha_nacimiento": "1982-05-19"},
+      "4": {"nombre": "Laura", "apellidos": "Vega Sánchez", "fecha_nacimiento": "1991-12-03"},
+      "5": {"nombre": "Diego", "apellidos": "Ramírez López", "fecha_nacimiento": "1989-09-20"},
+      "6": {"nombre": "Sofía", "apellidos": "Morales Torres", "fecha_nacimiento": "1992-04-14"},
+      "7": {"nombre": "Valeria", "apellidos": "Fernández Jiménez", "fecha_nacimiento": "1993-06-17"},
+      "8": {"nombre": "Miguel", "apellidos": "Santos Ortega", "fecha_nacimiento": "1988-03-05"},
+      "9": {"nombre": "Isabel", "apellidos": "Pérez Navarro", "fecha_nacimiento": "1991-02-18"},
+      "10": {"nombre": "Fernando", "apellidos": "Cruz Mendoza", "fecha_nacimiento": "1985-11-12"},
+      "empleados_ordenados": [1,2,3,4,5,6,7,8,9,10]
+    },
+    "it": {
+
+      "1": {"nombre": "Sofía", "apellidos": "Morales Díaz", "fecha_nacimiento": "1992-04-14"},
+      "2": {"nombre": "Diego", "apellidos": "López Ramírez", "fecha_nacimiento": "1989-09-30"},
+      "3": {"nombre": "Valeria", "apellidos": "Fernández Jiménez", "fecha_nacimiento": "1993-06-17"},
+      "4": {"nombre": "Ana", "apellidos": "García López", "fecha_nacimiento": "1985-03-12"},
+      "5": {"nombre": "Luis", "apellidos": "Martínez Pérez", "fecha_nacimiento": "1990-07-25"},
+      "6": {"nombre": "Carla", "apellidos": "Ramírez Torres", "fecha_nacimiento": "1988-11-04"},
+      "7": {"nombre": "Pedro", "apellidos": "Hernández Cruz", "fecha_nacimiento": "1987-01-16"},
+      "8": {"nombre": "Lucía", "apellidos": "Vega Sánchez", "fecha_nacimiento": "1992-05-30"},
+      "9": {"nombre": "Jorge", "apellidos": "Ruiz Gómez", "fecha_nacimiento": "1989-09-12"},
+      "10": {"nombre": "Diego", "apellidos": "Torres Castillo", "fecha_nacimiento": "1991-08-08"},
+      "empleados_ordenados": [1,2,3,4,5,6,7,8,9,10]
+    },
+    "ventas": {
+      "1": {"nombre": "Carlos", "apellidos": "Santos Ortega", "fecha_nacimiento": "1986-01-22"},
+      "2": {"nombre": "Laura", "apellidos": "Gómez Medina", "fecha_nacimiento": "1990-10-10"},
+      "3": {"nombre": "Miguel", "apellidos": "Torres Castillo", "fecha_nacimiento": "1988-03-05"},
+      "4": {"nombre": "Ana", "apellidos": "García López", "fecha_nacimiento": "1985-03-12"},
+      "5": {"nombre": "Luis", "apellidos": "Martínez Pérez", "fecha_nacimiento": "1990-07-25"},
+      "6": {"nombre": "Carla", "apellidos": "Ramírez Torres", "fecha_nacimiento": "1988-11-04"},
+      "7": {"nombre": "Pedro", "apellidos": "Hernández Cruz", "fecha_nacimiento": "1987-01-16"},
+      "8": {"nombre": "Lucía", "apellidos": "Vega Sánchez", "fecha_nacimiento": "1992-05-30"},
+      "9": {"nombre": "Jorge", "apellidos": "Ruiz Gómez", "fecha_nacimiento": "1989-09-12"},
+      "10": {"nombre": "Sofía", "apellidos": "Morales Díaz", "fecha_nacimiento": "1992-04-14"},
+      "empleados_ordenados": [1,2,3,4,5,6,7,8,9,10]
+    },
+    "marketing": {
+      "1": {"nombre": "Isabel", "apellidos": "Pérez Navarro", "fecha_nacimiento": "1991-02-18"},
+      "2": {"nombre": "Fernando", "apellidos": "Cruz Mendoza", "fecha_nacimiento": "1985-11-12"},
+      "3": {"nombre": "Natalia", "apellidos": "Ramos Herrera", "fecha_nacimiento": "1992-07-09"},
+      "4": {"nombre": "Ana", "apellidos": "García López", "fecha_nacimiento": "1985-03-12"},
+      "5": {"nombre": "Luis", "apellidos": "Martínez Pérez", "fecha_nacimiento": "1990-07-25"},
+      "6": {"nombre": "Carla", "apellidos": "Ramírez Torres", "fecha_nacimiento": "1988-11-04"},
+      "7": {"nombre": "Pedro", "apellidos": "Hernández Cruz", "fecha_nacimiento": "1987-01-16"},
+      "8": {"nombre": "Lucía", "apellidos": "Vega Sánchez", "fecha_nacimiento": "1992-05-30"},
+      "9": {"nombre": "Jorge", "apellidos": "Ruiz Gómez", "fecha_nacimiento": "1989-09-12"},
+      "10": {"nombre": "Diego", "apellidos": "Torres Castillo", "fecha_nacimiento": "1991-08-08"},
+      "empleados_ordenados": [1,2,3,4,5,6,7,8,9,10]
+    }
+}

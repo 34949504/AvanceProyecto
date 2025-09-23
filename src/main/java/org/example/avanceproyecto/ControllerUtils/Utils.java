@@ -8,6 +8,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -15,18 +17,28 @@ import org.example.avanceproyecto.Controllers.MainController;
 import org.example.avanceproyecto.Controllers.SharedStates;
 import org.example.avanceproyecto.Controllers.TaskDoer;
 import org.example.avanceproyecto.LinkedList.LinkedlistFuncs;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 
 import javafx.stage.Screen;
+import java.time.LocalDate; // import the LocalDate class
 
 public class Utils {
+    private static final Random random = new Random();
 
-    public static JSONObject readJson(String filename) {
+    /*
+    Reads data from a read-only files from the resources folders
+     */
+    public static JSONObject readJson_READONLY(String filename) {
         InputStream inputStream = Utils.class.getResourceAsStream(filename);
         if (inputStream == null) {
             throw new RuntimeException(String.format("filename %s does not exist", filename));
@@ -35,11 +47,27 @@ public class Utils {
         try {
             bytes = inputStream.readAllBytes();
         } catch (IOException e) {
+            System.out.println();
             throw new RuntimeException(e);
         }
         String jeson = new String(bytes, StandardCharsets.UTF_8);
         JSONObject jsonObject = new JSONObject(jeson);
         return jsonObject;
+    }
+    public static JSONObject readJsonAbs(String filename) {
+         String filePath = filename; // Replace with your file path
+        StringBuilder stringBuilder = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            return new JSONObject(stringBuilder.toString());
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+            return null;
+        }
     }
 
     public static Rectangle2D getScreenDimsHalfed() {
@@ -104,6 +132,79 @@ public class Utils {
         thread.setDaemon(true);                 // optional, allows app to exit if thread is running
         thread.start();
         return  taskDoer;
+    }
+
+    public static int getRandomIntFromList(JSONArray jsonArray) {
+        if (jsonArray == null || jsonArray.length() == 0) {
+            throw new IllegalArgumentException("JSONArray is null or empty");
+        }
+        int index = random.nextInt(jsonArray.length()); // pick a random index
+        return jsonArray.getInt(index); // return the value at that index
+    }
+
+    public static String getTodaysDate() {
+        LocalDate myObj = LocalDate.now(); // Create a date object
+        System.out.println(myObj); // Display the current date
+        return myObj.toString();
+    }
+
+    public static void writeJson(String jsonObject, String ... filepath) {
+        String currentDirectory = System.getProperty("user.dir");
+        Path path = Paths.get(currentDirectory,filepath);
+        String fileName =  path.toString();
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(fileName));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            writer.write(jsonObject);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static String getDepartamentoById(JSONObject departamentos_id,Integer id) {
+
+        Iterator<String> keys = departamentos_id.keys();
+
+        while (keys.hasNext()) {
+            String next = keys.next();
+            Integer cur_id = departamentos_id.getInt(next);
+
+            if (cur_id == id) {
+                return next;
+            }
+
+        }
+        return null;
+
+    }
+    public static String readFile(String ... path ) {
+        String currentDirectory = System.getProperty("user.dir");
+        Path filePath = Paths.get(currentDirectory,path);
+        String content = null;
+        try {
+            content = Files.readString(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return content;
+
+    }
+
+    public static <T,G>  TableColumn<T,G> createColumn(String tablaNombre,String referencia_value_class,int width) {
+        TableColumn<T,G> columna = new TableColumn<>(tablaNombre);
+        columna.setCellValueFactory(new PropertyValueFactory<>(referencia_value_class));
+        columna.setPrefWidth(width);
+        return columna;
     }
 
 

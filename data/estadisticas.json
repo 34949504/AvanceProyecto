@@ -1,0 +1,344 @@
+{
+    "marketing": {
+        "Coordinar con ventas": {},
+        "Planificar campañas": {},
+        "Editar videos promocionales": {},
+        "Elaborar estrategias trimestrales": {},
+        "Crear encuestas": {},
+        "Optimizar SEO": {"2025-09-22": [
+            {
+                "empleado": "Fernando Cruz Mendoza",
+                "segundos": 15
+            },
+            {
+                "empleado": "Fernando Cruz Mendoza",
+                "segundos": 15
+            },
+            {
+                "empleado": "Luis Martínez Pérez",
+                "segundos": 15
+            },
+            {
+                "empleado": "Jorge Ruiz Gómez",
+                "segundos": 15
+            }
+        ]},
+        "Redactar boletín semanal": {},
+        "Escribir comunicados de prensa": {},
+        "Organizar eventos": {},
+        "Revisar KPIs": {},
+        "Gestionar influencers": {},
+        "Analizar métricas de anuncios": {},
+        "Gestionar redes sociales": {},
+        "Revisar feedback de clientes": {},
+        "Diseñar material gráfico": {},
+        "Diseñar campaña en redes sociales": {},
+        "Actualizar sitio web": {},
+        "Monitorear reputación online": {},
+        "Analizar competencia": {},
+        "Crear contenido para blog": {}
+    },
+    "finanzas": {
+        "Gestionar préstamos": {},
+        "Auditar gastos": {},
+        "Control de caja chica": {},
+        "Gestionar inversiones": {},
+        "Preparar presupuestos": {},
+        "Revisar contratos financieros": {},
+        "Optimizar flujo de efectivo": {},
+        "Elaborar balances": {},
+        "Revisar cuentas por pagar": {},
+        "Validar comprobantes fiscales": {},
+        "Revisar cuentas por cobrar": {},
+        "Analizar estados financieros": {},
+        "Conciliación bancaria": {},
+        "Generar reporte mensual": {},
+        "Coordinar auditorías externas": {},
+        "Emitir recibos": {},
+        "Generar proyecciones": {},
+        "Calcular impuestos": {},
+        "Registrar facturas": {},
+        "Validar nóminas": {}
+    },
+    "recursos humanos": {
+        "Filtrar currículums": {},
+        "Atender conflictos laborales": {"2025-09-22": [{
+            "empleado": "Pedro Hernández Cruz",
+            "segundos": 20
+        }]},
+        "Preparar evaluaciones": {},
+        "Actualizar políticas internas": {},
+        "Organizar entrevistas": {},
+        "Coordinar capacitaciones externas": {"2025-09-22": [{
+            "empleado": "Luis Martínez Pérez",
+            "segundos": 18
+        }]},
+        "Coordinar eventos internos": {
+            "2025-09-22": [
+                {
+                    "empleado": "Ana García López",
+                    "segundos": 21
+                },
+                {
+                    "empleado": "Luis Martínez Pérez",
+                    "segundos": 18
+                },
+                {
+                    "empleado": "Pedro Hernández Cruz",
+                    "segundos": 18
+                },
+                {
+                    "empleado": "Carla Ramírez Torres",
+                    "segundos": 18
+                },
+                {
+                    "empleado": "Ana García López",
+                    "segundos": 21
+                },
+                {
+                    "empleado": "Ana García López",
+                    "segundos": 20
+                }
+            ],
+            "2025-09-17": [
+                {
+                    "empleado": "Ana García López",
+                    "segundos": 18
+                },
+                {
+                    "empleado": "Ana García López",
+                    "segundos": 18
+                },
+                {
+                    "empleado": "Ana García López",
+                    "segundos": 22
+                },
+                {
+                    "empleado": "Ana García López",
+                    "segundos": 19
+                },
+                {
+                    "empleado": "Ana García López",
+                    "segundos": 19
+                },
+                {
+                    "empleado": "Ana García López",
+                    "segundos": 21
+                }
+            ],
+            "2025-09-21": [{
+                "empleado": "Luis Martínez Pérez",
+                "segundos": 19
+            }]
+        },
+        "Atender consultas de empleados": {"2025-09-17": [{
+            "empleado": "Ana García López",
+            "segundos": 14
+        }]},
+        "Registrar asistencia": {"2025-09-17": [
+            {
+                "empleado": "Luis Martínez Pérez",
+                "segundos": 10
+            },
+            {
+                "empleado": "Valeria Fernández Jiménez",
+                "segundos": 9
+            },
+            {
+                "empleado": "Ana García López",
+                "segundos": 8
+            },
+            {
+                "empleado": "Luis Martínez Pérez",
+                "segundos": 8
+            },
+            {
+                "empleado": "Carla Ramírez Torres",
+                "segundos": 8
+            },
+            {
+                "empleado": "Pedro Hernández Cruz",
+                "segundos": 8
+            },
+            {
+                "empleado": "Lucía Vega Sánchez",
+                "segundos": 8
+            },
+            {
+                "empleado": "Jorge Ruiz Gómez",
+                "segundos": 8
+            },
+            {
+                "empleado": "Sofía Morales Díaz",
+                "segundos": 8
+            },
+            {
+                "empleado": "Diego López Ramírez",
+                "segundos": 8
+            },
+            {
+                "empleado": "Valeria Fernández Jiménez",
+                "segundos": 8
+            },
+            {
+                "empleado": "Carlos Santos Ortega",
+                "segundos": 8
+            },
+            {
+                "empleado": "Ana García López",
+                "segundos": 10
+            },
+            {
+                "empleado": "Ana García López",
+                "segundos": 8
+            },
+            {
+                "empleado": "Ana García López",
+                "segundos": 9
+            }
+        ]},
+        "Publicar vacantes": {"2025-09-17": [
+            {
+                "empleado": "Ana García López",
+                "segundos": 13
+            },
+            {
+                "empleado": "Ana García López",
+                "segundos": 13
+            }
+        ]},
+        "Encuestas de satisfacción": {},
+        "Supervisar pasantes": {"2025-09-22": [
+            {
+                "empleado": "Carlos Santos Ortega",
+                "segundos": 11
+            },
+            {
+                "empleado": "Jorge Ruiz Gómez",
+                "segundos": 12
+            },
+            {
+                "empleado": "Pedro Hernández Cruz",
+                "segundos": 12
+            },
+            {
+                "empleado": "Jorge Ruiz Gómez",
+                "segundos": 10
+            }
+        ]},
+        "Revisar prestaciones": {"2025-09-22": [
+            {
+                "empleado": "Lucía Vega Sánchez",
+                "segundos": 15
+            },
+            {
+                "empleado": "Carla Ramírez Torres",
+                "segundos": 17
+            },
+            {
+                "empleado": "Sofía Morales Díaz",
+                "segundos": 17
+            }
+        ]},
+        "Capacitación de personal": {},
+        "Realizar inducción": {},
+        "Actualizar expedientes": {},
+        "Revisar solicitudes de empleo": {"2025-09-17": [
+            {
+                "empleado": "Luis Martínez Pérez",
+                "segundos": 10
+            },
+            {
+                "empleado": "Ana García López",
+                "segundos": 11
+            },
+            {
+                "empleado": "Ana García López",
+                "segundos": 13
+            }
+        ]},
+        "Gestionar vacaciones": {
+            "2025-09-22": [
+                {
+                    "empleado": "Ana García López",
+                    "segundos": 12
+                },
+                {
+                    "empleado": "Lucía Vega Sánchez",
+                    "segundos": 12
+                },
+                {
+                    "empleado": "Jorge Ruiz Gómez",
+                    "segundos": 12
+                },
+                {
+                    "empleado": "Ana García López",
+                    "segundos": 12
+                },
+                {
+                    "empleado": "Pedro Hernández Cruz",
+                    "segundos": 12
+                }
+            ],
+            "2025-09-17": [{
+                "empleado": "Ana García López",
+                "segundos": 13
+            }]
+        },
+        "Auditar contratos": {"2025-09-22": [
+            {
+                "empleado": "Jorge Ruiz Gómez",
+                "segundos": 19
+            },
+            {
+                "empleado": "Luis Martínez Pérez",
+                "segundos": 19
+            }
+        ]},
+        "Generar reportes de desempeño": {}
+    },
+    "ventas": {
+        "Analizar tendencias": {},
+        "Negociar precios": {},
+        "Definir metas mensuales": {},
+        "Generar reportes de ventas": {},
+        "Llamar a clientes potenciales": {},
+        "Visitar clientes": {},
+        "Planear descuentos": {},
+        "Enviar propuestas": {},
+        "Cerrar ventas": {},
+        "Revisar pedidos": {},
+        "Capacitar vendedores": {},
+        "Hacer demos de producto": {},
+        "Dar seguimiento a leads": {},
+        "Preparar presentaciones": {},
+        "Atender reclamaciones": {},
+        "Supervisar campañas": {},
+        "Revisar contratos": {},
+        "Preparar cotizaciones": {},
+        "Participar en ferias": {},
+        "Coordinar con marketing": {}
+    },
+    "it": {
+        "Respaldar base de datos": {},
+        "Mantener hardware": {},
+        "Monitorear seguridad": {},
+        "Automatizar procesos": {},
+        "Atender tickets de soporte": {},
+        "Gestionar accesos": {},
+        "Configurar redes": {},
+        "Atender emergencias técnicas": {},
+        "Desplegar aplicaciones": {},
+        "Soporte remoto": {},
+        "Actualizar servidores": {},
+        "Gestionar copias de seguridad": {},
+        "Documentar incidencias": {},
+        "Instalar software": {},
+        "Optimizar rendimiento": {},
+        "Probar sistemas nuevos": {},
+        "Administrar servidores cloud": {},
+        "Revisar logs de sistema": {},
+        "Implementar actualizaciones": {},
+        "Auditar seguridad": {}
+    }
+}
