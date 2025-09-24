@@ -1,13 +1,15 @@
 package org.example.avanceproyecto.Controllers;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,8 +29,13 @@ public class VerEmpleados extends BaseController implements Observer {
     @FXML
     private TableView<Empleado> table;
 
+    @FXML private TextField buscar_filtro;
+    @FXML private ChoiceBox<String> filtro_departamentos;
+
+
     JSONObject departamentos_id;
     private ObservableList<Empleado> data = FXCollections.observableArrayList();
+    private ObservableList<Empleado> data_filtered = FXCollections.observableArrayList();
 
 
     public VerEmpleados(String fxml) {
@@ -39,6 +46,7 @@ public class VerEmpleados extends BaseController implements Observer {
     public void init() {
 
         createTable();
+        listener_buscarTextfield();
     }
 
 
@@ -122,6 +130,23 @@ public class VerEmpleados extends BaseController implements Observer {
 
         }
     }
+    private void listener_buscarTextfield() {
+        buscar_filtro.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String old, String new_str) {
+                if (new_str.length() == 0) {
+                    table.setItems(data);
+                } else {
+                    update_filtered_data(new_str);
+                    table.setItems(data_filtered);
+                }
+            }
+        });
+        buscar_filtro.setOnAction(actionEvent -> {
+            System.out.println("table focus");
+            table.requestFocus();
+        });
+    }
 
     /**
      * Es llamada  por taskDoer, solamente se tiene que refreshear, porque alla se actualiza el status del empleado
@@ -129,5 +154,39 @@ public class VerEmpleados extends BaseController implements Observer {
     @Override
     public void tareaTerminada(TareaNodo tareaNodo) {
         table.refresh();
+    }
+
+    private void update_filtered_data(String buscar_text) {
+
+        data_filtered.clear();
+        for (Empleado empleado:data) {
+            ArrayList<String> arrayList = empleado.get_attributes_arrayString();
+            boolean subset_in_array = string_subset_in_array(arrayList,buscar_text);
+
+            if (subset_in_array) {
+                data_filtered.add(empleado);
+            }
+        }
+
+    }
+    private boolean string_subset_in_array(ArrayList<String> arrayList,String subset) {
+        int len_subset = subset.length();
+        subset = subset.toLowerCase();
+//        System.out.println(subset);
+        for (String string:arrayList) {
+            string = string.toLowerCase();
+//            System.out.printf("%s %d %s\n",string,string.length(),subset);
+           if (string.length() < len_subset) {
+               continue;
+           }
+           String sub = string.substring(0,len_subset);
+//            System.out.printf("%s sub:%s %b\n",string,sub);
+           if (sub.compareTo(subset) == 0) {
+               System.out.println("Same subset");
+               return true;
+           }
+
+        }
+        return false;
     }
 }

@@ -5,28 +5,37 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
+<?import javafx.collections.FXCollections?>
+<BorderPane  xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="400.0" prefWidth="600.0">
 
+    <top>
+        <HBox alignment="BOTTOM_CENTER">
+
+            <Label  alignment="CENTER" styleClass="title" fx:id="titulo_nombre_tarea_label" text="Ver tareas Urgentes" />
+            <padding>
+                <Insets bottom="-50"/>
+            </padding>
+        </HBox>
+
+    </top>
     <center>
 
         <VBox alignment="CENTER">
-            <HBox>
-                <Label text="Buscar:"></Label>
-                <TextField>
+            <AnchorPane >
+                <HBox  alignment="BOTTOM_LEFT" AnchorPane.bottomAnchor="1" AnchorPane.leftAnchor="80">
+
+                <Label alignment="BOTTOM_LEFT" styleClass="white-text-big" text="Buscar:"></Label>
+                <TextField fx:id="buscar_filtro">
                 </TextField>
-
-                <VBox>
-                    <Label text="Filtro">
-                    </Label>
-                    <ChoiceBox></ChoiceBox>
-
-                </VBox>
+                </HBox>
 
 
-            </HBox>
+
+            </AnchorPane>
 
             <TableView  fx:id="table">
             </TableView>

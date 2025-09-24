@@ -33,7 +33,7 @@ public abstract class BaseController implements Observer {
     public void initilize_fxml(String fxmlFile) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            loader.setController(this); // ✅ Set this instance as controller
+            loader.setController(this);
             this.layout = loader.load();
         } catch (Exception e) {
             throw new RuntimeException("Failed to load FXML: " + fxmlFile, e);
@@ -47,9 +47,7 @@ public abstract class BaseController implements Observer {
     @Override
     public boolean show_layout(Class<?> clazz) {
 
-        System.out.println(this.getClass());
         if (clazz.isAssignableFrom(this.getClass())) {
-            System.out.println(clazz);
             this.borderpane_main.setCenter(getLayout());
             return true;
         }
