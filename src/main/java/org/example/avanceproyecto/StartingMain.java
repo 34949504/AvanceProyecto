@@ -44,20 +44,17 @@ public class StartingMain extends Application {
     public void start(Stage stage) throws IOException {
 
         readJsons();
-
+        Utils.setDepartamentos_id(departamentos_id); //XD
 
 
         ControllerInitializer controllerManager = new ControllerInitializer(stage);
-        Rectangle2D rectangle2D = Utils.getScreenDimsHalfed();
-        Scene scene = new Scene(controllerManager.getMainController().getOrigin(), rectangle2D.getWidth(), rectangle2D.getHeight());
+        Scene scene = new Scene(controllerManager.getMainController().getOrigin(),960, 540);
         scene.getStylesheets().add(getClass().getResource("/css/buttons.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("/css/general.css").toExternalForm());
 
 
         stage.setResizable(false);
-        stage.setX(rectangle2D.getMinX());
-        stage.setY(rectangle2D.getMinY());
-        stage.setTitle("Yeah");
+        stage.setTitle("App");
         stage.setScene(scene);
         stage.show();
     }
@@ -70,11 +67,13 @@ public class StartingMain extends Application {
      */
     @Getter @Setter
     private class ControllerInitializer {
+
         private MainController mainController = new MainController("/FXML/Main.fxml");
         private AgregarTarea agregarTarea = new AgregarTarea("/FXML/AgregarTarea.fxml");
         private VerTareas verTareas = new VerTareas("/FXML/VerTareas.fxml");
         private VerEmpleados empleados = new VerEmpleados("/FXML/Empleados.fxml");
-        private EstadisticaTracker estadisticaTracker = new EstadisticaTracker("/FXML/Estadisticas.fxml");
+//        private EstadisticaTracker estadisticaTracker = new EstadisticaTracker("/FXML/Estadisticas.fxml");
+        private EstadisticaTracker estadisticaTracker = new EstadisticaTracker("/FXML/estadisticas/guacala.fxml");
         private SharedStates sharedStates = new SharedStates(departamentos_id,empleados_json);
 
         private Stage stage;
@@ -103,6 +102,9 @@ public class StartingMain extends Application {
         Se pasa el json a controladores
          */
         private void setJsons() {
+
+            Utils.setDepartamentos_id(departamentos_id); //XD
+
             agregarTarea.setTareas_json(tareas_json);
             agregarTarea.setEmpleados_json(empleados_json);
             estadisticaTracker.setEstadistica_json(estadisticas_json);

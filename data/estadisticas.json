@@ -5,24 +5,64 @@
         "Editar videos promocionales": {},
         "Elaborar estrategias trimestrales": {},
         "Crear encuestas": {},
-        "Optimizar SEO": {"2025-09-22": [
-            {
-                "empleado": "Fernando Cruz Mendoza",
-                "segundos": 15
-            },
-            {
-                "empleado": "Fernando Cruz Mendoza",
-                "segundos": 15
-            },
-            {
-                "empleado": "Luis Martínez Pérez",
-                "segundos": 15
-            },
-            {
-                "empleado": "Jorge Ruiz Gómez",
-                "segundos": 15
-            }
-        ]},
+        "Optimizar SEO": {
+            "2025-09-23": [
+                {
+                    "empleado": "Renata Vega Quintana",
+                    "segundos": 15
+                },
+                {
+                    "empleado": "Natalia Ramos Herrera",
+                    "segundos": 15
+                },
+                {
+                    "empleado": "Adrián Torres Escamilla",
+                    "segundos": 15
+                },
+                {
+                    "empleado": "Esteban Ríos Galván",
+                    "segundos": 15
+                },
+                {
+                    "empleado": "Irene Pérez Navarro",
+                    "segundos": 15
+                },
+                {
+                    "empleado": "Pascual Hernández Vera",
+                    "segundos": 15
+                },
+                {
+                    "empleado": "Ángela García Salas",
+                    "segundos": 15
+                },
+                {
+                    "empleado": "Tomás Silva Mendoza",
+                    "segundos": 15
+                },
+                {
+                    "empleado": "Renata Vega Quintana",
+                    "segundos": 15
+                }
+            ],
+            "2025-09-22": [
+                {
+                    "empleado": "Fernando Cruz Mendoza",
+                    "segundos": 15
+                },
+                {
+                    "empleado": "Fernando Cruz Mendoza",
+                    "segundos": 15
+                },
+                {
+                    "empleado": "Luis Martínez Pérez",
+                    "segundos": 15
+                },
+                {
+                    "empleado": "Jorge Ruiz Gómez",
+                    "segundos": 15
+                }
+            ]
+        },
         "Redactar boletín semanal": {},
         "Escribir comunicados de prensa": {},
         "Organizar eventos": {},
@@ -41,7 +81,10 @@
     "finanzas": {
         "Gestionar préstamos": {},
         "Auditar gastos": {},
-        "Control de caja chica": {},
+        "Control de caja chica": {"2025-09-23": [{
+            "empleado": "Fernando Cruz Mendoza",
+            "segundos": 9
+        }]},
         "Gestionar inversiones": {},
         "Preparar presupuestos": {},
         "Revisar contratos financieros": {},
@@ -74,6 +117,10 @@
             "segundos": 18
         }]},
         "Coordinar eventos internos": {
+            "2025-09-23": [{
+                "empleado": "Ana García López",
+                "segundos": 22
+            }],
             "2025-09-22": [
                 {
                     "empleado": "Ana García López",

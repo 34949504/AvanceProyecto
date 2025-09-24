@@ -5,6 +5,7 @@ package org.example.avanceproyecto.ControllerUtils;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -34,6 +35,8 @@ import java.time.LocalDate; // import the LocalDate class
 
 public class Utils {
     private static final Random random = new Random();
+
+    private static JSONObject departamentos_id;
 
     /*
     Reads data from a read-only files from the resources folders
@@ -171,7 +174,7 @@ public class Utils {
     }
 
 
-    public static String getDepartamentoById(JSONObject departamentos_id,Integer id) {
+    public static String getDepartamentoById(JSONObject departamentos_ida,Integer id) {
 
         Iterator<String> keys = departamentos_id.keys();
 
@@ -207,5 +210,23 @@ public class Utils {
         return columna;
     }
 
+    public static void setDepartamentos_id(JSONObject departamentos_id) {
 
+
+        Utils.departamentos_id = departamentos_id;
+        if (Utils.departamentos_id == null) {
+            System.out.printf("%s", "no es null bruv");
+        }
+    }
+
+    public static FXMLLoader load_fxml(String fxmlFile,Class<?> controller) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Utils.class.getResource(fxmlFile));
+            loader.setController(controller);
+            return loader.load();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load FXML: " + fxmlFile, e);
+        }
+
+    }
 }
