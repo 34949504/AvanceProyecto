@@ -28,6 +28,7 @@
            <Button fx:id="ver_tarea" styleClass="small-button" text="Ver tareas" onAction="#displayVerTarea"></Button>
            <Button fx:id="empleados" styleClass="small-button" text="Ver Empleados" onAction="#verEmpleados"></Button>
            <Button fx:id="estadisticas" styleClass="small-button" text="Ver Estadisticas" onAction="#verEstadisticas"></Button>
+           <Button fx:id="proyecto" styleClass="small-button" text="Proyectos" onAction="#verProyectos"></Button>
 
        </HBox>
    </top>
