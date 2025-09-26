@@ -22,4 +22,9 @@ public interface Observer {
     default void updateSecondsInTable(int seconds){};
     default void tarea_creada(TareaNodo tareaNodo){};
     default void pre_close_request(){}
+
+
+    /**
+     * Just to change color xd
+     */
 }

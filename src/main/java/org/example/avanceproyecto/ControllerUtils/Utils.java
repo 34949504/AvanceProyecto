@@ -7,8 +7,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
@@ -28,6 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.Random;
 
 import javafx.stage.Screen;
@@ -128,6 +131,14 @@ public class Utils {
         });
         return alert;
     }
+    public static boolean showConfirmation(String title, String headerText, String contentText) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
+    }
 
     public static TaskDoer createTaskDoer(LinkedlistFuncs linkedlistFuncs, ArrayList<Observer> observers, SharedStates sharedStates) {
         TaskDoer taskDoer = new TaskDoer(linkedlistFuncs,observers,sharedStates);
@@ -219,11 +230,12 @@ public class Utils {
         }
     }
 
-    public static FXMLLoader load_fxml(String fxmlFile,Class<?> controller) {
+    public static Parent load_fxml(String fxmlFile,Object controller) {
         try {
             FXMLLoader loader = new FXMLLoader(Utils.class.getResource(fxmlFile));
             loader.setController(controller);
-            return loader.load();
+            Parent layout = loader.load();
+            return layout;
         } catch (Exception e) {
             throw new RuntimeException("Failed to load FXML: " + fxmlFile, e);
         }

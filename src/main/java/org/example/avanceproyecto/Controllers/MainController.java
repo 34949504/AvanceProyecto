@@ -41,6 +41,8 @@ public class MainController extends BaseController implements Observer {
     private Button empleados;
     @FXML
     private Button estadisticas;
+    @FXML
+    private Button proyecto;
 
     ArrayList<Button> buttons_array = new ArrayList<>();
 
@@ -81,6 +83,7 @@ public class MainController extends BaseController implements Observer {
         buttons_array.add(ver_tarea);
         buttons_array.add(empleados);
         buttons_array.add(estadisticas);
+        buttons_array.add(proyecto);
     }
     private void color_active_button(Button active) {
         String light_yellow = "#ffde85";
@@ -112,6 +115,11 @@ public class MainController extends BaseController implements Observer {
     private void verEstadisticas() {
         Utils.callObserver_show_layout(getObservers(),getBorderpane_main(),EstadisticaTracker.class);
         color_active_button(estadisticas);
+    }
+    @FXML
+    private void verProyectos() {
+        Utils.callObserver_show_layout(getObservers(),getBorderpane_main(),Proyectos.class);
+        color_active_button(proyecto);
     }
 
     /*

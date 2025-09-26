@@ -51,9 +51,6 @@ public abstract class BaseController implements Observer {
             this.borderpane_main.setCenter(getLayout());
             return true;
         }
-        else {
-            System.out.println("Was not able to show layout what");
-        }
         return false;
     }
 }

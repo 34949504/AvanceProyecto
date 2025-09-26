@@ -49,10 +49,6 @@ public class EstadisticaTracker extends BaseController implements Observer {
         initilize_fxml(fxml);
     }
 
-//    @FXML
-//    public void initialize() {
-//        System.out.println("ewiughweiurg");
-//    }
 
     @Override
     public void init() {
