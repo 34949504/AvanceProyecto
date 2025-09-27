@@ -1,6 +1,6 @@
-package org.example.avanceproyecto.Controllers;
+package org.example.avanceproyecto.Controllers.Proyecto;
 
-import javafx.beans.binding.Bindings;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,28 +13,29 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
-import kotlin.random.AbstractPlatformRandom;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.avanceproyecto.ControllerUtils.*;
-import org.example.avanceproyecto.Tarea.TareaNodo;
+import org.example.avanceproyecto.ControllerUtils.Dialogs.EmpleadoSelectionDialog;
+import org.example.avanceproyecto.ControllerUtils.Dialogs.TaskDialog;
+import org.example.avanceproyecto.Controllers.SharedStates;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Idea
@@ -45,7 +46,8 @@ import java.util.Iterator;
  * Grafos
  * Json donde se guarde  Nombre de proyecto -> datos de proyecto (key {}),empleados ({}) -> empleado: [tareas asignadas]
  */
-@Getter @Setter
+@Getter
+@Setter
 public class Proyectos extends BaseController implements Observer {
 
     @FXML
@@ -76,6 +78,7 @@ public class Proyectos extends BaseController implements Observer {
         creadorProyecto = new CreadorProyecto();
         asignadorProyecto = new AsignadorProyecto();
 
+        this.addObservers(asignadorProyecto);
 
         border_pane.setCenter(creadorProyecto.getCreadorProyectoBorderPane());
     }
@@ -156,7 +159,7 @@ public class Proyectos extends BaseController implements Observer {
                 System.out.println("WOw its borderpane");
             }
 
-           buttonColorManager = new ButtonColorManager(tareas_proyecto_button, datos_proyecto_button);
+            buttonColorManager = new ButtonColorManager(tareas_proyecto_button, datos_proyecto_button);
             buttonColorManager.change_color_state(datos_proyecto_button);
             onActionButtons();
             fecha_creacion_proyecto();
@@ -179,10 +182,14 @@ public class Proyectos extends BaseController implements Observer {
                     JSONObject nuevo_proyecto_json = validar_datos();
                     if (nuevo_proyecto_json != null) {
                         String proyecto_nombre = nuevo_proyecto_json.getString("proyecto_nombre");
-                        proyectos_creados.put(proyecto_nombre,nuevo_proyecto_json);
-                        Utils.writeJson(proyectos_creados.toString(4),"data","proyectos_creados.json");
-                        Toast.show(getStage(),"Proyecto creado exitosamente");
+                        proyectos_creados.put(proyecto_nombre, nuevo_proyecto_json);
+                        Utils.writeJson(proyectos_creados.toString(4), "data", "proyectos_creados.json");
+                        Toast.show(getStage(), "Proyecto creado exitosamente");
                         creardorTarea.clearEverything();
+
+                        for (Observer observer: getObservers()) {
+                            observer.proyecto_has_been_created(nuevo_proyecto_json);
+                        }
                     }
 
                 }
@@ -191,20 +198,20 @@ public class Proyectos extends BaseController implements Observer {
 
         private JSONObject validar_datos() {
             StringBuilder datos_faltantes = new StringBuilder();
-            String nombre_proyecto_value =  nombre_proyecto_textfield.getText();
-            String fecha_de_entraga_datefield_value =  fecha_de_entraga_datefield.getValue() == null ? "":fecha_de_entraga_datefield.getValue().toString();
-            String descripcion_textarea_value =  descripcion_textarea.getText();
+            String nombre_proyecto_value = nombre_proyecto_textfield.getText();
+            String fecha_de_entraga_datefield_value = fecha_de_entraga_datefield.getValue() == null ? "" : fecha_de_entraga_datefield.getValue().toString();
+            String descripcion_textarea_value = descripcion_textarea.getText();
 
-            isDatoEmpty(datos_faltantes,nombre_proyecto_value,"Nombre de proyecto");
-            isDatoEmpty(datos_faltantes,fecha_de_entraga_datefield_value,"Fecha de entrega");
-            isDatoEmpty(datos_faltantes,descripcion_textarea_value,"Descripcion de proyecto");
+            isDatoEmpty(datos_faltantes, nombre_proyecto_value, "Nombre de proyecto");
+            isDatoEmpty(datos_faltantes, fecha_de_entraga_datefield_value, "Fecha de entrega");
+            isDatoEmpty(datos_faltantes, descripcion_textarea_value, "Descripcion de proyecto");
 
             if (creardorTarea.isTaskSizeCero()) {
                 datos_faltantes.append("EL proyecto tiene 0 tareas");
             }
             System.out.println(datos_faltantes.toString());
             if (!datos_faltantes.isEmpty()) {
-                Alert alert = Utils.get_alert_position_centered(getStage(),Alert.AlertType.WARNING,"Advertencia","Datos faltantes:",datos_faltantes.toString());
+                Alert alert = Utils.get_alert_position_centered(getStage(), Alert.AlertType.WARNING, "Advertencia", "Datos faltantes:", datos_faltantes.toString());
                 alert.showAndWait();
                 return null;
             }
@@ -212,23 +219,24 @@ public class Proyectos extends BaseController implements Observer {
             JSONObject nuevo_proyecto_json = new JSONObject();
             JSONArray tareas_array = new JSONArray();
 
-            for (CardTarea cardTarea: creardorTarea.cardTareaArrayList) {
+            for (CardTarea cardTarea : creardorTarea.cardTareaArrayList) {
                 JSONObject tarea_json = new JSONObject();
                 String tarea_title = cardTarea.title.get();
-                String tarea_desc =  cardTarea.desc.get();
-                tarea_json.put("title",tarea_title);
-                tarea_json.put("desc",tarea_desc);
+                String tarea_desc = cardTarea.desc.get();
+                tarea_json.put("title", tarea_title);
+                tarea_json.put("desc", tarea_desc);
                 tareas_array.put(tarea_json);
             }
-            nuevo_proyecto_json.put("proyecto_nombre",nombre_proyecto_value);
-            nuevo_proyecto_json.put("descripcion",descripcion_textarea_value);
-            nuevo_proyecto_json.put("fecha_de_entrega",fecha_de_entraga_datefield_value);
-            nuevo_proyecto_json.put("tareas_proyecto",tareas_array);
-            return  nuevo_proyecto_json;
+            nuevo_proyecto_json.put("proyecto_nombre", nombre_proyecto_value);
+            nuevo_proyecto_json.put("descripcion", descripcion_textarea_value);
+            nuevo_proyecto_json.put("fecha_de_entrega", fecha_de_entraga_datefield_value);
+            nuevo_proyecto_json.put("tareas_proyecto", tareas_array);
+            return nuevo_proyecto_json;
         }
-        private void isDatoEmpty(StringBuilder datos_faltantes,String dato,String message) {
+
+        private void isDatoEmpty(StringBuilder datos_faltantes, String dato, String message) {
             if (dato.isEmpty()) {
-                datos_faltantes.append(message +"\n");
+                datos_faltantes.append(message + "\n");
             }
         }
 
@@ -285,7 +293,8 @@ public class Proyectos extends BaseController implements Observer {
             private Button agregar_tarea_button;
 
             //            private TaskDialog taskDialog = new TaskDialog(getStage());
-            public TaskDialog taskDialog;
+//            public TaskDialog taskDialog;
+            public org.example.avanceproyecto.ControllerUtils.Dialogs.TaskDialog taskDialog;
             CreadorTarea clazz = this;
 
             ArrayList<CardTarea> cardTareaArrayList = new ArrayList<>();
@@ -316,9 +325,12 @@ public class Proyectos extends BaseController implements Observer {
                             Stage stage = (Stage) agregar_tarea_button.getScene().getWindow();
                             taskDialog = new TaskDialog(stage);
                         }
-                        if (taskDialog.showDialog(true)) {
-                            String title = taskDialog.getTitle();
-                            String description = taskDialog.getDescription();
+                        if (taskDialog.show()) {
+
+                            TaskDialog.TaskResult taskResult = taskDialog.getDialogResult();
+                            String title = taskResult.getTitle();
+                            String description = taskResult.getDescription();
+                            taskDialog.clear();
 
                             CardTarea cardTarea = new CardTarea(title, description, card_count++, clazz);
                             cardTareaArrayList.add(cardTarea);
@@ -430,9 +442,10 @@ public class Proyectos extends BaseController implements Observer {
                         creardorTarea.taskDialog.setTitle(clazz.title.get());
                         creardorTarea.taskDialog.setDescription(clazz.desc.get());
 
-                        if (creardorTarea.taskDialog.showDialog(false)) {
-                            clazz.title.set(creardorTarea.taskDialog.getTitle());
-                            clazz.desc.set(creardorTarea.taskDialog.getDescription());
+                        if (creardorTarea.taskDialog.show()) {
+                            TaskDialog.TaskResult result = creardorTarea.taskDialog.getDialogResult();
+                            clazz.title.set(result.getTitle());
+                            clazz.desc.set(result.getDescription());
                         }
                     }
                 });
@@ -442,7 +455,7 @@ public class Proyectos extends BaseController implements Observer {
 
     }
 
-    public class AsignadorProyecto {
+    public class AsignadorProyecto implements Observer {
 
         @FXML
         ChoiceBox<ProyectoObject> proyecto_seleccionar_choicebox;
@@ -456,14 +469,17 @@ public class Proyectos extends BaseController implements Observer {
         Button agregar_row_button;
 
         private ObservableList<EmpleadoTarea> data = FXCollections.observableArrayList(); //Fata de todos los tareas nodos
-        @FXML private TableColumn<EmpleadoTarea,String> column_empleado;
-        @FXML private TableColumn<EmpleadoTarea,String> column_tarea;
+        @FXML
+        private TableColumn<EmpleadoTarea, String> column_empleado;
+        @FXML
+        private TableColumn<EmpleadoTarea, String> column_tarea;
 
-        int tareas_asignadas = 0;
+        Integer tareas_asignadas = 0;
         private ObjectProperty<ProyectoObject> current_proyecto = new SimpleObjectProperty<>();
 
 
         Parent layout;
+
         public AsignadorProyecto() {
             this.layout = Utils.load_fxml("/FXML/Proyecto/AsignarProyecto.fxml", this);
             initialize_data_elements();
@@ -475,22 +491,43 @@ public class Proyectos extends BaseController implements Observer {
             EmpleadoTarea empleadoTarea = new EmpleadoTarea();
             data.add(empleadoTarea);
             asignados_table.setItems(data);
+            asignados_table.setDisable(true);
         }
+
+
 
         private void settingUpTableColumns() {
 
             asignados_table.setStyle("-fx-background-color: white; -fx-text-fill: black;");
+
             asignados_table.setRowFactory(tv -> {
-                TableRow<EmpleadoTarea> row = new TableRow<>();
-                row.setStyle("-fx-background-color: white; -fx-text-fill: black;");
+                TableRow<EmpleadoTarea> row = new TableRow<EmpleadoTarea>() {
+                    @Override
+                    protected void updateItem(EmpleadoTarea item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty || item == null) {
+                            // No border for empty rows
+                            setStyle("-fx-background-color: white;");
+                        } else {
+                            // Border only for rows with data
+                            setStyle("-fx-background-color: white; " +
+                                    "-fx-text-fill: black; " +
+                                    "-fx-border-color: #d3d3d3; " +
+                                    "-fx-border-width: 0 0 1 0;");
+                        }
+                    }
+                };
                 return row;
             });
+
 
             asignados_table.setEditable(true);
             column_empleado.setEditable(true);
             column_tarea.setEditable(true);
 
-            column_empleado.setCellFactory(column -> new EmpleadoCell());
+            column_empleado.setCellFactory(column -> new EmpleadoCell(getStage(), getSharedStates()));
+            column_tarea.setCellFactory(c -> new TareaCell(current_proyecto,column_tarea));
         }
 
         private void addRow_listener() {
@@ -501,7 +538,6 @@ public class Proyectos extends BaseController implements Observer {
                 }
             });
         }
-
 
 
         public void setupLabelBinding() {
@@ -528,13 +564,14 @@ public class Proyectos extends BaseController implements Observer {
                 proyecto_seleccionar_choicebox.getItems().add(proyectoObject);
             }
         }
+
         private void choicebox_proyecto_seleccionar_listener() {
             proyecto_seleccionar_choicebox.setValue(null);
             proyecto_seleccionar_choicebox.setConverter(new StringConverter<ProyectoObject>() {
                 @Override
                 public String toString(ProyectoObject proyectoObject) {
-                    if (proyectoObject == null)return "Seleccionar";
-                    return  proyectoObject.getProycto_name();
+                    if (proyectoObject == null) return "Seleccionar";
+                    return proyectoObject.getProycto_name();
                 }
 
                 @Override
@@ -549,14 +586,50 @@ public class Proyectos extends BaseController implements Observer {
                 public void changed(ObservableValue<? extends ProyectoObject> observableValue, ProyectoObject old, ProyectoObject new_obj) {
                     tareas_asignadas = 0;
                     current_proyecto.set(new_obj);
+                    asignados_table.setDisable(false);
+
+                    if (adjust_rows_to_match_target_size()){
+                        asignados_table.refresh();
+                    }
                 }
 
             });
         }
 
+        private boolean adjust_rows_to_match_target_size() {
+            boolean changed = false;
+            int targetSize = current_proyecto.get().tareas_proyecto.size();
+
+            // Add rows if we need more
+            while (data.size() < targetSize) {
+                EmpleadoTarea newRow = new EmpleadoTarea();
+                data.add(newRow);
+                changed = true;
+            }
+
+            // Remove rows if we have too many
+            while (data.size() > targetSize) {
+                data.remove(data.size() - 1);
+                changed = true;
+            }
+
+            return changed;
+        }
+
 
         public Parent getLayout() {
             return this.layout;
+        }
+
+        @Override
+        public void init() {
+
+        }
+
+        @Override
+        public void proyecto_has_been_created(JSONObject proyecto) {
+            ProyectoObject proyectoObject = ProyectoObject.createProyectoObjectFromJson(proyecto);
+            proyecto_seleccionar_choicebox.getItems().add(proyectoObject);
         }
     }
 
@@ -567,7 +640,8 @@ public class Proyectos extends BaseController implements Observer {
 }
 
 
-@Getter @Setter
+@Getter
+@Setter
 class ProyectoObject {
 
     String proycto_name;
@@ -600,24 +674,166 @@ class ProyectoObject {
     }
 }
 
-@Getter @Setter
+@Getter
+@Setter
 class TareaObject {
     String title;
     String desc;
 }
 
 
-@Getter @Setter
+@Getter
+@Setter
 class EmpleadoTarea {
-    Empleado empleado = new Empleado("","",0);
-    String tarea;
+    Empleado empleado;
+    TareaObject tareaObject;
 }
-
 
 
 //Cells
 class EmpleadoCell extends TableCell<EmpleadoTarea, String> {
     private TextField textField;
+    private static EmpleadoSelectionDialog employeeSelectionDialog;
+
+
+    public EmpleadoCell(Stage stage, SharedStates sharedStates) {
+        employeeSelectionDialog = new EmpleadoSelectionDialog(stage, sharedStates);
+    }
+
+    @Override
+    protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        Empleado empleado = getValue();
+        if (empty || empleado == null) {
+            setText(null);
+            setGraphic(null);
+        } else {
+            setText(empleado.getFullName());
+
+        }
+    }
+
+    @Override
+    public void startEdit() {
+        super.startEdit();
+
+        Empleado currentValue = getValue();
+        if (currentValue != null) {
+            employeeSelectionDialog.set_choice_boxes_to_current_value(currentValue); //Does
+            setText(currentValue.getFullName());
+        }
+
+        if (employeeSelectionDialog.show()) {
+            EmpleadoSelectionDialog.EmployeeSelectionResult employeeSelectionResult = employeeSelectionDialog.getDialogResult();
+            Empleado empleado = employeeSelectionResult.getEmpleado();
+            setValue(empleado);
+            commitEdit(empleado.getFullName());
+        }
+        cancelEdit();
+    }
+
+    @Override
+    public void cancelEdit() {
+        super.cancelEdit();
+        if (getValue() != null)
+            setText(getValue().getFullName());
+    }
+
+    @Override
+    public void commitEdit(String newValue) {
+        super.commitEdit(newValue);
+        setText(newValue);
+    }
+
+
+    private Empleado getValue() {
+        TableRow<EmpleadoTarea> tableRow = getTableRow();
+        if (tableRow != null && tableRow.getItem() != null) {
+            EmpleadoTarea empleadoTarea = tableRow.getItem();
+            return  empleadoTarea.getEmpleado();
+        }
+        System.out.println("get value is null");
+        return null;
+    }
+    private void setValue(Empleado empleado) {
+        TableRow<EmpleadoTarea> tableRow = getTableRow();
+        if (tableRow != null && tableRow.getItem() != null) {
+            EmpleadoTarea empleadoTarea = tableRow.getItem();
+            empleadoTarea.setEmpleado(empleado);
+        }
+    }
+}
+
+
+
+class TareaCell extends TableCell<EmpleadoTarea, String> {
+    private ChoiceBox<TareaObject> choiceBox = new ChoiceBox<>();
+    private ArrayList<TareaObject> tareas_escogidas = new ArrayList<>();
+    private static TableColumn<EmpleadoTarea,String> column;
+
+    public TareaCell(ObjectProperty<ProyectoObject> current_proyecto,TableColumn<EmpleadoTarea,String> empleadoTareaTareaObjectTableColumn) {
+        column = empleadoTareaTareaObjectTableColumn;
+
+       current_proyecto.addListener(new ChangeListener<ProyectoObject>() {
+           @Override
+           public void changed(ObservableValue<? extends ProyectoObject> observableValue, ProyectoObject proyectoObject, ProyectoObject t1) {
+               tareas_escogidas.clear();
+               choiceBox.getItems().clear();
+               choiceBox.setValue(null);
+               for (TareaObject s: t1.getTareas_proyecto()) {
+                  choiceBox.getItems().add(s);
+               }
+               if (proyectoObject != null)
+                   clearTareaColumn();
+           }
+       });
+
+       choiceBox.setConverter(new StringConverter<TareaObject>() {
+           @Override
+           public String toString(TareaObject tareaObject) {
+               if (tareaObject != null) {
+                   return  tareaObject.getTitle();
+               }
+               return  null;
+           }
+
+           @Override
+           public TareaObject fromString(String s) {
+               return null;
+           }
+       });
+
+       choiceBox.setOnAction(new EventHandler<ActionEvent>() {
+           @Override
+           public void handle(ActionEvent actionEvent) {
+               System.out.println("this was called when i cleared?");
+               if (choiceBox.getValue() != null) {
+
+               tareas_escogidas.add(choiceBox.getValue());
+               setValue(choiceBox.getValue());
+               commitEdit(choiceBox.getValue().title);
+               }
+           }
+       });
+
+       choiceBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
+           @Override
+           public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+               if (t1 == false) {
+                   setValue(choiceBox.getValue());
+                   commitEdit(choiceBox.getValue().title);
+               }
+
+           }
+       });
+        setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && !isEmpty() && !isEditing()) {
+                startEdit();
+                // Show dropdown immediately after starting edit
+                Platform.runLater(() -> choiceBox.show());
+            }
+        });
+    }
 
     @Override
     protected void updateItem(String item, boolean empty) {
@@ -626,87 +842,84 @@ class EmpleadoCell extends TableCell<EmpleadoTarea, String> {
             setText(null);
             setGraphic(null);
         } else {
-            // Check if we're currently editing THIS cell
-            if (isEditing()) {
-                setText(null);
-                setGraphic(textField);
-                if (textField != null) {
-                    textField.setText(item);
-                }
-            } else {
-                setText(item);
-                setGraphic(null);
-            }
+            System.out.println("item is "+item);
+            setText(item);
         }
     }
 
     @Override
     public void startEdit() {
         super.startEdit();
-        if (textField == null) {
-            createTextField();
-        }
-
-        String currentValue = getValue();
-        TableRow<EmpleadoTarea> tableRow = getTableRow(); if (tableRow != null && tableRow.getItem() != null) {
-            EmpleadoTarea empleado = tableRow.getItem();
-            currentValue = empleado.empleado.getEmpleadoName(); // or whatever getter method you have
-
-        }
-
-        textField.setText(currentValue);
-        setGraphic(textField);
-        setText(null);
-        textField.requestFocus();
-        textField.selectAll();
+        setGraphic(choiceBox);
+        Platform.runLater(() -> {
+        choiceBox.requestFocus();
+        choiceBox.show();
+    });
     }
 
     @Override
     public void cancelEdit() {
         super.cancelEdit();
-        setText(getValue());
+        System.out.println("cancelling edit");
+        if (getValue() !=null) {
+            System.out.println("value is "+getValue().getTitle());
+            setText(getValue().getTitle());
+            setValue(getValue());
+        }
         setGraphic(null);
     }
 
     @Override
     public void commitEdit(String newValue) {
         super.commitEdit(newValue);
-
-        TableRow<EmpleadoTarea> tableRow = getTableRow();
-        if (tableRow != null && tableRow.getItem() != null) {
-            EmpleadoTarea empleado = tableRow.getItem();
-            empleado.empleado.setEmpleadoName(newValue); // or whatever setter matches this column
-        }
-
         setText(newValue);
         setGraphic(null);
     }
 
-    private void createTextField() {
-        textField = new TextField();
-        textField.setOnAction(e -> {
-            commitEdit(textField.getText());
-        });
-        textField.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.ESCAPE) {
-                cancelEdit();
-            }
-        });
-    }
-
-    private String getValue() {
+    private void setValue(TareaObject tareaObject) {
         TableRow<EmpleadoTarea> tableRow = getTableRow();
         if (tableRow != null && tableRow.getItem() != null) {
-            String currentValue = "";
-            EmpleadoTarea empleado = tableRow.getItem();
-            currentValue = empleado.empleado.getEmpleadoName(); // or whatever getter method you have
-            return currentValue;
+            EmpleadoTarea empleadoTarea = tableRow.getItem();
+            empleadoTarea.setTareaObject(tareaObject);
+        }
+    }
+
+    private TareaObject  getValue() {
+        TableRow<EmpleadoTarea> tableRow = getTableRow();
+        if (tableRow != null && tableRow.getItem() != null) {
+            EmpleadoTarea empleadoTarea = tableRow.getItem();
+            return  empleadoTarea.getTareaObject();
         }
         System.out.println("get value is null");
         return null;
     }
-}
+    private void clearTareaColumn() {
+        TableView<EmpleadoTarea> table = getTableView();
 
+        // Clear all data first
+        for (EmpleadoTarea empleadoTarea : table.getItems()) {
+            empleadoTarea.setTareaObject(null);
+        }
+
+        // Then update all cells in ONE Platform.runLater call
+        Platform.runLater(() -> {
+            Set<Node> cells = table.lookupAll(".table-cell");
+            for (Node node : cells) {
+                if (node instanceof TareaCell) {
+                    TareaCell tareaCell = (TareaCell) node;
+                    if (tareaCell.getTableRow() != null &&
+                            tareaCell.getTableRow().getIndex() >= 0 &&
+                            tareaCell.getTableRow().getIndex() < table.getItems().size()) {
+
+                        // Clear both the cell display AND the choicebox value
+                        tareaCell.updateItem(null, false);
+                        tareaCell.choiceBox.setValue(null); // Clear the choicebox selection
+                    }
+                }
+            }
+        });
+    }
+}
 
 
 

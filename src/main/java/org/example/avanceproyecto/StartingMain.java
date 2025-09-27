@@ -6,7 +6,6 @@ Inicializo los controladores y sus observadores
 package org.example.avanceproyecto;
 
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -16,6 +15,7 @@ import org.example.avanceproyecto.ControllerUtils.BaseController;
 import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.ControllerUtils.Utils;
 import org.example.avanceproyecto.Controllers.*;
+import org.example.avanceproyecto.Controllers.Proyecto.Proyectos;
 import org.json.JSONObject;
 
 import java.io.IOException;

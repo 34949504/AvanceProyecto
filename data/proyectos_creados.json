@@ -1,9 +1,41 @@
-{"ewiafjhaewifaw": {
-    "proyecto_nombre": "ewiafjhaewifaw",
-    "descripcion": "3ffiuw3hfuif",
-    "fecha_de_entrega": "2025-09-12",
-    "tareas_proyecto": [{
-        "title": "waefawefw",
-        "desc": "aefaefawf"
-    }]
-}}
+{
+    "nuevo": {
+        "proyecto_nombre": "nuevo",
+        "descripcion": "wacala",
+        "fecha_de_entrega": "2025-09-05",
+        "tareas_proyecto": [
+            {
+                "title": "iuawefhiaeu",
+                "desc": "awijefaewiufuif"
+            },
+            {
+                "title": "wafawef",
+                "desc": "weiofjawiefjawiejuefwi"
+            }
+        ]
+    },
+    "alohakbar": {
+        "proyecto_nombre": "alohakbar",
+        "descripcion": "wiuefhaiuefhawuef",
+        "fecha_de_entrega": "2025-09-18",
+        "tareas_proyecto": [
+            {
+                "title": "chiudo",
+                "desc": "fioawefhuwefuihuaefw"
+            },
+            {
+                "title": "awfa",
+                "desc": "what the hell?"
+            }
+        ]
+    },
+    "ewiafjhaewifaw": {
+        "proyecto_nombre": "ewiafjhaewifaw",
+        "descripcion": "3ffiuw3hfuif",
+        "fecha_de_entrega": "2025-09-12",
+        "tareas_proyecto": [{
+            "title": "waefawefw",
+            "desc": "aefaefawf"
+        }]
+    }
+}

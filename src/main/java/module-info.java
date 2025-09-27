@@ -23,4 +23,6 @@ module org.example.avanceproyecto {
     opens org.example.avanceproyecto.ControllerUtils to javafx.fxml;
     exports org.example.avanceproyecto.Controllers;
     opens org.example.avanceproyecto.Controllers to javafx.fxml;
+    exports org.example.avanceproyecto.Controllers.Proyecto;
+    opens org.example.avanceproyecto.Controllers.Proyecto to javafx.fxml;
 }

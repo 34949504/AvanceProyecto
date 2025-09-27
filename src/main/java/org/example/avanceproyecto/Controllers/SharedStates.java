@@ -30,11 +30,9 @@ public class SharedStates {
     @Setter(AccessLevel.NONE)
     private JSONObject empleados_json;
 
-//    private HashMap<String, ArrayList<Integer>> empleados_ocupados = new HashMap<>();
     private HashMap<String,Integer> departamentos_id_hashmap = new HashMap<>();
-//    private HashMap<Integer,ArrayList<Empleado>> empleados_hashmap_array = new HashMap<>();
+    private HashMap<Integer,String> departamentos_id_name_hashmap = new HashMap<>();
     private ArrayList<String> departamentos_names = new ArrayList<>();
-
     private HashMap<Integer,Empleado> departamentos_binaryTrees = new HashMap<>(); //departamento id and Node
 
 
@@ -53,6 +51,7 @@ public class SharedStates {
             Integer id = departamentos_id_json.getInt(departamento_name);
             departamentos_id_hashmap.put(departamento_name,id);
             departamentos_names.add(departamento_name);
+            departamentos_id_name_hashmap.put(id,departamento_name);
         }
 
 
@@ -95,7 +94,7 @@ public class SharedStates {
         return  departamentos_id_hashmap.get(departamento_name);
     }
     public ArrayList<Empleado> getEmpleadosArray(String departamento_name) {
-        int departamento_id = getDepartamentoID(departamento_name);
+        int departamento_id = getDepartamentoID(departamento_name.toLowerCase());
         Empleado root = departamentos_binaryTrees.get(departamento_id);
         ArrayList<Empleado> empleadoArrayList = new ArrayList<>();
         ArbolBinario.inorder(root,empleadoArrayList);
@@ -142,6 +141,10 @@ public class SharedStates {
                 ArbolBinario.insertNode(root,empleado);
             }
         }
+
+    }
+    public String getDepartamentoName(int id) {
+     return departamentos_id_name_hashmap.get(id);
 
     }
 
