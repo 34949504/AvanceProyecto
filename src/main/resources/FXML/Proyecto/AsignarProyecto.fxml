@@ -42,6 +42,7 @@
             <HBox>
                <children>
                   <Button fx:id="crear_equipo_proyecto" mnemonicParsing="false" text="Crear equipo de proyecto" />
+
                </children>
             </HBox>
          </children>

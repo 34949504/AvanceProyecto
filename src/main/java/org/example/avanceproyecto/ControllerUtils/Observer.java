@@ -29,6 +29,7 @@ public interface Observer {
 
 
 
+
     /**
      * Just to change color xd
      */

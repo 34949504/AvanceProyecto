@@ -120,6 +120,7 @@ public class MainController extends BaseController implements Observer {
     @FXML
     private void verProyectos() {
         Utils.callObserver_show_layout(getObservers(),getBorderpane_main(), Proyectos.class);
+
         color_active_button(proyecto);
     }
 
