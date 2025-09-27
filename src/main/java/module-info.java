@@ -14,6 +14,7 @@ module org.example.avanceproyecto {
     requires javafx.base;
     requires javafx.graphics;
     requires com.fasterxml.jackson.databind;
+    requires jdk.jshell;
 
     opens org.example.avanceproyecto to javafx.fxml;
     exports org.example.avanceproyecto;

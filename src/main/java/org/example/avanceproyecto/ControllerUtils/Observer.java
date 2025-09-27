@@ -3,6 +3,7 @@ Metodos que permiten a las clases comunicarse
  */
 
 package org.example.avanceproyecto.ControllerUtils;
+import org.example.avanceproyecto.Controllers.Proyecto.objects.ProyectoObject;
 import org.example.avanceproyecto.Tarea.TareaNodo;
 import org.example.avanceproyecto.Tarea.TipoTarea;
 import org.json.JSONObject;
@@ -24,6 +25,7 @@ public interface Observer {
     default void tarea_creada(TareaNodo tareaNodo){};
     default void pre_close_request(){}
     default void proyecto_has_been_created(JSONObject proyecto){}
+    default void proyecto_has_been_assigned(ProyectoObject proyectoObject){}
 
 
 

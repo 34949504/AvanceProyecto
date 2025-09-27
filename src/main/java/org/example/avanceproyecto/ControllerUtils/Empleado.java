@@ -14,17 +14,19 @@ public class Empleado {
     String empleadoLastName;
     Integer departamentoId;
     String departamentoNombre;
+    String fecha_nacimiento;
     ActividadStatus actividadStatus = ActividadStatus.No_activo;
 
     public Integer id;
     public Empleado right = null;
     public Empleado left = null;
 
-    public Empleado(String empleadoName, String empleadoLastName, Integer departamento_id) {
+    public Empleado(String empleadoName, String empleadoLastName, Integer departamento_id,String fecha_nacimiento) {
         this.empleadoName = empleadoName;
         this.empleadoLastName = empleadoLastName;
         this.departamentoId = departamento_id;
         this.departamentoNombre = Utils.getDepartamentoById(new JSONObject(),this.departamentoId);
+        this.fecha_nacimiento = fecha_nacimiento;
         this.id = generateEmpleadoID();
     }
 
@@ -55,5 +57,13 @@ public class Empleado {
         Integer tint = abs(getFullName().hashCode() %1000);
         return (tint);
 
+    }
+
+    public static JSONObject toJson(Empleado empleado) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("nombre",empleado.getEmpleadoName());
+        jsonObject.put("apellidos",empleado.getEmpleadoLastName());
+        jsonObject.put("fecha_nacimiento",empleado.getFecha_nacimiento());
+        return jsonObject;
     }
 }
