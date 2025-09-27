@@ -3,6 +3,7 @@ package org.example.avanceproyecto.Controllers;
 Datos atomicos que permite una facil comunicacion entre dos clases como VerTareas y TaskDoer
  */
 
+import javafx.stage.Stage;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,12 +31,11 @@ public class SharedStates {
     @Setter(AccessLevel.NONE)
     private JSONObject empleados_json;
 
-//    private HashMap<String, ArrayList<Integer>> empleados_ocupados = new HashMap<>();
     private HashMap<String,Integer> departamentos_id_hashmap = new HashMap<>();
-//    private HashMap<Integer,ArrayList<Empleado>> empleados_hashmap_array = new HashMap<>();
+    private HashMap<Integer,String> departamentos_id_name_hashmap = new HashMap<>();
     private ArrayList<String> departamentos_names = new ArrayList<>();
-
     private HashMap<Integer,Empleado> departamentos_binaryTrees = new HashMap<>(); //departamento id and Node
+    private Stage stage;
 
 
  public SharedStates(JSONObject departamentos_id_json, JSONObject empleados_json) { this.departamentos_id_json = departamentos_id_json; this.empleados_json = empleados_json;
@@ -53,49 +53,17 @@ public class SharedStates {
             Integer id = departamentos_id_json.getInt(departamento_name);
             departamentos_id_hashmap.put(departamento_name,id);
             departamentos_names.add(departamento_name);
+            departamentos_id_name_hashmap.put(id,departamento_name);
         }
 
 
     }
-//    private void fillEmpleados() {
-//        for(String departamento:departamentos_names) {
-//            JSONObject dep_json = empleados_json.getJSONObject(departamento);
-//            JSONArray empleados_ordenados = dep_json.getJSONArray("empleados_ordenados");
-//            int departamento_id = departamentos_id_hashmap.get(departamento);
-//
-//
-//            if (!empleados_hashmap_array.containsKey(departamento_id)) {
-//                empleados_hashmap_array.put(departamento_id,new ArrayList<>());
-//            }
-//
-//
-//            for (int i = 0; i < empleados_ordenados.length(); i++) {
-//               int emp_key_int =  empleados_ordenados.getInt(i);
-//               String emp_key = Integer.toString(emp_key_int);
-//
-//               JSONObject empleado_json = dep_json.getJSONObject(emp_key);
-//               String nombre = empleado_json.getString("nombre");
-//                String apellidos = empleado_json.getString("apellidos");
-//                String fecha_nacimiento = empleado_json.getString("fecha_nacimiento");
-//
-//                Empleado empleado = new Empleado(nombre,apellidos,departamento_id);
-//                if (empleado.id ==null) System.out.println("HUH ID IS NULL");
-//
-//                ArrayList<Empleado> empleado_list = empleados_hashmap_array.get(departamento_id);
-//                empleado_list.add(empleado);
-//            }
-//
-//
-//
-//
-//        }
-//    }
 
     public Integer getDepartamentoID(String departamento_name) {
         return  departamentos_id_hashmap.get(departamento_name);
     }
     public ArrayList<Empleado> getEmpleadosArray(String departamento_name) {
-        int departamento_id = getDepartamentoID(departamento_name);
+        int departamento_id = getDepartamentoID(departamento_name.toLowerCase());
         Empleado root = departamentos_binaryTrees.get(departamento_id);
         ArrayList<Empleado> empleadoArrayList = new ArrayList<>();
         ArbolBinario.inorder(root,empleadoArrayList);
@@ -132,7 +100,7 @@ public class SharedStates {
                 String apellidos = empleado_json.getString("apellidos");
                 String fecha_nacimiento = empleado_json.getString("fecha_nacimiento");
 
-                Empleado empleado = new Empleado(nombre,apellidos,departamento_id);
+                Empleado empleado = new Empleado(nombre,apellidos,departamento_id,fecha_nacimiento);
 
                 if (!departamentos_binaryTrees.containsKey(departamento_id)) {
                     departamentos_binaryTrees.put(departamento_id,empleado);
@@ -142,6 +110,10 @@ public class SharedStates {
                 ArbolBinario.insertNode(root,empleado);
             }
         }
+
+    }
+    public String getDepartamentoName(int id) {
+     return departamentos_id_name_hashmap.get(id);
 
     }
 

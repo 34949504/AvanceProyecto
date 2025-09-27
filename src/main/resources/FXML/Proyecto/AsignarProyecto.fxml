@@ -42,7 +42,7 @@
             <HBox>
                <children>
                   <Button fx:id="crear_equipo_proyecto" mnemonicParsing="false" text="Crear equipo de proyecto" />
-                  <Button fx:id="agregar_row_button" mnemonicParsing="false" text="Agregar row" />
+
                </children>
             </HBox>
          </children>

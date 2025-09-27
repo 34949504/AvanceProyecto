@@ -1,3 +1,73 @@
 {
 
+    "alohakbar": {
+        "proyecto_nombre": "alohakbar",
+        "descripcion": "wiuefhaiuefhawuef",
+        "fecha_de_entrega": "2025-09-18",
+        "empleado_tareas": [
+            {
+                "tarea": {
+                    "title": "chiudo",
+                    "desc": "fioawefhuwefuihuaefw"
+                },
+                "empleado": {
+                    "apellidos": "Navarro Ibarra",
+                    "fecha_nacimiento": "1982-05-19",
+                    "nombre": "Héctor"
+                }
+            },
+            {
+                "tarea": {
+                    "title": "awfa",
+                    "desc": "what the hell?"
+                },
+                "empleado": {
+                    "apellidos": "Fernández Robles",
+                    "fecha_nacimiento": "1993-08-03",
+                    "nombre": "Valeria"
+                }
+            }
+        ]
+    },
+    "Manazas": {
+        "proyecto_nombre": "Manazas",
+        "descripcion": "Papaya",
+        "fecha_de_entrega": "2025-09-26",
+        "empleado_tareas": [
+            {
+                "tarea": {
+                    "title": "Cortar manzas",
+                    "desc": "Asegurarse de coratar bien las manzanas"
+                },
+                "empleado": {
+                    "apellidos": "Vega Quintana",
+                    "fecha_nacimiento": "1992-05-30",
+                    "nombre": "Renata"
+                }
+            },
+            {
+                "tarea": {
+                    "title": "Jugar a la moneda",
+                    "desc": "AIOFWAIFAWEJIOAWIOJEIJWOAF"
+                },
+                "empleado": {
+                    "apellidos": "Hernández Vera",
+                    "fecha_nacimiento": "1987-01-16",
+                    "nombre": "Pascual"
+                }
+            },
+            {
+                "tarea": {
+                    "title": "SOplar moscas",
+                    "desc": "QUitar las moscas con una mata moscas"
+                },
+                "empleado": {
+                    "apellidos": "Vargas Sánchez",
+                    "fecha_nacimiento": "1992-05-30",
+                    "nombre": "Luciana"
+                }
+            }
+        ]
+    }
+
 }

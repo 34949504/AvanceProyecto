@@ -1,9 +1,27 @@
-{"ewiafjhaewifaw": {
-    "proyecto_nombre": "ewiafjhaewifaw",
-    "descripcion": "3ffiuw3hfuif",
-    "fecha_de_entrega": "2025-09-12",
-    "tareas_proyecto": [{
-        "title": "waefawefw",
-        "desc": "aefaefawf"
-    }]
-}}
+{
+    "nuevo": {
+        "proyecto_nombre": "nuevo",
+        "descripcion": "wacala",
+        "fecha_de_entrega": "2025-09-05",
+        "tareas_proyecto": [
+            {
+                "title": "iuawefhiaeu",
+                "desc": "awijefaewiufuif"
+            },
+            {
+                "title": "wafawef",
+                "desc": "weiofjawiefjawiejuefwi"
+            }
+        ]
+    },
+    "ewiafjhaewifaw": {
+        "proyecto_nombre": "ewiafjhaewifaw",
+        "descripcion": "3ffiuw3hfuif",
+        "fecha_de_entrega": "2025-09-12",
+        "tareas_proyecto": [{
+            "title": "waefawefw",
+            "desc": "aefaefawf"
+        }]
+    }
+}
+

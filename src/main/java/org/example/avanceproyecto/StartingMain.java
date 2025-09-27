@@ -6,7 +6,6 @@ Inicializo los controladores y sus observadores
 package org.example.avanceproyecto;
 
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -16,6 +15,7 @@ import org.example.avanceproyecto.ControllerUtils.BaseController;
 import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.ControllerUtils.Utils;
 import org.example.avanceproyecto.Controllers.*;
+import org.example.avanceproyecto.Controllers.Proyecto.Proyectos;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -91,6 +91,8 @@ public class StartingMain extends Application {
 		// IMPORTANT
 		public ControllerInitializer(Stage stage) {
 			this.stage = stage;
+            sharedStates.setStage(stage);
+
 			initiliaze_observers();
 			setJsons();
 			setUpstuff();
@@ -143,7 +145,7 @@ public class StartingMain extends Application {
 			for (int i = 0; i < length; i++) {
 				Observer observer = observers[i];
 				if (observer instanceof BaseController baseController) {
-					System.out.println(observer.getClass());
+
 					baseController.setStage(stage);
 					baseController.setSharedStates(sharedStates);
 				}

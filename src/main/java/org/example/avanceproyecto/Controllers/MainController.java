@@ -16,6 +16,7 @@ import lombok.Setter;
 import org.example.avanceproyecto.ControllerUtils.BaseController;
 import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.ControllerUtils.Utils;
+import org.example.avanceproyecto.Controllers.Proyecto.Proyectos;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -118,7 +119,8 @@ public class MainController extends BaseController implements Observer {
     }
     @FXML
     private void verProyectos() {
-        Utils.callObserver_show_layout(getObservers(),getBorderpane_main(),Proyectos.class);
+        Utils.callObserver_show_layout(getObservers(),getBorderpane_main(), Proyectos.class);
+
         color_active_button(proyecto);
     }
 
