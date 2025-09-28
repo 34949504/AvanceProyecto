@@ -62,21 +62,19 @@ public class EstadisticaTracker extends BaseController implements Observer {
         });
         actions_empleado_ejemplar();
 
-        Timeline timeline = new Timeline(new KeyFrame(
-                Duration.seconds(1), // Delay duration
-                event -> Platform.runLater(() -> {
-                tinkerTable();
-                })
-        ));
-        timeline.play();
+//        Timeline timeline = new Timeline(new KeyFrame( Duration.seconds(1), // Delay duration
+//                event -> Platform.runLater(() -> {
+//                tinkerTable();
+//                })
+//        ));
+//        timeline.play();
     }
 
     private void actions_empleado_ejemplar() {
         empleado_ejemplar_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println(table.getWidth());
-                tinkerTable();
+
             }
         });
     }
