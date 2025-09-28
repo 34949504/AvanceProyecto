@@ -2,7 +2,6 @@ package org.example.avanceproyecto.Controllers.Proyecto.objects;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.avanceproyecto.ControllerUtils.Empleado;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -17,7 +16,7 @@ public class ProyectoObject {
     String fecha_de_entrega;
     ArrayList<TareaObject> tareas_proyecto = new ArrayList<>();
 
-    public static ProyectoObject createProyectoObjectFromJson(JSONObject jsonObject) {
+    public static ProyectoObject fromJson(JSONObject jsonObject) {
         ProyectoObject proyecto = new ProyectoObject();
 
         proyecto.setProycto_name(jsonObject.getString("proyecto_nombre"));
@@ -76,5 +75,10 @@ public class ProyectoObject {
 
     public int getTareasSize() {
         return tareas_proyecto.size();
+    }
+
+    @Override
+    public String toString() {
+        return proycto_name; // This is what will be displayed in the ListView
     }
 }
