@@ -1,73 +1,149 @@
 {
-
-    "alohakbar": {
-        "proyecto_nombre": "alohakbar",
-        "descripcion": "wiuefhaiuefhawuef",
-        "fecha_de_entrega": "2025-09-18",
-        "empleado_tareas": [
-            {
-                "tarea": {
-                    "title": "chiudo",
-                    "desc": "fioawefhuwefuihuaefw"
-                },
-                "empleado": {
-                    "apellidos": "Navarro Ibarra",
-                    "fecha_nacimiento": "1982-05-19",
-                    "nombre": "Héctor"
-                }
+    "1": {
+        "proyecto_nombre": "1",
+        "descripcion": "aaw",
+        "fecha_de_entrega": "2000-02-02",
+        "empleado_tareas": [{
+            "tarea": {
+                "title": "awef",
+                "desc": "faewfaw"
             },
-            {
-                "tarea": {
-                    "title": "awfa",
-                    "desc": "what the hell?"
-                },
-                "empleado": {
-                    "apellidos": "Fernández Robles",
-                    "fecha_nacimiento": "1993-08-03",
-                    "nombre": "Valeria"
-                }
+            "empleado": {
+                "apellidos": "Navarro Ibarra",
+                "departamento_id": 2,
+                "fecha_nacimiento": "1982-05-19",
+                "nombre": "Héctor"
             }
-        ]
+        }]
     },
-    "Manazas": {
-        "proyecto_nombre": "Manazas",
-        "descripcion": "Papaya",
-        "fecha_de_entrega": "2025-09-26",
+    "awefiua": {
+        "proyecto_nombre": "awefiua",
+        "descripcion": "awfiuwaeu9wea",
+        "fecha_de_entrega": "2025-09-12",
         "empleado_tareas": [
             {
                 "tarea": {
-                    "title": "Cortar manzas",
-                    "desc": "Asegurarse de coratar bien las manzanas"
+                    "title": "awfaewf",
+                    "desc": "aewfawe"
                 },
                 "empleado": {
                     "apellidos": "Vega Quintana",
+                    "departamento_id": 5,
                     "fecha_nacimiento": "1992-05-30",
                     "nombre": "Renata"
                 }
             },
             {
                 "tarea": {
-                    "title": "Jugar a la moneda",
-                    "desc": "AIOFWAIFAWEJIOAWIOJEIJWOAF"
+                    "title": "wafawef",
+                    "desc": "awefawefawe"
                 },
                 "empleado": {
-                    "apellidos": "Hernández Vera",
-                    "fecha_nacimiento": "1987-01-16",
-                    "nombre": "Pascual"
+                    "apellidos": "Morales Díaz",
+                    "departamento_id": 4,
+                    "fecha_nacimiento": "1992-04-14",
+                    "nombre": "Marisol"
+                }
+            }
+        ]
+    },
+    "2": {
+        "proyecto_nombre": "2",
+        "descripcion": "a",
+        "fecha_de_entrega": "2025-09-11",
+        "empleado_tareas": [{
+            "tarea": {
+                "title": "awd",
+                "desc": "aewfaew"
+            },
+            "empleado": {
+                "apellidos": "Vega Quintana",
+                "departamento_id": 5,
+                "fecha_nacimiento": "1992-05-30",
+                "nombre": "Renata"
+            }
+        }]
+    },
+    "Primero proyecto": {
+        "proyecto_nombre": "Primero proyecto",
+        "descripcion": "Buenas este es cool proyecto",
+        "fecha_de_entrega": "2025-09-04",
+        "empleado_tareas": [{
+            "tarea": {
+                "title": "Tarea 1",
+                "desc": "Realizar algo super importante"
+            },
+            "empleado": {
+                "apellidos": "Silva Mendoza",
+                "departamento_id": 5,
+                "fecha_nacimiento": "1985-11-12",
+                "nombre": "Tomás"
+            }
+        }]
+    },
+    "ewaf": {
+        "proyecto_nombre": "ewaf",
+        "descripcion": "awefawef",
+        "fecha_de_entrega": "2025-09-04",
+        "empleado_tareas": [{
+            "tarea": {
+                "title": "awef",
+                "desc": "waef"
+            },
+            "empleado": {
+                "apellidos": "Vega Quintana",
+                "departamento_id": 5,
+                "fecha_nacimiento": "1992-05-30",
+                "nombre": "Renata"
+            }
+        }]
+    },
+    "ewfjaiowaijowef": {
+        "proyecto_nombre": "ewfjaiowaijowef",
+        "descripcion": "aefiuoajfwiowaefjawefawewfawef",
+        "fecha_de_entrega": "2025-09-04",
+        "empleado_tareas": [
+            {
+                "tarea": {
+                    "title": "awefiaewijfi",
+                    "desc": "wefaewfefw wefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefwwefaewfefw"
+                },
+                "empleado": {
+                    "apellidos": "Vega Cordero",
+                    "departamento_id": 2,
+                    "fecha_nacimiento": "1991-12-03",
+                    "nombre": "Laura"
                 }
             },
             {
                 "tarea": {
-                    "title": "SOplar moscas",
-                    "desc": "QUitar las moscas con una mata moscas"
+                    "title": "wefiwefjiwej",
+                    "desc": "iewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfieiewjfiawjfie"
                 },
                 "empleado": {
-                    "apellidos": "Vargas Sánchez",
-                    "fecha_nacimiento": "1992-05-30",
-                    "nombre": "Luciana"
+                    "apellidos": "Morales Téllez",
+                    "departamento_id": 2,
+                    "fecha_nacimiento": "1992-04-14",
+                    "nombre": "Paola"
                 }
             }
         ]
+    },
+    "989ue89r8uw9g": {
+        "proyecto_nombre": "989ue89r8uw9g",
+        "descripcion": "\najwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioef",
+        "fecha_de_entrega": "2000-02-09",
+        "empleado_tareas": [{
+            "tarea": {
+                "title": "iewfufewu",
+                "desc": "Long ass tarea text Long ass tarea textLong ass tarea textLong ass tarea textLong ass tarea textLong ass tarea textLong ass tarea textLong ass tarea textLong ass tarea textLong ass tarea textLong ass tarea textLong ass tarea textLong ass tarea textLong ass tarea textLong ass tarea text"
+            },
+            "empleado": {
+                "apellidos": "Vega Quintana",
+                "departamento_id": 5,
+                "fecha_nacimiento": "1992-05-30",
+                "nombre": "Renata"
+            }
+        }]
     }
-
 }

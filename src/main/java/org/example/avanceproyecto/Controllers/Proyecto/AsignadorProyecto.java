@@ -13,27 +13,25 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
-import jdk.jshell.execution.Util;
 import org.example.avanceproyecto.ControllerUtils.*;
 import org.example.avanceproyecto.ControllerUtils.Observer;
 import org.example.avanceproyecto.Controllers.Proyecto.cells.EmpleadoCell;
 import org.example.avanceproyecto.Controllers.Proyecto.cells.TareaCell;
 import org.example.avanceproyecto.Controllers.Proyecto.objects.EmpleadoTarea;
-import org.example.avanceproyecto.Controllers.Proyecto.objects.ProyectoObject;
+import org.example.avanceproyecto.Controllers.Proyecto.objects.ProyectoObjectAsignado;
+import org.example.avanceproyecto.Controllers.Proyecto.objects.ProyectoObjectCreados;
 import org.example.avanceproyecto.Controllers.Proyecto.objects.TareaObject;
 import org.example.avanceproyecto.Controllers.SharedStates;
 import org.json.JSONObject;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReferenceArray;
 
 public class AsignadorProyecto implements Observer {
 
     @FXML
-    ChoiceBox<ProyectoObject> proyecto_seleccionar_choicebox;
-    @FXML
-    Label tareas_asignadas_label;
+    ChoiceBox<ProyectoObjectCreados> proyecto_seleccionar_choicebox;
+    @FXML Label tareas_asignadas_label;
     @FXML
     TableView<EmpleadoTarea> asignados_table;
     @FXML
@@ -46,19 +44,16 @@ public class AsignadorProyecto implements Observer {
 
     private ObservableList<EmpleadoTarea> data = FXCollections.observableArrayList(); //Fata de todos los tareas nodos
     AtomicInteger tareas_asignadas = new AtomicInteger(0);
-    private ObjectProperty<ProyectoObject> current_proyecto = new SimpleObjectProperty<>();
+    private ObjectProperty<ProyectoObjectCreados> current_proyecto = new SimpleObjectProperty<>();
     Parent layout;
     private SharedStates sharedStates;
     private ProyectoShared prsh;
 
     ArrayList<Observer> observers = new ArrayList<>();
-    private void addObservers(Observer ... observers) {
-        for(Observer observer:observers){
-            this.observers.add(observer);
-        }
+
+    public ArrayList<Observer> getObservers() {
+        return observers;
     }
-
-
 
     public AsignadorProyecto(SharedStates sharedStates, ProyectoShared proyectoShared) {
         this.prsh = proyectoShared;
@@ -130,10 +125,13 @@ public class AsignadorProyecto implements Observer {
             @Override
             public void handle(ActionEvent actionEvent) {
 
-                ProyectoObject proyectoObject = current_proyecto.get();
+                ProyectoObjectCreados proyectoObject = current_proyecto.get();
                 if (isTableDataValid(proyectoObject)) {
                     ArrayList<EmpleadoTarea> empleadoTareas = new ArrayList<>(data);
-                    JSONObject proyectoJson = ProyectoObject.toJson(proyectoObject, empleadoTareas);
+
+                    JSONObject proyectoJson = ProyectoObjectAsignado.createJson(proyectoObject, empleadoTareas); //Proyecto object con datos de proyectom , empleados y tareas
+                    ProyectoObjectAsignado proyectoObjectAsignado = ProyectoObjectAsignado.fromJson(proyectoJson);
+
                     prsh.getProyectos_asignados().put(proyectoJson.getString("proyecto_nombre"), proyectoJson);
 
                     Utils.writeJson(prsh.getProyectos_asignados().toString(4), "data", "proyectos_asignados.json");
@@ -146,7 +144,7 @@ public class AsignadorProyecto implements Observer {
                     Toast.show(sharedStates.getStage(),"Asignacion de Proyecto exitoso");
 
                     for (Observer observer: observers) {
-                        observer.proyecto_has_been_assigned(proyectoObject);
+                        observer.proyecto_has_been_assigned(proyectoObject,proyectoObjectAsignado);
                     }
                 }
             }
@@ -168,7 +166,7 @@ public class AsignadorProyecto implements Observer {
      * Columna tareas different values
      * Proyecto seleccionado
      */
-    private boolean isTableDataValid(ProyectoObject proyectoObject) {
+    private boolean isTableDataValid(ProyectoObjectCreados proyectoObject) {
 
         if (current_proyecto.get() == null) {
             Alert alert = Utils.get_alert_position_centered(
@@ -232,18 +230,7 @@ public class AsignadorProyecto implements Observer {
             }
             tareasAsignadas.add(tarea);
         }
-
-        // All validations passed - proceed with team creation
-        Alert successAlert = Utils.get_alert_position_centered(
-                sharedStates.getStage(),
-                Alert.AlertType.INFORMATION,
-                "Éxito",
-                "Equipo creado",
-                "El equipo del proyecto se ha creado correctamente"
-        );
-        successAlert.showAndWait();
         return true;
-        // TODO: Add your team creation logic here
     }
 
     private void showValidationAlert(String title, String message) {
@@ -278,30 +265,30 @@ public class AsignadorProyecto implements Observer {
         while (proyectos_keys.hasNext()) {
             String pro_name = proyectos_keys.next();
             JSONObject proyecto_json = prsh.getProyectos_creados().getJSONObject(pro_name);
-            ProyectoObject proyectoObject = ProyectoObject.createProyectoObjectFromJson(proyecto_json);
+            ProyectoObjectCreados proyectoObject = ProyectoObjectCreados.fromJson(proyecto_json);
             proyecto_seleccionar_choicebox.getItems().add(proyectoObject);
         }
     }
 
     private void choicebox_proyecto_seleccionar_listener() {
         proyecto_seleccionar_choicebox.setValue(null);
-        proyecto_seleccionar_choicebox.setConverter(new StringConverter<ProyectoObject>() {
+        proyecto_seleccionar_choicebox.setConverter(new StringConverter<ProyectoObjectCreados>() {
             @Override
-            public String toString(ProyectoObject proyectoObject) {
+            public String toString(ProyectoObjectCreados proyectoObject) {
                 if (proyectoObject == null) return "Seleccionar";
                 return proyectoObject.getProycto_name();
             }
 
             @Override
-            public ProyectoObject fromString(String s) {
+            public ProyectoObjectCreados fromString(String s) {
                 return null;
             }
         });
 
 
-        proyecto_seleccionar_choicebox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProyectoObject>() {
+        proyecto_seleccionar_choicebox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProyectoObjectCreados>() {
             @Override
-            public void changed(ObservableValue<? extends ProyectoObject> observableValue, ProyectoObject old, ProyectoObject new_obj) {
+            public void changed(ObservableValue<? extends ProyectoObjectCreados> observableValue, ProyectoObjectCreados old, ProyectoObjectCreados new_obj) {
                 tareas_asignadas.set(0);
                 current_proyecto.set(new_obj);
                 asignados_table.setDisable(false);
@@ -316,6 +303,11 @@ public class AsignadorProyecto implements Observer {
     }
 
     private boolean adjust_rows_to_match_target_size() {
+        if (current_proyecto.get() == null) {
+            data.clear();
+            return false;
+        }
+
         boolean changed = false;
         int targetSize = current_proyecto.get().getTareas_proyecto().size();
 
@@ -346,8 +338,7 @@ public class AsignadorProyecto implements Observer {
     }
 
     @Override
-    public void proyecto_has_been_created(JSONObject proyecto) {
-        ProyectoObject proyectoObject = ProyectoObject.createProyectoObjectFromJson(proyecto);
-        proyecto_seleccionar_choicebox.getItems().add(proyectoObject);
+    public void proyecto_has_been_created(ProyectoObjectCreados proyecto) {
+        proyecto_seleccionar_choicebox.getItems().add(proyecto);
     }
 }

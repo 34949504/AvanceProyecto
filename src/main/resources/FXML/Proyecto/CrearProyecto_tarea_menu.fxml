@@ -25,7 +25,7 @@
                   </Button>
                </children>
             </HBox>
-            <ScrollPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="250.0" prefWidth="950.0" style="-fx-background-color: green;">
+            <ScrollPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="250.0" prefWidth="950.0" style="-fx-background-color: white;"  >
                <content>
                   <GridPane id="grid_tareas" prefWidth="948.0">
                      <columnConstraints>

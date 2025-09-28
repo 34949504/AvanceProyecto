@@ -15,10 +15,24 @@
 
   <dependencies>
       <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+      <!-- https://mvnrepository.com/artifact/org.jgrapht/jgrapht-jdk1.5 -->
+      <!-- https://mvnrepository.com/artifact/org.jgrapht/jgrapht-core -->
+      <dependency>
+          <groupId>org.jgrapht</groupId>
+          <artifactId>jgrapht-core</artifactId>
+          <version>1.5.2</version>
+      </dependency>
+
       <dependency>
           <groupId>org.projectlombok</groupId>
           <artifactId>lombok</artifactId>
           <version>1.18.38</version>
+      </dependency>
+
+      <dependency>
+          <groupId>io.github.mkpaz</groupId>
+          <artifactId>atlantafx-base</artifactId>
+          <version>2.1.0</version>
       </dependency>
 
       <dependency>

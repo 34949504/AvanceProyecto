@@ -27,4 +27,17 @@ public class EmpleadoTarea {
 
         return jsonObject;
     }
+    public static EmpleadoTarea fromJson(JSONObject jsonObject) {
+        JSONObject empleado_json = jsonObject.getJSONObject("empleado");
+        JSONObject tarea_json = jsonObject.getJSONObject("tarea");
+
+        Empleado empleado = Empleado.fromJson(empleado_json);
+        TareaObject tareaObject = TareaObject.fromJson(tarea_json);
+
+        EmpleadoTarea empleadoTarea = new EmpleadoTarea();
+        empleadoTarea.setEmpleado(empleado);
+        empleadoTarea.setTareaObject(tareaObject);
+
+        return empleadoTarea;
+    }
 }

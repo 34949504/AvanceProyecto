@@ -64,6 +64,17 @@ public class Empleado {
         jsonObject.put("nombre",empleado.getEmpleadoName());
         jsonObject.put("apellidos",empleado.getEmpleadoLastName());
         jsonObject.put("fecha_nacimiento",empleado.getFecha_nacimiento());
+        jsonObject.put("departamento_id",empleado.getDepartamentoId());
         return jsonObject;
+    }
+    public static Empleado fromJson(JSONObject jsonObject) {
+        String nombre = jsonObject.getString("nombre");
+        String apellidos = jsonObject.getString("apellidos");
+        String fecha_nacimiento = jsonObject.getString("fecha_nacimiento");
+        Integer departamentoId = jsonObject.getInt("departamento_id");
+
+        Empleado empleado = new Empleado(nombre, apellidos, departamentoId, fecha_nacimiento);
+
+        return empleado;
     }
 }

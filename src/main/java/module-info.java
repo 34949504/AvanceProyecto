@@ -15,6 +15,8 @@ module org.example.avanceproyecto {
     requires javafx.graphics;
     requires com.fasterxml.jackson.databind;
     requires jdk.jshell;
+    requires org.jgrapht.core;
+    requires atlantafx.base;
 
     opens org.example.avanceproyecto to javafx.fxml;
     exports org.example.avanceproyecto;
@@ -26,4 +28,6 @@ module org.example.avanceproyecto {
     opens org.example.avanceproyecto.Controllers to javafx.fxml;
     exports org.example.avanceproyecto.Controllers.Proyecto;
     opens org.example.avanceproyecto.Controllers.Proyecto to javafx.fxml;
+    exports org.example.avanceproyecto.Controllers.Proyecto.VerProyectos;
+    opens org.example.avanceproyecto.Controllers.Proyecto.VerProyectos to javafx.fxml;
 }

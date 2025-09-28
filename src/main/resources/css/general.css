@@ -1,83 +1,105 @@
 .border-pane-main-container {
-    -fx-background-color: black;
+	-fx-background-color: black;
 
 }
+
 ToolBar {
-    -fx-background-color: white;
+	-fx-background-color: white;
 }
 
 .fill-white {
-    -fx-background-color: white;
+	-fx-background-color: white;
 }
+
 .wassa {
-    -fx-background-color: #29384f;
+	-fx-background-color: #29384f;
 }
 
 
 .title {
--fx-font: normal bold 30px "Western";
-    -fx-text-fill: white;
-    -fx-alignment:center
+	-fx-font: normal bold 30px "Western";
+	-fx-text-fill: white;
+	-fx-alignment: center
 }
 
 
 
 .table-view {
-    -fx-background-color: black;
-    -fx-table-cell-border-color: gray;
+	-fx-background-color: black;
+	-fx-table-cell-border-color: gray;
 }
 
 .table-row-cell {
-    -fx-background-color: #222222;
+	-fx-background-color: #222222;
 }
 
 .table-cell {
-    -fx-text-fill: white;
+	-fx-text-fill: white;
 }
 
 .white-text-big {
-    -fx-text-fill: white;
-    -fx-font: normal bold 30px "Western";
+	-fx-text-fill: white;
+	-fx-font: normal bold 30px "Western";
 }
 
 .medium-size-choicebox {
-    -fx-font: normal bold 20px "Western";
-    -fx-pref-width: 450px; /* sets the preferred width */
+	-fx-font: normal bold 20px "Western";
+	-fx-pref-width: 450px;
+	/* sets the preferred width */
 }
+
 .container-white-background {
-     -fx-background-color: white;
+	-fx-background-color: white;
 }
+
 .medium-size-text-black-bold {
-    -fx-font: normal bold 20px "Western";
-    -fx-text-fill: black;
+	-fx-font: normal bold 20px "Western";
+	-fx-text-fill: black;
 
 }
 
 
 .table-cell {
-    -fx-padding: 0.166667em; /* 2px, plus border adds 1px */
-    -fx-background-color: white;
-    -fx-border-color: transparent -fx-table-cell-border-color transparent transparent;
-    -fx-cell-size: 2.0em; /* 24 */
-    -fx-text-fill: -fx-text-background-color;
+	-fx-padding: 0.166667em;
+	/* 2px, plus border adds 1px */
+	-fx-background-color: white;
+	-fx-border-color: transparent -fx-table-cell-border-color transparent transparent;
+	-fx-cell-size: 2.0em;
+	/* 24 */
+	-fx-text-fill: black;
 }
 
 
 .table-row-cell {
-    -fx-background: -fx-control-inner-background;
-    -fx-background-color: -fx-table-cell-border-color, -fx-background;
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: 0;
-    -fx-text-fill: -fx-text-background-color;
+	-fx-background: -fx-control-inner-background;
+	-fx-background-color: -fx-table-cell-border-color, -fx-background;
+	-fx-background-insets: 0, 0 0 1 0;
+	-fx-padding: 0;
+	-fx-text-fill: black;
 }
+
 .table-row-cell:odd {
-    -fx-background: -fx-control-inner-background-alt;
+	-fx-background: -fx-control-inner-background-alt;
 }
 
 
 .white-text-small {
-    -fx-text-fill: white;
-    -fx-font: normal bold 14px "Western";
+	-fx-text-fill: white;
+	-fx-font: normal bold 14px "Western";
 }
 
 
+
+.vpd-tareas-list {
+	-fx-fixed-cell-size: -1;
+}
+
+.vpd-tareas-list .list-cell {
+	-fx-cell-size: -1;
+	-fx-padding: 8;
+}
+
+.vpd-tarea-content {
+	-fx-spacing: 8;
+	-fx-padding: 6;
+}

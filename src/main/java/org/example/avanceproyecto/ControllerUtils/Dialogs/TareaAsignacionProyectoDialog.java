@@ -52,11 +52,6 @@ public class TareaAsignacionProyectoDialog extends BaseDialog {
                 return null;
             }
         });
-//        tareaObjectChoiceBox.setOnAction(e -> {
-//            PauseTransition pause = new PauseTransition(Duration.millis(500));
-//            pause.setOnFinished(ev -> okButton.fire());
-//            pause.play();
-//        });
 
         Platform.runLater(() -> tareaObjectChoiceBox.requestFocus());
 

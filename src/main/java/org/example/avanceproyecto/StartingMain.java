@@ -5,6 +5,8 @@ Inicializo los controladores y sus observadores
 
 package org.example.avanceproyecto;
 
+import atlantafx.base.theme.PrimerDark;
+import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -34,21 +36,22 @@ public class StartingMain extends Application {
 	JSONObject empleados_json;
 	JSONObject departamentos_id;
 
-    JSONObject proyectos_creados_json;
-    JSONObject proyectos_asignados_json;
+	JSONObject proyectos_creados_json;
+	JSONObject proyectos_asignados_json;
 
 	private void readJsons() {
 		tareas_json = Utils.readJson_READONLY("/Tareas.json");
 		empleados_json = Utils.readJson_READONLY("/empleados.json");
 		departamentos_id = Utils.readJson_READONLY("/departamentos_id.json");
 
-        estadisticas_json = new JSONObject(Utils.readFile("data", "estadisticas.json"));
-        proyectos_creados_json = new JSONObject(Utils.readFile("data", "proyectos_creados.json"));
-        proyectos_asignados_json = new JSONObject(Utils.readFile("data", "proyectos_asignados.json"));
+		estadisticas_json = new JSONObject(Utils.readFile("data", "estadisticas.json"));
+		proyectos_creados_json = new JSONObject(Utils.readFile("data", "proyectos_creados.json"));
+		proyectos_asignados_json = new JSONObject(Utils.readFile("data", "proyectos_asignados.json"));
 	}
 
 	@Override
 	public void start(Stage stage) throws IOException {
+		Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
 
 		readJsons();
 		Utils.setDepartamentos_id(departamentos_id); // XD
@@ -57,6 +60,7 @@ public class StartingMain extends Application {
 		Scene scene = new Scene(controllerManager.getMainController().getOrigin(), 960, 540);
 		scene.getStylesheets().add(getClass().getResource("/css/buttons.css").toExternalForm());
 		scene.getStylesheets().add(getClass().getResource("/css/general.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/css/ver_proyectos_dialog.css").toExternalForm());
 
 		stage.setResizable(false);
 		stage.setTitle("App");
@@ -91,7 +95,7 @@ public class StartingMain extends Application {
 		// IMPORTANT
 		public ControllerInitializer(Stage stage) {
 			this.stage = stage;
-            sharedStates.setStage(stage);
+			sharedStates.setStage(stage);
 
 			initiliaze_observers();
 			setJsons();
@@ -120,8 +124,8 @@ public class StartingMain extends Application {
 			estadisticaTracker.setEstadistica_json(estadisticas_json);
 			empleados.setDepartamentos_id(departamentos_id);
 			agregarTarea.setDepartamentos_id(departamentos_id);
-            proyectos.setProyectos_creados(proyectos_creados_json);
-            proyectos.setProyectos_asignados(proyectos_asignados_json);
+			proyectos.setProyectos_creados(proyectos_creados_json);
+			proyectos.setProyectos_asignados(proyectos_asignados_json);
 		}
 
 		// IMPORTANT ALL CONTROLLERS FXML NEED THE BORDERPANE

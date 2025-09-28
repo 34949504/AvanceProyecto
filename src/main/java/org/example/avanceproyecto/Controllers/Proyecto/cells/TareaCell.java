@@ -1,53 +1,31 @@
 package org.example.avanceproyecto.Controllers.Proyecto.cells;
 
-import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.util.StringConverter;
 
 import java.util.ArrayList;
-import java.util.Set;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.util.StringConverter;
-import kotlin.collections.UArraySortingKt;
-import org.example.avanceproyecto.ControllerUtils.*;
 import org.example.avanceproyecto.ControllerUtils.Dialogs.TareaAsignacionProyectoDialog;
-import org.example.avanceproyecto.Controllers.Proyecto.cells.EmpleadoCell;
 import org.example.avanceproyecto.Controllers.Proyecto.objects.EmpleadoTarea;
-import org.example.avanceproyecto.Controllers.Proyecto.objects.ProyectoObject;
+import org.example.avanceproyecto.Controllers.Proyecto.objects.ProyectoObjectCreados;
 import org.example.avanceproyecto.Controllers.Proyecto.objects.TareaObject;
 import org.example.avanceproyecto.Controllers.SharedStates;
-import org.json.JSONObject;
 
-import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TareaCell extends TableCell<EmpleadoTarea, String> {
     private TextField textField;
     private static TareaAsignacionProyectoDialog tareaAsignacionProyectoDialog;
-    ObjectProperty<ProyectoObject> current_project;
+    ObjectProperty<ProyectoObjectCreados> current_project;
     AtomicInteger tareas_asignadas;
 
 
-    public TareaCell(ObjectProperty<ProyectoObject> current_project, SharedStates sharedStates, AtomicInteger tareas_num) {
+    public TareaCell(ObjectProperty<ProyectoObjectCreados> current_project, SharedStates sharedStates, AtomicInteger tareas_num) {
         this.tareas_asignadas = tareas_num;
         this.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
@@ -57,12 +35,13 @@ public class TareaCell extends TableCell<EmpleadoTarea, String> {
             }
         });
 
-        current_project.addListener(new ChangeListener<ProyectoObject>() {
+        current_project.addListener(new ChangeListener<ProyectoObjectCreados>() {
             @Override
-            public void changed(ObservableValue<? extends ProyectoObject> observableValue, ProyectoObject proyectoObject, ProyectoObject t1) {
+            public void changed(ObservableValue<? extends ProyectoObjectCreados> observableValue, ProyectoObjectCreados proyectoObject, ProyectoObjectCreados t1) {
                 if (proyectoObject !=null) {
                     clearColumns();
-                    tareaAsignacionProyectoDialog.populate_choicebox(t1.getTareas_proyecto());
+                    if (t1 != null)
+                        tareaAsignacionProyectoDialog.populate_choicebox(t1.getTareas_proyecto());
                 }
             }
         });
@@ -124,7 +103,6 @@ public class TareaCell extends TableCell<EmpleadoTarea, String> {
             EmpleadoTarea empleadoTarea = tableRow.getItem();
             return empleadoTarea.getTareaObject();
         }
-        System.out.println("get value is null");
         return null;
     }
 

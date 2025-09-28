@@ -16,9 +16,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import lombok.Getter;
-import lombok.Setter;
 import org.example.avanceproyecto.ControllerUtils.*;
 import org.example.avanceproyecto.ControllerUtils.Dialogs.TaskDialog;
+import org.example.avanceproyecto.Controllers.Proyecto.objects.ProyectoObjectCreados;
 import org.example.avanceproyecto.Controllers.SharedStates;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -112,7 +112,7 @@ public class CreadorProyecto {
                     creardorTarea.clearEverything();
 
                     for (Observer observer : observers) {
-                        observer.proyecto_has_been_created(nuevo_proyecto_json);
+                        observer.proyecto_has_been_created(ProyectoObjectCreados.fromJson(nuevo_proyecto_json));
                     }
                 }
 
@@ -302,6 +302,13 @@ public class CreadorProyecto {
         CreadorTarea creardorTarea;
 
         public CardTarea(String title, String description, int card_count, CreadorTarea creardorTarea) {
+            try {
+                String css = getClass().getResource("/css/cardtarea.css").toExternalForm();
+                this.getStylesheets().add(css);
+            } catch (Exception e) {
+                System.err.println("Could not load CardTarea CSS: " + e.getMessage());
+            }
+
             this.title.set(title);
             this.desc.set(description);
             this.creardorTarea = creardorTarea;
@@ -312,8 +319,9 @@ public class CreadorProyecto {
             this.setMaxWidth(Region.USE_COMPUTED_SIZE);
             this.setMinHeight(Region.USE_COMPUTED_SIZE);
             this.setPrefHeight(151.0);
-            this.setPrefWidth(394.0);
-            this.setStyle("-fx-border-color: black;");
+            this.setPrefWidth(200.0);
+            this.setMaxWidth(200);
+//            this.setStyle("-fx-border-color: black;");
 
             // AnchorPane
             AnchorPane anchorPane = new AnchorPane();
@@ -373,6 +381,17 @@ public class CreadorProyecto {
                     }
                 }
             });
+
+            control_width(anchorPane,label);
+        }
+        private void control_width(AnchorPane anchorPane,Label label) {
+
+            int width = 300;
+
+            this.setPrefWidth(width);
+            this.setMaxWidth(width);
+            anchorPane.setPrefWidth(width);
+            label.setPrefWidth(width);
         }
     }
 

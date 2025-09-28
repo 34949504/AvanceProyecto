@@ -241,4 +241,16 @@ public class Utils {
         }
 
     }
+
+    public static void addObservers(ArrayList<Observer> class_observer_array,Observer ... observers) {
+        for(Observer observer:observers){
+            class_observer_array.add(observer);
+
+        }
+    }
+    public static void addObservers(ArrayList<Observer> class_observer_array,ArrayList<Observer> observers) {
+        for(Observer observer:observers){
+            class_observer_array.add(observer);
+        }
+    }
 }

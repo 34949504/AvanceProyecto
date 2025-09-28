@@ -82,7 +82,6 @@ public class EmpleadoCell extends TableCell<EmpleadoTarea, String> {
             EmpleadoTarea empleadoTarea = tableRow.getItem();
             return empleadoTarea.getEmpleado();
         }
-        System.out.println("get value is null");
         return null;
     }
 

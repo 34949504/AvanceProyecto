@@ -74,6 +74,10 @@ public abstract class BaseDialog<T> {
         okButton = new Button("OK");
         cancelButton = new Button("Cancel");
     }
+
+    public boolean dialogIsShowing() {
+        return dialogStage.isShowing();
+    }
     
     protected void addButtonsToGrid(GridPane grid) {
         HBox buttonBox = new HBox(10);
@@ -83,6 +87,9 @@ public abstract class BaseDialog<T> {
         // Find next available row
         int nextRow = grid.getRowCount();
         grid.add(buttonBox, 1, nextRow);
+    }
+    private void closeDialog() {
+        dialogStage.close();
     }
     
     private void setupButtonActions() {
