@@ -5,7 +5,6 @@ Inicializo los controladores y sus observadores
 
 package org.example.avanceproyecto;
 
-import atlantafx.base.theme.PrimerDark;
 import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -38,6 +37,7 @@ public class StartingMain extends Application {
 
 	JSONObject proyectos_creados_json;
 	JSONObject proyectos_asignados_json;
+    JSONObject empleados_tracking_data_json;
 
 	private void readJsons() {
 		tareas_json = Utils.readJson_READONLY("/Tareas.json");
@@ -47,6 +47,7 @@ public class StartingMain extends Application {
 		estadisticas_json = new JSONObject(Utils.readFile("data", "estadisticas.json"));
 		proyectos_creados_json = new JSONObject(Utils.readFile("data", "proyectos_creados.json"));
 		proyectos_asignados_json = new JSONObject(Utils.readFile("data", "proyectos_asignados.json"));
+        empleados_tracking_data_json = new JSONObject(Utils.readFile("data", "empleados_data_tracking.json"));
 	}
 
 	@Override
@@ -78,6 +79,8 @@ public class StartingMain extends Application {
 	@Setter
 	private class ControllerInitializer {
 
+        private SharedStates sharedStates = new SharedStates(departamentos_id, empleados_json);
+
 		private MainController mainController = new MainController("/FXML/Main.fxml");
 		private AgregarTarea agregarTarea = new AgregarTarea("/FXML/AgregarTarea.fxml");
 		private VerTareas verTareas = new VerTareas("/FXML/VerTareas.fxml");
@@ -85,7 +88,6 @@ public class StartingMain extends Application {
 		// private EstadisticaTracker estadisticaTracker = new
 		// EstadisticaTracker("/FXML/Estadisticas.fxml");
 		private EstadisticaTracker estadisticaTracker = new EstadisticaTracker("/FXML/estadisticas/guacala.fxml");
-		private SharedStates sharedStates = new SharedStates(departamentos_id, empleados_json);
 		private Proyectos proyectos = new Proyectos("/FXML/Proyecto/Proyecto_base.fxml");
 
 		private Stage stage;
@@ -110,7 +112,7 @@ public class StartingMain extends Application {
 
 			mainController.addObservers(agregarTarea, verTareas, empleados, estadisticaTracker, proyectos);
 			agregarTarea.addObservers(mainController, verTareas, estadisticaTracker, agregarTarea, empleados);
-			verTareas.addObservers(mainController, agregarTarea);
+			verTareas.addObservers(mainController, agregarTarea,estadisticaTracker);
 		}
 
 		/*
@@ -126,6 +128,8 @@ public class StartingMain extends Application {
 			agregarTarea.setDepartamentos_id(departamentos_id);
 			proyectos.setProyectos_creados(proyectos_creados_json);
 			proyectos.setProyectos_asignados(proyectos_asignados_json);
+            sharedStates.setEstadisticas_json(estadisticas_json);
+            estadisticaTracker.setEmpleados_tracking_data_json(empleados_tracking_data_json);;
 		}
 
 		// IMPORTANT ALL CONTROLLERS FXML NEED THE BORDERPANE

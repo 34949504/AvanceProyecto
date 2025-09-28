@@ -24,12 +24,9 @@ public class SharedStates {
     private AtomicBoolean thread_active = new AtomicBoolean(true);
     private AtomicInteger speed = new AtomicInteger(1000);
 
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
-    private JSONObject departamentos_id_json;
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     private JSONObject empleados_json;
+    private JSONObject departamentos_id_json;
+    private JSONObject estadisticas_json;
 
     private HashMap<String,Integer> departamentos_id_hashmap = new HashMap<>();
     private HashMap<Integer,String> departamentos_id_name_hashmap = new HashMap<>();
@@ -38,11 +35,12 @@ public class SharedStates {
     private Stage stage;
 
 
- public SharedStates(JSONObject departamentos_id_json, JSONObject empleados_json) { this.departamentos_id_json = departamentos_id_json; this.empleados_json = empleados_json;
+ public SharedStates(JSONObject departamentos_id_json, JSONObject empleados_json)
+ { this.departamentos_id_json = departamentos_id_json;
+     this.empleados_json = empleados_json;
 
 
         fillDepartamentosId();//FIRST
-//        fillEmpleados();
         createBinaryTrees();
     }
 
@@ -99,8 +97,10 @@ public class SharedStates {
                 String nombre = empleado_json.getString("nombre");
                 String apellidos = empleado_json.getString("apellidos");
                 String fecha_nacimiento = empleado_json.getString("fecha_nacimiento");
+                String empleado_id = String.format("%s-%s",departamento_id,emp_key_int);
 
                 Empleado empleado = new Empleado(nombre,apellidos,departamento_id,fecha_nacimiento);
+                empleado.setEmpleado_id(empleado_id);
 
                 if (!departamentos_binaryTrees.containsKey(departamento_id)) {
                     departamentos_binaryTrees.put(departamento_id,empleado);
@@ -116,6 +116,52 @@ public class SharedStates {
      return departamentos_id_name_hashmap.get(id);
 
     }
+
+    private void initizlize_estadistcas() {
+//
+//        for (String departamento: departamentos_names) {
+//            JSONObject departamento_estadisticas_json = estadisticas_json.getJSONObject(departamento);
+//            Iterator<String> keys = departamento_estadisticas_json.keys();
+//
+//            while (keys.hasNext()) {
+//                String key = keys.next();
+//                JSONObject tarea_json = departamento_estadisticas_json.getJSONObject(key);
+//
+//                if (tarea_json.isEmpty())continue;
+//
+//                Iterator<String> date_keys = tarea_json.keys();
+//                while (date_keys.hasNext()) {
+//                    String key_date = date_keys.next();
+//                    JSONArray date_array =  tarea_json.getJSONArray(key_date);
+//
+//                    if (date_array.isEmpty())continue;
+//
+//                    for (int i = 0; i < date_array.length(); i++) {
+//                        JSONObject jsonObject = date_array.getJSONObject(i);
+//                        String empleado_full_name = jsonObject.getString("empleado");
+//
+//
+//
+//
+//                    }
+//
+//                }
+//
+//
+//
+//            }
+//
+////            for (Empleado empleado: getEmpleadosArray(departamento)) {
+////
+////
+////
+////            }
+//
+//        }
+
+    }
+    
+    
 
 
 

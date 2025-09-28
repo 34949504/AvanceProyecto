@@ -54,9 +54,9 @@
          <children>
             <TableView fx:id="table" maxHeight="300.0" maxWidth="500.0" prefHeight="300.0" prefWidth="500.0">
               <columns>
-                <TableColumn prefWidth="166.0" text="Fecha" />
-                <TableColumn prefWidth="166.0" text="Empleado" />
-                  <TableColumn prefWidth="166.0" text="Segundos" />
+                <TableColumn fx:id="empleado_column" prefWidth="166.0" text="Empleado" />
+		<TableColumn fx:id="departamento_column" prefWidth="166.0" text="Departamento" />
+		<TableColumn fx:id="tareas_column" prefWidth="166.0" text="Tareas Completadas" />
               </columns>
             </TableView>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">

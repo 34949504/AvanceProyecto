@@ -160,8 +160,8 @@ public class AgregarTarea extends BaseController implements Observer {
 
 
     @Override
-    public ArrayList<TareaNodo> get_node_tarea_array(TipoTarea tipoTarea) {
-        return taskAdministrator.get_arraylist_tarea_nodo(tipoTarea);
+    public ArrayList<TareaNodo> get_node_tarea_array(TipoTarea tipoTarea,Prioridad prioridad) {
+        return taskAdministrator.get_arraylist_tarea_nodo(tipoTarea,prioridad);
     }
 
     /*
@@ -204,13 +204,15 @@ public class AgregarTarea extends BaseController implements Observer {
             public void changed(ObservableValue<? extends String> observableValue, String string, String t1) {
                 System.out.println("This was called bruv");
 
-                if (ignore_one_time_flag) {
-                    ignore_one_time_flag = false;
-                    return;
-                }
+//                if (ignore_one_time_flag) {
+//                    ignore_one_time_flag = false;
+//                    return;
+//                }
+
                 tipoTarea_label.setText(String.format("Prioridad: %s",t1));
                 setLabelColor(tipoTarea_label,dato_activo_color);
                 currentNode.setPrioridad(Prioridad.getPrioridad(t1));
+                System.out.println("set prioridad");
             }
         });
     }
@@ -404,6 +406,7 @@ public class AgregarTarea extends BaseController implements Observer {
 
                 if (tareas_prioritarias_active) {
                     check_datos_faltantes(prioridad,"Prioridad",datos_faltantes);
+                    currentNode.setTipoTarea(null);
                 } else {
                     check_datos_faltantes(urgencia,"Urgencia",datos_faltantes);
                 }
@@ -418,9 +421,6 @@ public class AgregarTarea extends BaseController implements Observer {
                     tareaNodo.getEmpleadoAsignado().setActividadStatus(Empleado.ActividadStatus.Activo);
                     quitar_empleado_realizando_tarea_de_checkbox(departamento);
                     for (Observer observer:getObservers()) {
-//                        if (observer instanceof VerTareas verTareas) {
-//                            verTareas.tareaTerminada(currentNode.getTipoTarea());
-//                        }
                         observer.tarea_creada(tareaNodo);
                     }
                     String message = String.format("Tarea:%s\nDuración:%dms\nTipo de Tarea:%s",currentNode.getNombreTarea(),currentNode.getSegundos(),currentNode.getTipoTarea());
@@ -454,8 +454,6 @@ public class AgregarTarea extends BaseController implements Observer {
         empleado_choicebox.setValue(null);
         empleado_label.setText("Empleado:");
         setLabelColor(empleado_label,dato_faltante_color);
-
-
     }
 
 
