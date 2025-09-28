@@ -65,6 +65,7 @@ public class Empleado {
         jsonObject.put("apellidos",empleado.getEmpleadoLastName());
         jsonObject.put("fecha_nacimiento",empleado.getFecha_nacimiento());
         jsonObject.put("departamento_id",empleado.getDepartamentoId());
+        //hola
         return jsonObject;
     }
     public static Empleado fromJson(JSONObject jsonObject) {
