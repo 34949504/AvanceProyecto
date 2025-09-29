@@ -26,15 +26,15 @@ cd AvanceProyecto
 
 ```bash
 mvn clean javafx:run
-```
 
----
+
 
 # Algoritmos
 
 ## Grafos
 
 Los utilicé para crear una relación entre los objetos **proyectos**, **tareas**, y **empleados**, aunque me parece que era super innecesario y solo agrega complejidad tonta al programa.
+
 
 Los grafos son buenos para crear relaciones de **redes sociales** y conexiones grandes de objetos.
 
@@ -47,5 +47,6 @@ Lo utilicé para crear un `HashMap<departamento_id, empleado_root>`, entonces te
 Me parece que también es *overkill*; hubiera sido suficiente un `HashMap<departamento_id, Array<Empleados>>`.
 
 ## HashMaps
+
 
 Los **HashMaps** los utilicé en varias ocasiones en el código.
