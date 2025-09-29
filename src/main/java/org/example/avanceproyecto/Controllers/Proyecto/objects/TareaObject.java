@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.json.JSONObject;
 
+/**
+ * Representa las tareas de los proyectos
+ */
 @Getter
 @Setter
 public class TareaObject {

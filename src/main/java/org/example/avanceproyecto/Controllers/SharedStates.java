@@ -19,6 +19,14 @@ import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Consigue los empleados y los guarda en arboles binarios por departamentos
+ *
+ * thread_active = False: el thread deja de simular la realizacion de tarea else continua
+ * speed = controla que tan rapido  o lento es el sleep en el thread
+ * departamentos_binaryTrees = Cada empleado tiene right,left Empleados
+ *
+ */
 @Getter @Setter
 public class SharedStates {
     private AtomicBoolean thread_active = new AtomicBoolean(true);
@@ -81,6 +89,9 @@ public class SharedStates {
         public static final String CIAN = "#00FFFF";     // cian
     }
 
+    /**
+     * Inicializa el hashmap con su departamento y su empleado nodo  con sus hijos
+     */
     private void createBinaryTrees() {
 
         for(String departamento:departamentos_names) {
@@ -117,52 +128,10 @@ public class SharedStates {
 
     }
 
-    private void initizlize_estadistcas() {
-//
-//        for (String departamento: departamentos_names) {
-//            JSONObject departamento_estadisticas_json = estadisticas_json.getJSONObject(departamento);
-//            Iterator<String> keys = departamento_estadisticas_json.keys();
-//
-//            while (keys.hasNext()) {
-//                String key = keys.next();
-//                JSONObject tarea_json = departamento_estadisticas_json.getJSONObject(key);
-//
-//                if (tarea_json.isEmpty())continue;
-//
-//                Iterator<String> date_keys = tarea_json.keys();
-//                while (date_keys.hasNext()) {
-//                    String key_date = date_keys.next();
-//                    JSONArray date_array =  tarea_json.getJSONArray(key_date);
-//
-//                    if (date_array.isEmpty())continue;
-//
-//                    for (int i = 0; i < date_array.length(); i++) {
-//                        JSONObject jsonObject = date_array.getJSONObject(i);
-//                        String empleado_full_name = jsonObject.getString("empleado");
-//
-//
-//
-//
-//                    }
-//
-//                }
-//
-//
-//
-//            }
-//
-////            for (Empleado empleado: getEmpleadosArray(departamento)) {
-////
-////
-////
-////            }
-//
-//        }
-
     }
     
     
 
 
 
-}
+

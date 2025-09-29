@@ -14,6 +14,12 @@ import java.util.ArrayList;
 
 //PILA, COMO SE APILAN LOS PLATOS UNO SOBRE OTRO, Y CUANDO SE AGREGA UN PLATO
 //SE AGREGA AL TOPE Y ES EL PRIMERO QUE SALE
+
+/**
+ * Realiza operaciones de una pila
+ * Tiene taskdoer
+ * AL haber una tarea en ejecucion
+ */
 @Getter @Setter
 public class Pila implements LinkedlistFuncs {
     TareaNodo tareaTop;

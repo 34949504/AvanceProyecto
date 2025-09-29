@@ -10,6 +10,9 @@ import org.example.avanceproyecto.Tarea.TipoTarea;
 
 import java.util.ArrayList;
 
+/**
+ * Contrato para que las controladores se comuniquen
+ */
 public interface Observer {
     default boolean show_layout(Class<?> clazz) {
         return false;

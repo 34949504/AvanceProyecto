@@ -14,6 +14,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Setter;
 
+/**
+ * Dialog abstracto para reutilizar variables que puedan tener otros dialogos
+ * Tiene 4 metodos abstractos
+ * createContent: Aqui los hijos dialogos definen su contenido
+ * validateINput: Pueden definer validaciones
+ * getResult: EL tipo de resultado que  regresa los dialogos hijos
+ * clearValues: Limpiar valores
+ * @param <T>
+ */
 public abstract class BaseDialog<T> {
     protected Stage dialogStage;
     protected Stage parentStage;
@@ -153,13 +162,3 @@ public abstract class BaseDialog<T> {
         return result;
     }
 }
-
-// Task creation result class
-
-// Task Dialog implementation
-
-// Employee selection result class
-
-// Employee Selection Dialog implementation
-
-// Usage example:

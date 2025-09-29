@@ -18,6 +18,9 @@ import org.example.avanceproyecto.Controllers.SharedStates;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Representa el objeto de la Columna tarea
+ */
 public class TareaCell extends TableCell<EmpleadoTarea, String> {
     private TextField textField;
     private static TareaAsignacionProyectoDialog tareaAsignacionProyectoDialog;

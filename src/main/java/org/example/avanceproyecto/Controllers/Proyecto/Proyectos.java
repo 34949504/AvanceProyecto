@@ -12,13 +12,7 @@ import org.example.avanceproyecto.Controllers.Proyecto.VerProyectos.BaseVerProye
 import org.json.JSONObject;
 
 /**
- * Idea
- * Esta la seccion para crear proyecto, poner descripcion, nombre del proyecto, tareas a realizar, fecha de entrega  (textfields)
- * Seccion de asignar a empleados a proyectos, seleccionar departamento y una lista  de los empleados
- * Seccion explorar los proyectos (ver sus datos, tareas y los que estan trabajando en el
- * Seccion para marcar proyectos terminados (se quita el proyecto de json)
- * Grafos
- * Json donde se guarde  Nombre de proyecto -> datos de proyecto (key {}),empleados ({}) -> empleado: [tareas asignadas]
+ * El layout principal de la funcionalidad de proyectos,
  */
 @Getter
 @Setter
@@ -79,6 +73,9 @@ public class Proyectos extends BaseController implements Observer {
         initilize_fxml(fxml);
     }
 
+    /**
+     * Los layouts que remplazan al centro de este
+     */
     public void onActionButtons() {
 
 
@@ -117,24 +114,3 @@ public class Proyectos extends BaseController implements Observer {
 
 
 
-
-
-/*
-
-@FXML
-ChoiceBox proyecto_seleccionar_choicebox;
-@FXML
-Label tareas_asignadas_label;
-@FXML
-TableView asignados_table;
-@FXML
-Button crear_equipo_proyecto;
-
-Parent layout;
-public AsignadorProyecto() {
-    layout = Utils.load_fxml("/FXML/Proyecto/AsignarProyecto.fxml ", this);
-}
-public Parent getLayout() {
-    return layout;
-}
-*/

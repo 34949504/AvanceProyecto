@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 import org.example.avanceproyecto.Controllers.Proyecto.objects.ProyectoObjectCreados;
 import org.example.avanceproyecto.Controllers.Proyecto.objects.TareaObject;
 
+/**
+ * DIalogo que te muestra informacion de un proyecto Creado
+ */
 public class VerProyectoCreadosDialog extends BaseDialog {
 
     private ProyectoObjectCreados proyectoObject;

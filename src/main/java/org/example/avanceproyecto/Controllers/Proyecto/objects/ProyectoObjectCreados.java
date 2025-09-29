@@ -7,6 +7,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * Objecto proyecto que ha sido creado y solo tiene informacion del proyecto y tareas
+ */
 @Getter @Setter
 public class ProyectoObjectCreados extends ProyectoObject {
     private ArrayList<TareaObject> tareas_proyecto = new ArrayList<>();

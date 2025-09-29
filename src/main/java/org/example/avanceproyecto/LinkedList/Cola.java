@@ -12,6 +12,11 @@ import java.util.ArrayList;
 
 //Cola: ES COMO UNA FILA AL BANCO, EL PRIMERO EN LLEGAR ES EL PRIMERO QUE ES ATENDIDO
 // Y el utlimo de la cola es el ultimo en ser atendido
+/**
+ * Clase que realiza las tareas de una cola
+ * Tiene un taskdoer
+ */
+
 @Getter @Setter
 public class Cola implements LinkedlistFuncs {
     TareaNodo first;

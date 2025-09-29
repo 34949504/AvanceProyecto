@@ -13,6 +13,10 @@ import javafx.stage.Stage;
 import lombok.Setter;
 
 
+/**
+ * Dialogo para agregar tareas al creador de proyectos
+ * Titulo de tarea y descripcion
+ */
 public class TaskDialog extends BaseDialog<TaskDialog.TaskResult> {
     private TextField titleField;
     private TextArea descriptionArea;

@@ -164,19 +164,10 @@ public class AgregarTarea extends BaseController implements Observer {
         return taskAdministrator.get_arraylist_tarea_nodo(tipoTarea,prioridad);
     }
 
-    /*
-    choice_box_text  label_of_choice_box_text choiceboxObject labelObject
+
+    /**
+     * Stringconverteer del objecto
      */
-    private void set_choice_label_values (Object ... objects) {
-        String choice_box_value = (String)objects[0];
-        String label_value = (String)objects[1];
-        ChoiceBox<String> choicebox = (ChoiceBox<String>) objects[2];
-        Label label = (Label) objects[3];
-
-        choicebox.setValue(choice_box_value);
-        label.setText(label_value);
-    }
-
     private void setupEmpleadoChoiceBox() {
         empleado_choicebox.setConverter(new StringConverter<Empleado>() {
             @Override
@@ -219,6 +210,7 @@ public class AgregarTarea extends BaseController implements Observer {
 
     /**
      * Es un toggle para quitar urgencias checkpoint y poner prioridades checkpoint  y al reves
+     * bruh :(
      */
     private void tareasPrioritariasOnAction() {
 

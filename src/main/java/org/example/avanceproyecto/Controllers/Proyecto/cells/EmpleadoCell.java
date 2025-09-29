@@ -11,6 +11,10 @@ import org.example.avanceproyecto.Controllers.Proyecto.objects.EmpleadoTarea;
 import org.example.avanceproyecto.Controllers.SharedStates;
 
 //Cells
+
+/**
+ * Representa el objecto que tiene la columa de Empleados
+ */
 public class EmpleadoCell extends TableCell<EmpleadoTarea, String> {
     private TextField textField;
     private static EmpleadoSelectionDialog employeeSelectionDialog;

@@ -129,6 +129,52 @@
             }
         ]
     },
+    "Proyecto superman": {
+        "proyecto_nombre": "Proyecto superman",
+        "descripcion": "Puedes la descripcion",
+        "fecha_de_entrega": "2025-11-19",
+        "empleado_tareas": [
+            {
+                "tarea": {
+                    "title": "TItuloaerkgnaei",
+                    "desc": "descripcion"
+                },
+                "empleado": {
+                    "apellidos": "Vega Quintana",
+                    "departamento_id": 5,
+                    "empleado_id": "5-8",
+                    "fecha_nacimiento": "1992-05-30",
+                    "nombre": "Renata"
+                }
+            },
+            {
+                "tarea": {
+                    "title": "aefawef",
+                    "desc": "awejfajwiuef"
+                },
+                "empleado": {
+                    "apellidos": "Fernández Robles",
+                    "departamento_id": 1,
+                    "empleado_id": "1-9",
+                    "fecha_nacimiento": "1993-08-03",
+                    "nombre": "Valeria"
+                }
+            },
+            {
+                "tarea": {
+                    "title": "otra tarea",
+                    "desc": "hola"
+                },
+                "empleado": {
+                    "apellidos": "Silva Mendoza",
+                    "departamento_id": 5,
+                    "empleado_id": "5-2",
+                    "fecha_nacimiento": "1985-11-12",
+                    "nombre": "Tomás"
+                }
+            }
+        ]
+    },
     "989ue89r8uw9g": {
         "proyecto_nombre": "989ue89r8uw9g",
         "descripcion": "\najwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioefajwioef",

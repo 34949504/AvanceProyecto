@@ -23,6 +23,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
+/**
+ * COntrolador que te permite ver el status de los empleados
+ * Activo significa que esta realizando una tarea
+ * No activo significa que no esta realizando un a tarea
+ */
 @Setter @Getter
 public class VerEmpleados extends BaseController implements Observer {
 
@@ -130,6 +135,10 @@ public class VerEmpleados extends BaseController implements Observer {
 
         }
     }
+
+    /**
+     * Filtra la tabla con el texto basandose en el texto de todas las columnas
+     */
     private void listener_buscarTextfield() {
         buscar_filtro.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -169,6 +178,13 @@ public class VerEmpleados extends BaseController implements Observer {
         }
 
     }
+
+    /**
+     * True significa si el texto del usuario es un subset de algun texto de una row
+     * @param arrayList
+     * @param subset
+     * @return
+     */
     private boolean string_subset_in_array(ArrayList<String> arrayList,String subset) {
         int len_subset = subset.length();
         subset = subset.toLowerCase();

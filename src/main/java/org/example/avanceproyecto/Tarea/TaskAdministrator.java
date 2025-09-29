@@ -15,6 +15,9 @@ import org.example.avanceproyecto.LinkedList.PrioridadNode;
 
 import java.util.ArrayList;
 
+/**
+ * Inicializa las clases principales de realizacion de tareas
+ */
 public class TaskAdministrator {
 
     private ArrayList<Observer> observers;

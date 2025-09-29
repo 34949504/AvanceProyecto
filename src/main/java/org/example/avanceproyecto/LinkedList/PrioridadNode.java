@@ -10,6 +10,11 @@ import org.example.avanceproyecto.Tarea.TipoTarea;
 
 import java.util.ArrayList;
 
+/**
+ * No es node xd, ya habia otra clase con Prioridad
+ * Al pedir por una tarea, primero checa por el orden de prioridad
+ * Tiene taskDoer
+ */
 public class PrioridadNode implements LinkedlistFuncs {
     ArrayList<TareaNodo> prioridad_alta_lista = new ArrayList<>();
     ArrayList<TareaNodo> prioridad_media_lista = new ArrayList<>();

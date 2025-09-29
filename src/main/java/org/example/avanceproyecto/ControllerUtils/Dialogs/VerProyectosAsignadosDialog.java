@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 import org.example.avanceproyecto.Controllers.Proyecto.objects.EmpleadoTarea;
 import org.example.avanceproyecto.Controllers.Proyecto.objects.ProyectoObjectAsignado;
 
+/**
+ * Dialog que temuestra informacion sobre un proyecto asignado
+ * Proyecto de datos, empleados con sus responsabilidadess
+ */
 public class VerProyectosAsignadosDialog extends BaseDialog {
 
     private ProyectoObjectAsignado proyectoObject; // Changed to ProyectoObjectAsignado

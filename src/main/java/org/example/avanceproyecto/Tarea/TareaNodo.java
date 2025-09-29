@@ -13,6 +13,9 @@ import lombok.Setter;
 import org.example.avanceproyecto.ControllerUtils.Empleado;
 import org.example.avanceproyecto.ControllerUtils.Prioridad;
 
+/**
+ * Objeto que represta una tarea
+ */
 @Getter @Setter
 public class TareaNodo {
     String departamento;

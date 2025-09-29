@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 import static java.lang.Math.abs;
 
+/**
+ * Objeto que representa un empleado
+ *
+ */
 @Getter @Setter
 public class Empleado {
     String empleadoName;
@@ -87,8 +91,9 @@ public class Empleado {
         Integer tareas_realizadas;
 
         public int increment_tareas_realizadas() {
-            int count =tareas_realizadas++;
-            return count;
+            System.out.println("Tareas realizadas es "+tareas_realizadas);
+            ++tareas_realizadas;
+            return tareas_realizadas;
         }
     }
 }

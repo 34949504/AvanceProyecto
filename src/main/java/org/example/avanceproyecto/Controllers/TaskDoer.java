@@ -21,6 +21,15 @@ import org.example.avanceproyecto.Tarea.TipoTarea;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * Dont ask
+ * Esta clase se encarga de simula la realizacion de tareas
+ *
+ * TIp: Esta clase esta mal hecha y es confusa, y el funcionamiento es impredecible
+ * Pilas: si una tarea se esta realizando, y otra tarea es agregada, la nueva tarea resume en realizar
+ * COlas: Primero en llegar, Primero en salir
+ * Priorida: Alta,media,baja, es como colas, pero se respeta la prioridad
+ */
 @Getter
 @Setter
 public class TaskDoer extends Task<Void> {

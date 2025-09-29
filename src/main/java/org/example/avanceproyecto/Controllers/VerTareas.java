@@ -22,6 +22,13 @@ import org.example.avanceproyecto.Tarea.TipoTarea;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Controlador que te permite ver las tareas de pilas,colas,listas,prioridad
+ * Se muestra en cada row el empleado, la tarea, y los segundos restantes
+ * Los segundos restantes son actualizados por TaskDoer
+ * Hay un filtro que permite filtrar la columna por departamentos
+ *
+ */
 public class VerTareas extends BaseController implements Observer {
 
     private ObservableList<TareaNodo> data = FXCollections.observableArrayList(); //Fata de todos los tareas nodos

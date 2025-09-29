@@ -14,40 +14,6 @@
 <?import java.lang.String?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="900.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <HBox prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="400">
-               <children>
-        <Label text="Departamento" styleClass="white-text-big">
-
-        </Label>
-            <ChoiceBox  styleClass="medium-size-choicebox" value="Seleccionar" fx:id="departamentos_choicebox">
-                <items>
-                    <!--            pila,cola,lista-->
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="Recursos Humanos" />
-                        <String fx:value="Finanzas" />
-                        <String fx:value="IT" />
-                        <String fx:value="Ventas" />
-                        <String fx:value="Marketing" />
-                    </FXCollections>
-                </items>
-            </ChoiceBox>
-	    
-
-
-               </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="500">
-               <children>
-                <Label text="Tarea" styleClass="white-text-big">
-                </Label>
-                <ChoiceBox  styleClass="medium-size-choicebox" value="Seleccionar" disable="true" fx:id="tarea_choicebox">
-                </ChoiceBox>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
    </top>
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
@@ -62,7 +28,6 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Button mnemonicParsing="false" text="Empleado Ejemplar" fx:id="empleado_ejemplar_button" />
-                  <Button mnemonicParsing="false" text="Total de tareas" fx:id="total_tareas_button" />
 
                </children>
             </HBox>

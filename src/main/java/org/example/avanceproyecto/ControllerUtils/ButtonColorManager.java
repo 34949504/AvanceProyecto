@@ -5,6 +5,9 @@ import javafx.scene.control.Button;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase simple que permite cambiar el color de un boton para mostrar estatus activo
+ */
 public class ButtonColorManager  {
 
     ArrayList<Button> buttons = new ArrayList<>();

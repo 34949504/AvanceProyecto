@@ -6,6 +6,9 @@ import org.example.avanceproyecto.Tarea.TareaNodo;
 
 import java.util.ArrayList;
 
+/**
+ * Solamente agrega las
+ */
 public class Lista   {
     ArrayList<TareaNodo> tareaNodoArrayList = new ArrayList<>();
 

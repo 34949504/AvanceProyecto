@@ -17,6 +17,9 @@ import org.example.avanceproyecto.Controllers.Proyecto.objects.TareaObject;
 
 import java.util.ArrayList;
 
+/**
+ * Dialog que muestra choicebox con las tareas disponibles de un proyecto
+ */
 public class TareaAsignacionProyectoDialog extends BaseDialog {
     private ChoiceBox<TareaObject> tareaObjectChoiceBox;
 

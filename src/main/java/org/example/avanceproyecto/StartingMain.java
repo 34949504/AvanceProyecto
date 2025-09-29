@@ -26,7 +26,7 @@ Es el inicio del programa
 Resumen:
 Se lee los archivos jsons
 Se inicializa ControllerInitializer
-Se agrega a la escenal los archivos css
+Se agrega a la escen al los archivos css
 
  */
 public class StartingMain extends Application {
