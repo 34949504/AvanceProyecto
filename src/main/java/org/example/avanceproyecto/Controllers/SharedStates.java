@@ -19,17 +19,22 @@ import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Consigue los empleados y los guarda en arboles binarios por departamentos
+ *
+ * thread_active = False: el thread deja de simular la realizacion de tarea else continua
+ * speed = controla que tan rapido  o lento es el sleep en el thread
+ * departamentos_binaryTrees = Cada empleado tiene right,left Empleados
+ *
+ */
 @Getter @Setter
 public class SharedStates {
     private AtomicBoolean thread_active = new AtomicBoolean(true);
     private AtomicInteger speed = new AtomicInteger(1000);
 
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
-    private JSONObject departamentos_id_json;
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     private JSONObject empleados_json;
+    private JSONObject departamentos_id_json;
+    private JSONObject estadisticas_json;
 
     private HashMap<String,Integer> departamentos_id_hashmap = new HashMap<>();
     private HashMap<Integer,String> departamentos_id_name_hashmap = new HashMap<>();
@@ -38,11 +43,12 @@ public class SharedStates {
     private Stage stage;
 
 
- public SharedStates(JSONObject departamentos_id_json, JSONObject empleados_json) { this.departamentos_id_json = departamentos_id_json; this.empleados_json = empleados_json;
+ public SharedStates(JSONObject departamentos_id_json, JSONObject empleados_json)
+ { this.departamentos_id_json = departamentos_id_json;
+     this.empleados_json = empleados_json;
 
 
         fillDepartamentosId();//FIRST
-//        fillEmpleados();
         createBinaryTrees();
     }
 
@@ -83,6 +89,9 @@ public class SharedStates {
         public static final String CIAN = "#00FFFF";     // cian
     }
 
+    /**
+     * Inicializa el hashmap con su departamento y su empleado nodo  con sus hijos
+     */
     private void createBinaryTrees() {
 
         for(String departamento:departamentos_names) {
@@ -99,8 +108,10 @@ public class SharedStates {
                 String nombre = empleado_json.getString("nombre");
                 String apellidos = empleado_json.getString("apellidos");
                 String fecha_nacimiento = empleado_json.getString("fecha_nacimiento");
+                String empleado_id = String.format("%s-%s",departamento_id,emp_key_int);
 
                 Empleado empleado = new Empleado(nombre,apellidos,departamento_id,fecha_nacimiento);
+                empleado.setEmpleado_id(empleado_id);
 
                 if (!departamentos_binaryTrees.containsKey(departamento_id)) {
                     departamentos_binaryTrees.put(departamento_id,empleado);
@@ -117,6 +128,10 @@ public class SharedStates {
 
     }
 
+    }
+    
+    
 
 
-}
+
+

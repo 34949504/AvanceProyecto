@@ -8,6 +8,9 @@ import org.jgrapht.graph.DefaultEdge;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Funciones de utileria para los grafos
+ */
 public class UtilsGraphs {
     
     // Get all graphs from the map

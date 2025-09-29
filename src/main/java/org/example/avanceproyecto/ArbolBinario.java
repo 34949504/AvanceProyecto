@@ -17,12 +17,12 @@ public class ArbolBinario {
             return nuevo_empleado;
         }
 
-        if (root.id == nuevo_empleado.id) {
-            nuevo_empleado.id = resolve_same_key(nuevo_empleado.id);
+        if (root.id_arbolBinario == nuevo_empleado.id_arbolBinario) {
+            nuevo_empleado.id_arbolBinario = resolve_same_key(nuevo_empleado.id_arbolBinario);
             return insertNode(root, nuevo_empleado);
         }
 
-        if (nuevo_empleado.id < root.id) {
+        if (nuevo_empleado.id_arbolBinario < root.id_arbolBinario) {
             root.left = insertNode(root.left, nuevo_empleado);
         } else {
             root.right = insertNode(root.right, nuevo_empleado);
@@ -50,7 +50,7 @@ public class ArbolBinario {
             if (pointer == null) {
                 return new EmpleadoInfo(null, ErrorReason.IDNotFOund);
             }
-            int current_id = pointer.id;
+            int current_id = pointer.id_arbolBinario;
             if (id > current_id) {
                 pointer = pointer.right;
             }
@@ -93,9 +93,9 @@ public class ArbolBinario {
     public static Empleado eliminarEmpleado(Empleado root, Integer id) {
         if (root == null) return null;
 
-        if (id < root.id) {
+        if (id < root.id_arbolBinario) {
             root.left = eliminarEmpleado(root.left, id);
-        } else if (id > root.id) {
+        } else if (id > root.id_arbolBinario) {
             root.right = eliminarEmpleado(root.right, id);
         } else { // Found the node to delete
             // Case 1: Leaf
@@ -111,8 +111,8 @@ public class ArbolBinario {
             // Case 3: Two children
             else {
                 Empleado successor = findMin(root.right);
-                root.id = successor.id;
-                root.right = eliminarEmpleado(root.right, successor.id);
+                root.id_arbolBinario = successor.id_arbolBinario;
+                root.right = eliminarEmpleado(root.right, successor.id_arbolBinario);
             }
         }
 

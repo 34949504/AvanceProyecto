@@ -27,6 +27,10 @@ import org.json.JSONObject;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Controlador que te permite seleccionar un proyecto, despues te permite seleccionar en la
+ * tabla  el empleado que se quiere seleccinar y la tarea de l proyecto que va a realizar
+ */
 public class AsignadorProyecto implements Observer {
 
     @FXML
@@ -119,6 +123,15 @@ public class AsignadorProyecto implements Observer {
             }
         });
     }
+
+    /**
+     * Llama funcion para validar datos
+     * Se guarda el objecto en el json
+     * Se escribe el archivo asignados json
+     * Se borra el objecto en creados json
+     * Se escribe creados json
+     * Se notifica a las demas clases que un proyecto ha sido asignado
+     */
 
     private void crear_equipo_proyecto_onAction() {
         crear_equipo_proyecto.setOnAction(new EventHandler<ActionEvent>() {
@@ -245,6 +258,9 @@ public class AsignadorProyecto implements Observer {
     }
 
 
+    /**
+     * Mostra en el label el total de tareas del proyecto
+     */
     public void setupLabelBinding() {
         current_proyecto.addListener((obs, oldProject, newProject) -> {
             if (newProject == null) {
@@ -294,14 +310,15 @@ public class AsignadorProyecto implements Observer {
                 asignados_table.setDisable(false);
 
                 adjust_rows_to_match_target_size();
-//                    if (adjust_rows_to_match_target_size()){
-//                        asignados_table.refresh();
-//                    }
             }
 
         });
     }
 
+    /**
+     * Quita o agrega las rows exactas al tamano del array de las tareas
+     * @return
+     */
     private boolean adjust_rows_to_match_target_size() {
         if (current_proyecto.get() == null) {
             data.clear();

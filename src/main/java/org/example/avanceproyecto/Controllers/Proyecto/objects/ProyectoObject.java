@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.json.JSONObject;
 
+/**
+ * Clase abstracta que guarda datos en comun entre un proyectoCreado y un proyectoAsignado
+ */
 @Getter @Setter
 public abstract class ProyectoObject {
     protected String proycto_name;  // Use protected so subclasses can access

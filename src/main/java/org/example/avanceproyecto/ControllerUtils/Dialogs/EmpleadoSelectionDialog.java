@@ -15,6 +15,9 @@ import org.example.avanceproyecto.Controllers.SharedStates;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Dialogo que te muestra choicebox departamento y otro choicebox con los empleados de ese departamento
+ */
 public class EmpleadoSelectionDialog extends BaseDialog<EmpleadoSelectionDialog.EmployeeSelectionResult> {
     private ChoiceBox<String> departamentoChoiceBox;
     private ChoiceBox<Empleado> empleadoChoiceBox;

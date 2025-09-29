@@ -12,6 +12,9 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Pop up que desaparece que muestra un mensaje
+ */
 public class Toast {
 
     public static void show(Stage owner, String message) {

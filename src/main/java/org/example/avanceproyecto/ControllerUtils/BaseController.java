@@ -15,6 +15,9 @@ import org.example.avanceproyecto.Controllers.SharedStates;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Padre de los controladores, que guarda variables en comun
+ */
 @Getter @Setter
 public abstract class BaseController implements Observer {
     protected Parent layout;

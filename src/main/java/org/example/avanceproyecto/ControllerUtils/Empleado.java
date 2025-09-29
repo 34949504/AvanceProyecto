@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 import static java.lang.Math.abs;
 
+/**
+ * Objeto que representa un empleado
+ *
+ */
 @Getter @Setter
 public class Empleado {
     String empleadoName;
@@ -16,8 +20,10 @@ public class Empleado {
     String departamentoNombre;
     String fecha_nacimiento;
     ActividadStatus actividadStatus = ActividadStatus.No_activo;
+    Estadistica estadistica = new Estadistica();
+    String empleado_id;
 
-    public Integer id;
+    public Integer id_arbolBinario;
     public Empleado right = null;
     public Empleado left = null;
 
@@ -27,7 +33,7 @@ public class Empleado {
         this.departamentoId = departamento_id;
         this.departamentoNombre = Utils.getDepartamentoById(new JSONObject(),this.departamentoId);
         this.fecha_nacimiento = fecha_nacimiento;
-        this.id = generateEmpleadoID();
+        this.id_arbolBinario = generateEmpleadoID();
     }
 
     public String getFullName() {
@@ -65,6 +71,7 @@ public class Empleado {
         jsonObject.put("apellidos",empleado.getEmpleadoLastName());
         jsonObject.put("fecha_nacimiento",empleado.getFecha_nacimiento());
         jsonObject.put("departamento_id",empleado.getDepartamentoId());
+        jsonObject.put("empleado_id",empleado.getEmpleado_id());
         //hola
         return jsonObject;
     }
@@ -77,5 +84,16 @@ public class Empleado {
         Empleado empleado = new Empleado(nombre, apellidos, departamentoId, fecha_nacimiento);
 
         return empleado;
+    }
+
+    @Setter @Getter
+    public class Estadistica {
+        Integer tareas_realizadas;
+
+        public int increment_tareas_realizadas() {
+            System.out.println("Tareas realizadas es "+tareas_realizadas);
+            ++tareas_realizadas;
+            return tareas_realizadas;
+        }
     }
 }

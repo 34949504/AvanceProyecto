@@ -5,6 +5,9 @@ import lombok.Setter;
 import org.example.avanceproyecto.ControllerUtils.Empleado;
 import org.json.JSONObject;
 
+/**
+ * Objeto que alamace el objeto empleado y tareobject
+ */
 @Getter
 @Setter
 public class EmpleadoTarea {

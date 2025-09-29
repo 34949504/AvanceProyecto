@@ -6,6 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
+/**
+ * Tiene la informacion de relacion empleado tarea y la informacion de un proyecto
+ */
 @Getter @Setter
 public class ProyectoObjectAsignado extends ProyectoObject {
     private ArrayList<EmpleadoTarea> empleadoTareas = new ArrayList<>();

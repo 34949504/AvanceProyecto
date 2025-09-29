@@ -15,16 +15,20 @@ import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.example.avanceproyecto.ControllerUtils.BaseController;
-import org.example.avanceproyecto.ControllerUtils.Empleado;
-import org.example.avanceproyecto.ControllerUtils.Observer;
-import org.example.avanceproyecto.ControllerUtils.Utils;
+import org.example.avanceproyecto.ControllerUtils.*;
 import org.example.avanceproyecto.Tarea.TareaNodo;
 import org.example.avanceproyecto.Tarea.TipoTarea;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Controlador que te permite ver las tareas de pilas,colas,listas,prioridad
+ * Se muestra en cada row el empleado, la tarea, y los segundos restantes
+ * Los segundos restantes son actualizados por TaskDoer
+ * Hay un filtro que permite filtrar la columna por departamentos
+ *
+ */
 public class VerTareas extends BaseController implements Observer {
 
     private ObservableList<TareaNodo> data = FXCollections.observableArrayList(); //Fata de todos los tareas nodos
@@ -75,11 +79,12 @@ public class VerTareas extends BaseController implements Observer {
     @FXML
     public void initialize() {
 //        Utils.set_action_regresar_main_menu(regresar, getObservers());
-        change_color_state(urgentes_button,no_urgentes_button,lista_button);
+        change_color_state(urgentes_button,no_urgentes_button,lista_button,prioridad_button);
         Action_listaButton();
         Action_pausarThread();
         Action_UrgentesButton();
         Action_noUrgentesBUtton();
+        Action_prioridadButton();
         Listener_filtro();
         Listener_spinnerVelocidad();
 
@@ -147,14 +152,14 @@ public class VerTareas extends BaseController implements Observer {
      * cuando una tarea es creada, eliminada, o cunado se cambia la vista de la tablas de urgentes, no urgenes y listas
      * @param tipoTarea
      */
-    private void changedaTable(TipoTarea tipoTarea) {
+    private void changedaTable(TipoTarea tipoTarea, Prioridad prioridad) {
         this.current_tipoTarea_state = tipoTarea;
         ArrayList<TareaNodo> tareaNodoArrayList = new ArrayList<>();
 
         for (Observer observer : getObservers()) {
             if (observer instanceof AgregarTarea agregarTarea) {
 
-                ArrayList<TareaNodo> result = observer.get_node_tarea_array(tipoTarea);
+                ArrayList<TareaNodo> result = observer.get_node_tarea_array(tipoTarea,prioridad);
                 if (result != null) {
                     tareaNodoArrayList = result;
                     System.out.println(tareaNodoArrayList.size());
@@ -162,9 +167,9 @@ public class VerTareas extends BaseController implements Observer {
                 }
             }
         }
-//        for (TareaNodo tareaNodo : tareaNodoArrayList) {
-//            System.out.println(tareaNodo.getValues());
-//        }
+        for (TareaNodo tareaNodo : tareaNodoArrayList) {
+            System.out.println(tareaNodo.getValues());
+        }
         data.clear();
         data.addAll(tareaNodoArrayList);
         filter_data(filtro.getValue());
@@ -177,9 +182,19 @@ public class VerTareas extends BaseController implements Observer {
     @Override
     public void tareaTerminada(TareaNodo tareaNodo) {
         TipoTarea tipoTarea = tareaNodo.getTipoTarea();
+        Prioridad prioridad = tareaNodo.getPrioridad();
         System.out.println("Updating?");
         if (this.current_tipoTarea_state == tipoTarea) {
-            changedaTable(tipoTarea);
+            changedaTable(tipoTarea,prioridad);
+        }
+
+        /**
+         * TaskDoer, la clase apesta, primero la hize yo, pero no funciono, entonces despues de varias
+         * iteraciones con chatgpt y claude, me devolvio eso, pero no se entienede nada (Se necesita volver hacer esa clase xd)
+         * Necesito  llamar a otros observadores de aqui por TaskDoer sucks
+         */
+        for (Observer observer:getObservers()) {
+            observer.tareaTerminada(tareaNodo);
         }
 
     }
@@ -191,9 +206,10 @@ public class VerTareas extends BaseController implements Observer {
     @Override
     public void tarea_creada(TareaNodo tareaNodo) {
         TipoTarea tipoTarea = tareaNodo.getTipoTarea();
+        Prioridad prioridad = tareaNodo.getPrioridad();
         System.out.println("Updating?");
         if (this.current_tipoTarea_state == tipoTarea) {
-            changedaTable(tipoTarea);
+            changedaTable(tipoTarea,prioridad);
         }
     }
 
@@ -252,7 +268,7 @@ public class VerTareas extends BaseController implements Observer {
             @Override
             public void handle(ActionEvent actionEvent) {
                 titulo_nombre_tarea_label.setText(urgentes_button.getText());
-                changedaTable(TipoTarea.Urgente);
+                changedaTable(TipoTarea.Urgente,Prioridad.none);
                 change_color_state(urgentes_button,no_urgentes_button,lista_button);
             }
         });
@@ -267,8 +283,20 @@ public class VerTareas extends BaseController implements Observer {
             @Override
             public void handle(ActionEvent actionEvent) {
                 titulo_nombre_tarea_label.setText(no_urgentes_button.getText());
-                changedaTable(TipoTarea.No_Urgente);
+                changedaTable(TipoTarea.No_Urgente,Prioridad.none);
                 change_color_state(no_urgentes_button,urgentes_button,lista_button);
+            }
+        });
+    }
+    private void Action_prioridadButton() {
+
+        prioridad_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                titulo_nombre_tarea_label.setText(prioridad_button.getText());
+                changedaTable(null,Prioridad.alta);
+                change_color_state(prioridad_button,no_urgentes_button,urgentes_button,lista_button);
             }
         });
     }
@@ -282,7 +310,7 @@ public class VerTareas extends BaseController implements Observer {
             @Override
             public void handle(ActionEvent actionEvent) {
                 titulo_nombre_tarea_label.setText(lista_button.getText());
-                changedaTable(TipoTarea.Lista);
+                changedaTable(TipoTarea.Lista,Prioridad.none);
                 change_color_state(lista_button,urgentes_button,no_urgentes_button);
             }
         });

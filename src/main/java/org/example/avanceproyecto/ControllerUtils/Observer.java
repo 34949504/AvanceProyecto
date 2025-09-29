@@ -10,11 +10,14 @@ import org.example.avanceproyecto.Tarea.TipoTarea;
 
 import java.util.ArrayList;
 
+/**
+ * Contrato para que las controladores se comuniquen
+ */
 public interface Observer {
     default boolean show_layout(Class<?> clazz) {
         return false;
     }
-    default ArrayList<TareaNodo> get_node_tarea_array(TipoTarea tipoTarea){return null;}
+    default ArrayList<TareaNodo> get_node_tarea_array(TipoTarea tipoTarea,Prioridad prioridad){return null;}
     default void tareaTerminada(TareaNodo tareaNodo){};
 
     /**

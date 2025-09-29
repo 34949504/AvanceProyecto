@@ -25,6 +25,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * Controlador que te permite asignar datos a un proyecto y agregar las tareas que tiene el proyecto
+ */
 @Getter
 public class CreadorProyecto {
 
@@ -97,6 +100,12 @@ public class CreadorProyecto {
     }
 //        private void
 
+    /**
+     * Llama funcion validar datos
+     * se agrega el objeto proyecto al json creados
+     * Se escribe el json creados
+     * Se notifica a las demas clases que un proyecto ha sido creado
+     */
     private void onAction_crear_proyecto_enviar() {
 
         crear_proyecto_button.setOnAction(new EventHandler<ActionEvent>() {
@@ -120,6 +129,12 @@ public class CreadorProyecto {
         });
     }
 
+
+    /**
+     * No puede haber campos vacio y por lo menos 1 tarea debe de ser creada
+     * Regresa el objeto proyecto en forma de json
+     * @return
+     */
     private JSONObject validar_datos() {
         StringBuilder datos_faltantes = new StringBuilder();
         String nombre_proyecto_value = nombre_proyecto_textfield.getText();
@@ -165,6 +180,9 @@ public class CreadorProyecto {
     }
 
 
+    /**
+     * Cambia el layout a datos
+     */
     private void onAction_datos_proyecto() {
         datos_proyecto_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -176,6 +194,9 @@ public class CreadorProyecto {
         });
     }
 
+    /**
+     * Cambia el layout a tareas
+     */
     private void onAction_tareas_proyecto() {
         tareas_proyecto_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -187,6 +208,9 @@ public class CreadorProyecto {
         });
     }
 
+    /**
+     * Descarta los datos del proyecto y  sus tareas
+     */
     private void onAction_borrar_proyecto() {
 
         borrar_proyecto_button.setOnAction(new EventHandler<ActionEvent>() {
@@ -206,6 +230,9 @@ public class CreadorProyecto {
         fecha_creacion_label.setText(fecha_creacion_label.getText() + Utils.getTodaysDate());
     }
 
+    /**
+     * Controlador que te permite agregar tareas
+     */
     public class CreadorTarea {
         @FXML
         private GridPane grid_tareas;
@@ -273,6 +300,15 @@ public class CreadorProyecto {
             redistributeAllCards();
         }
 
+        /**
+         * 2 vboxes
+         * if i have
+         *     card1     card2
+         *     card3     card4
+         *  and i remove card 2
+         *     card1     card3
+         *     card4
+         */
         private void redistributeAllCards() {
             // Clear both VBoxes
             left_vbox_grid.getChildren().clear();

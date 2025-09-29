@@ -4,6 +4,7 @@ public enum TipoTarea {
     Urgente,
     No_Urgente,
     Lista,
+    Prioridad,
     none;
 
     public static TipoTarea get_enum_by_string_comparison(String type) {
@@ -16,6 +17,10 @@ public enum TipoTarea {
         }
         if (type.compareToIgnoreCase("listas") == 0) {
             return TipoTarea.Lista; // Fixed: should return Listas, not Urgente
+        }
+
+        if (type.compareToIgnoreCase("prioridad") == 0) {
+            return TipoTarea.Prioridad;
         }
 
         // Fixed: proper exception throwing syntax

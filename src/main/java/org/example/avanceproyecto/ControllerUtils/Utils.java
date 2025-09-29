@@ -36,6 +36,9 @@ import java.util.Random;
 import javafx.stage.Screen;
 import java.time.LocalDate; // import the LocalDate class
 
+/**
+ * Funcinones de utileria
+ */
 public class Utils {
     private static final Random random = new Random();
 
@@ -60,28 +63,7 @@ public class Utils {
         JSONObject jsonObject = new JSONObject(jeson);
         return jsonObject;
     }
-    public static JSONObject readJsonAbs(String filename) {
-         String filePath = filename; // Replace with your file path
-        StringBuilder stringBuilder = new StringBuilder();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-            return new JSONObject(stringBuilder.toString());
-        } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
-            return null;
-        }
-    }
-
-    public static Rectangle2D getScreenDimsHalfed() {
-        Rectangle2D rectangle2D = Screen.getPrimary().getVisualBounds();
-        double width = rectangle2D.getWidth() / 2;
-        double height = rectangle2D.getHeight() / 2;
-        return new Rectangle2D(width / 2, height / 2, width, height);
-    }
 
     public static void callObserver_show_layout(ArrayList<Observer> observers, BorderPane centerPane, Class<?> clazz) {
         for (Observer observer : observers) {
@@ -90,18 +72,16 @@ public class Utils {
         }
     }
 
-    public static void set_action_regresar_main_menu(Button regresar, ArrayList<Observer> observers) {
-        regresar.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                for (Observer observer : observers) {
-                    boolean sucess = observer.show_layout(MainController.class);
-                    if (sucess) break;
-                }
-            }
-        });
-    }
 
+    /**
+     * Crea una alerta con los datos que le pases, y la centra
+     * @param big_window
+     * @param type
+     * @param title
+     * @param header
+     * @param msg
+     * @return
+     */
     public static Alert get_alert_position_centered(Stage big_window, Alert.AlertType type, String title,String header, String msg) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
